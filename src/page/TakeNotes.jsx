@@ -53,7 +53,7 @@ const TakeNotes = () => {
                          {tanggal}
                     </Table.Cell>
                     <Table.Cell>
-                         {nominal}
+                         Rp {nominal}
                     </Table.Cell>
                </Table.Row>
           )
@@ -135,16 +135,22 @@ const TakeNotes = () => {
                               </Table.HeadCell>
                          </Table.Head>
                          <Table.Body className="divide-y">
-                              {savedData.map((data, index) => {
-                                   return (
+                              {savedData.length <= 0 ? (
+                                   <tr>
+                                        <td colSpan="3" className="text-center font-bold">
+                                             Data kosong!
+                                        </td>
+                                   </tr>
+                              ) : (
+                                   savedData.map((data, index) => (
                                         <DataRow
                                              key={index}
                                              deskripsi={data.deskripsi}
                                              tanggal={data.tanggal}
                                              nominal={data.nominal}
                                         />
-                                   )
-                              })}
+                                   ))
+                              )}
                          </Table.Body>
                     </Table>
                </div>
