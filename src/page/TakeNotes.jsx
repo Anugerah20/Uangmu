@@ -3,19 +3,9 @@ import { Table } from 'flowbite-react';
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { useState } from 'react';
-// import { useEffect, useState } from 'react';
 
 const TakeNotes = () => {
      document.title = "Uangmu | Buat Catatan";
-     // const [takeNotes, setTakeNotes] = useState(false);
-     // const [msgAlert, setMsgAlert] = useState(false);
-
-     // useEffect(() => {
-     //      if (takeNotes && msgAlert)
-     //           alert("Halaman ini sedang dalam pengerjaan");
-     //      setMsgAlert(true);
-     //      setTakeNotes(true);
-     // }, [takeNotes, msgAlert])
 
      // Inisialisasi data yg mau disimpan
      const [deskripsi, setDeskripsi] = useState("");
