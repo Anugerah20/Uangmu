@@ -15,9 +15,6 @@ const TakeNotes = () => {
 
      function dataNote(e) {
           e.preventDefault();
-          // console.log("Dekskripsi:", deskripsi);
-          // console.log("Tanggal:", tanggal);
-          // console.log("nominal:", nominal);
 
           // Validasi inputan
           if (deskripsi === "") {
@@ -27,11 +24,14 @@ const TakeNotes = () => {
           } else if (nominal === "") {
                return alert("Nominal wajib diisi!")
           }
+
+          // Wadah untuk menyimpan data sementara
           const newDataNote = {
                deskripsi,
                tanggal,
                nominal
           };
+          console.log(newDataNote);
 
           const updatedData = [...savedData, newDataNote];
           setSavedData(updatedData);
@@ -40,6 +40,23 @@ const TakeNotes = () => {
           setDeskripsi("");
           setTanggal("");
           setNominal("");
+     }
+
+     // function untuk tabel
+     function DataRow({ deskripsi, tanggal, nominal }) {
+          return (
+               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    <Table.Cell className="whitespace-nowrap">
+                         {deskripsi}
+                    </Table.Cell>
+                    <Table.Cell>
+                         {tanggal}
+                    </Table.Cell>
+                    <Table.Cell>
+                         {nominal}
+                    </Table.Cell>
+               </Table.Row>
+          )
      }
 
      return (
@@ -104,7 +121,7 @@ const TakeNotes = () => {
                {/* END: FORMULIR KEUANGAN */}
 
                {/* START: Memasukkan Data */}
-               {/* <div className="flex max-w-md flex-col mx-auto mt-10 mb-5">
+               <div className="flex max-w-md flex-col mx-auto mt-10 mb-5">
                     <Table>
                          <Table.Head>
                               <Table.HeadCell>
@@ -118,20 +135,19 @@ const TakeNotes = () => {
                               </Table.HeadCell>
                          </Table.Head>
                          <Table.Body className="divide-y">
-                              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                   <Table.Cell className="whitespace-nowrap">
-                                        Kaos Kaki
-                                   </Table.Cell>
-                                   <Table.Cell>
-                                        19/08/2023
-                                   </Table.Cell>
-                                   <Table.Cell>
-                                        Rp 20.000
-                                   </Table.Cell>
-                              </Table.Row>
+                              {savedData.map((data, index) => {
+                                   return (
+                                        <DataRow
+                                             key={index}
+                                             deskripsi={data.deskripsi}
+                                             tanggal={data.tanggal}
+                                             nominal={data.nominal}
+                                        />
+                                   )
+                              })}
                          </Table.Body>
                     </Table>
-               </div> */}
+               </div>
 
                {/* END: Memasukkan Data */}
                <Footer />
