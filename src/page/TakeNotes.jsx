@@ -43,7 +43,7 @@ const TakeNotes = () => {
      }
 
      // function untuk tabel
-     function DataRow({ deskripsi, tanggal, nominal }) {
+     function DataNoteTable({ deskripsi, tanggal, nominal }) {
           return (
                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap">
@@ -137,13 +137,13 @@ const TakeNotes = () => {
                          <Table.Body className="divide-y">
                               {savedData.length <= 0 ? (
                                    <tr>
-                                        <td colSpan="3" className="text-center font-bold">
+                                        <td colSpan="3" className="text-center font-bold py-2">
                                              Data kosong!
                                         </td>
                                    </tr>
                               ) : (
                                    savedData.map((data, index) => (
-                                        <DataRow
+                                        <DataNoteTable
                                              key={index}
                                              deskripsi={data.deskripsi}
                                              tanggal={data.tanggal}
