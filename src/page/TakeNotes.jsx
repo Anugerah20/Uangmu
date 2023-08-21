@@ -22,7 +22,9 @@ const TakeNotes = () => {
           } else if (tanggal === "") {
                return alert("Tanggal wajib diisi!");
           } else if (nominal === "") {
-               return alert("Nominal wajib diisi!")
+               return alert("Nominal wajib di isi");
+          } else if (isNaN(nominal) === true) {
+               return alert("Nominal harus angka");
           }
 
           // Wadah untuk menyimpan data sementara
@@ -109,7 +111,7 @@ const TakeNotes = () => {
                               id="nominal"
                               name="nominal"
                               placeholder="contoh: 10.000"
-                              type="number"
+                              type="text"
                               value={nominal}
                               onChange={(e) => setNominal(e.target.value)}
                          />
