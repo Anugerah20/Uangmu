@@ -11,20 +11,22 @@ const TakeNotes = () => {
      const [deskripsi, setDeskripsi] = useState("");
      const [tanggal, setTanggal] = useState("");
      const [nominal, setNominal] = useState("");
-     const [savedData, setSavedData] = useState([])
+     const [savedData, setSavedData] = useState([]);
+
+     // Menambahkan titik dibagian nominal
 
      function dataNote(e) {
           e.preventDefault();
 
           // Validasi inputan
           if (deskripsi === "") {
-               return alert("Deskripsi wajib diisi!");
+               return alert("Deskripsi tidak boleh kosong");
           } else if (tanggal === "") {
-               return alert("Tanggal wajib diisi!");
+               return alert("Tanggal tidak boleh kosong");
           } else if (nominal === "") {
-               return alert("Nominal wajib di isi");
+               return alert("Nominal tidak boleh kosong");
           } else if (isNaN(nominal) === true) {
-               return alert("Nominal harus angka");
+               return alert("Nominal hanya menerima angka");
           }
 
           // Wadah untuk menyimpan data sementara
@@ -46,16 +48,20 @@ const TakeNotes = () => {
 
      // function untuk tabel
      function DataNoteTable({ deskripsi, tanggal, nominal }) {
+          const formatAmountID = Number(nominal).toLocaleString("id-ID");
+
+          const partDate = tanggal.split("-");
+          const formattedDate = `${partDate[2]}/${partDate[1]}/${partDate[0]}`;
           return (
                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap">
                          {deskripsi}
                     </Table.Cell>
                     <Table.Cell>
-                         {tanggal}
+                         {formattedDate}
                     </Table.Cell>
                     <Table.Cell>
-                         Rp {nominal}
+                         Rp {formatAmountID}
                     </Table.Cell>
                </Table.Row>
           )
@@ -81,6 +87,7 @@ const TakeNotes = () => {
                               name="deskripsi"
                               placeholder="contoh: beli kopi"
                               type="text"
+                              autoComplete="off"
                               value={deskripsi}
                               onChange={(e) => setDeskripsi(e.target.value)}
                          />
@@ -110,14 +117,15 @@ const TakeNotes = () => {
                          <TextInput
                               id="nominal"
                               name="nominal"
-                              placeholder="contoh: 10.000"
+                              placeholder="contoh: 10000"
                               type="text"
+                              autoComplete="off"
                               value={nominal}
                               onChange={(e) => setNominal(e.target.value)}
                          />
                     </div>
                     <Button type="submit">
-                         Submit
+                         Kirim
                     </Button>
                </form>
                {/* END: FORMULIR KEUANGAN */}
