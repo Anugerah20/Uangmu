@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Card, Label, TextInput } from 'flowbite-react';
 import { Modal, Table } from 'flowbite-react';
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
 const TakeNotes = () => {
+     document.title = "Uangmu | Catatan";
+
      const [deskripsi, setDeskripsi] = useState("");
      const [tanggal, setTanggal] = useState("");
      const [nominal, setNominal] = useState("");
@@ -13,6 +15,7 @@ const TakeNotes = () => {
      const [jenisCatatan, setJenisCatatan] = useState("pemasukan");
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
+     const [totalUang, setTotalUang] = useState(0);
      const setModal = useRef(null);
 
      // State Input
@@ -53,11 +56,17 @@ const TakeNotes = () => {
           };
 
           // Calculate money
-          if (nominal > 0) {
+          let totalUangBaru = totalUang;
+
+          if (jenisCatatan === "pemasukan") {
                setTotalPemasukan(totalPemasukan + newDataNote.nominal);
+               totalUangBaru += newDataNote.nominal;
           } else {
                setTotalPengeluaran(totalPengeluaran + newDataNote.nominal);
+               totalUangBaru -= newDataNote.nominal;
           }
+
+          setTotalUang(totalUangBaru);
 
           const updatedData = [...savedData, newDataNote];
           setSavedData(updatedData);
@@ -91,9 +100,20 @@ const TakeNotes = () => {
 
                <div className="flex flex-wrap">
 
+                    {/* START: TOTAL MONEY */}
+                    <Card
+                         className="w-4/5 sm:w-3/6 md:w-2/5 flex flex-col mx-auto"
+                    >
+                         <h1 className="text-center text-2xl font-bold">Total Uang Sekarang</h1>
+                         <hr />
+                         {/* <h2 className="text-center text-xl">Rp {totalPemasukan}</h2> */}
+                         <h2 className="text-center text-xl">Rp {totalUang > 0 ? totalUang : 0}</h2>
+                    </Card>
+                    {/* END: TOTAL MONEY */}
+
                     {/* START: MODAL KEUANGAN */}
-                    <div className="flex flex-col gap-4 mx-auto w-4/5 sm:w-2/4 md:w-2/5">
-                         <Button onClick={() => setOpenModal(true)}>Buat Catatan Sekarang</Button>
+                    <div className="flex flex-col gap-4 mx-auto w-4/5 sm:w-3/6 md:w-2/5">
+                         <Button onClick={() => setOpenModal(true)} className="flex justify-center items-center">Buat Catatan Sekarang</Button>
                          <Modal
                               show={openModal}
                               size="md"
