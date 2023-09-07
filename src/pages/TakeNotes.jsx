@@ -10,6 +10,9 @@ const TakeNotes = () => {
      const [nominal, setNominal] = useState("");
      const [savedData, setSavedData] = useState([]);
      const [openModal, setOpenModal] = useState(false);
+     const [jenisCatatan, setJenisCatatan] = useState("pemasukan");
+     const [totalPemasukan, setTotalPemasukan] = useState(0);
+     const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const setModal = useRef(null);
 
      // State Input
@@ -45,8 +48,16 @@ const TakeNotes = () => {
           const newDataNote = {
                deskripsi,
                tanggal,
-               nominal
+               nominal: parseFloat(nominal),
+               jenis: jenisCatatan,
           };
+
+          // Calculate money
+          if (nominal > 0) {
+               setTotalPemasukan(totalPemasukan + newDataNote.nominal);
+          } else {
+               setTotalPengeluaran(totalPengeluaran + newDataNote.nominal);
+          }
 
           const updatedData = [...savedData, newDataNote];
           setSavedData(updatedData);
@@ -59,7 +70,7 @@ const TakeNotes = () => {
      };
 
      // Function table
-     const DataNoteTable = ({ deskripsi, tanggal, nominal }) => {
+     const DataNoteTable = ({ deskripsi, tanggal, nominal, jenis }) => {
           const formatAmountID = new Intl.NumberFormat("id-ID").format(nominal);
 
           const partDate = tanggal.split("-");
@@ -69,6 +80,7 @@ const TakeNotes = () => {
                     <Table.Cell className="whitespace-nowrap">{deskripsi}</Table.Cell>
                     <Table.Cell>{formattedDate}</Table.Cell>
                     <Table.Cell>Rp {formatAmountID}</Table.Cell>
+                    <Table.Cell>{jenis === "pemasukan" ? "pemasukan" : "pengeluaran"}</Table.Cell>
                </Table.Row>
           );
      };
@@ -133,6 +145,31 @@ const TakeNotes = () => {
                                                   onChange={(e) => handlerInputChange(e, "nominal")}
                                              />
                                         </div>
+
+                                        <div className="mb-2 block">
+                                             <Label htmlFor="jenisCatatan" value="Jenis Catatan" />
+                                        </div>
+                                        <div className="mb-2 block">
+                                             <input
+                                                  type="radio"
+                                                  id="pemasukan"
+                                                  name="jenisCatatan"
+                                                  value="pemasukan"
+                                                  checked={jenisCatatan === "pemasukan"}
+                                                  onChange={(e) => setJenisCatatan(e, "jenisCatatan")}
+                                             />
+                                             <label htmlFor="pemasukan" className="mr-2">Pemasukan</label>
+                                             <input
+                                                  type="radio"
+                                                  id="pengeluaran"
+                                                  name="jenisCatatan"
+                                                  value="pengeluaran"
+                                                  checked={jenisCatatan === "pengeluaran"}
+                                                  onChange={(e) => setJenisCatatan(e, "jenisCatatan")}
+                                             />
+                                             <label htmlFor="pengeluaran">Pengeluaran</label>
+                                        </div>
+
                                         <Button type="submit" onClick={handleSubmit}>Kirim Sekarang</Button>
                                    </div>
                               </Modal.Body>
@@ -154,6 +191,9 @@ const TakeNotes = () => {
                                    <Table.HeadCell>
                                         Nominal
                                    </Table.HeadCell>
+                                   <Table.HeadCell>
+                                        Jenis
+                                   </Table.HeadCell>
                               </Table.Head>
                               <Table.Body className="divide-y">
                                    {savedData.length === 0 ? (
@@ -169,6 +209,7 @@ const TakeNotes = () => {
                                                   deskripsi={data.deskripsi}
                                                   tanggal={data.tanggal}
                                                   nominal={data.nominal}
+                                                  jenis={data.jenis}
                                              />
                                         ))
                                    )}
@@ -177,7 +218,7 @@ const TakeNotes = () => {
                     </div>
                     {/* END: MEMASUKKAN DATA */}
 
-               </div>
+               </div >
                <Footer />
           </>
      );
