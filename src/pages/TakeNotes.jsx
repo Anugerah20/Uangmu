@@ -93,7 +93,7 @@ const TakeNotes = () => {
 
                     {/* START: MODAL KEUANGAN */}
                     <div className="flex flex-col gap-4 mx-auto w-4/5 sm:w-2/4 md:w-2/5">
-                         <Button onClick={() => setOpenModal(true)}>Buat Catatan Pemasukan</Button>
+                         <Button onClick={() => setOpenModal(true)}>Buat Catatan Sekarang</Button>
                          <Modal
                               show={openModal}
                               size="md"
