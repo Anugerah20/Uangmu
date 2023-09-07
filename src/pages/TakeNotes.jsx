@@ -198,8 +198,8 @@ const TakeNotes = () => {
                               <Table.Body className="divide-y">
                                    {savedData.length === 0 ? (
                                         <tr>
-                                             <td colSpan="3" className="text-center font-bold py-2">
-                                                  Data kosong!
+                                             <td colSpan="4" className="text-center font-bold py-2">
+                                                  Catatan uangmu tidak tersedia
                                              </td>
                                         </tr>
                                    ) : (
