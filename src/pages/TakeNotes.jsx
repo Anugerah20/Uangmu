@@ -149,7 +149,7 @@ const TakeNotes = () => {
                                         <div className="mb-2 block">
                                              <Label htmlFor="jenisCatatan" value="Jenis Catatan" />
                                         </div>
-                                        <div className="mb-2 block">
+                                        <div className="block mt-2">
                                              <input
                                                   type="radio"
                                                   id="pemasukan"
