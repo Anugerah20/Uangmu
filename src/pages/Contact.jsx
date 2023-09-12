@@ -11,13 +11,6 @@ const Contact = () => {
                <h1 className="text-2xl font-bold text-center">Kirim Pesanmu Disini</h1>
                {/* START: KONTAK */}
 
-               {/* <section className="text-center mt-8">
-                    <a href="https://github.com/Anugerah20" target="_blank" className="py-2 px-4 bg-black text-white rounded-md me-3">✔️ Github</a>
-                    <a href="https://web.facebook.com/nabil.pangestu.359/" target="_blank" className="py-2 px-4 bg-black text-white rounded-md me-3">✔️ Facebook</a>
-                    <a href="https://instagram.com/anugerah" target="_blank" className="py-2 px-4 bg-black text-white rounded-md me-3">✔️ Instagram</a>
-               </section> */}
-
-               {/* Updated Contact */}
                <form className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-5">
                     <div>
                          <div className="mb-2 block">
@@ -69,7 +62,6 @@ const Contact = () => {
                          kirim sekarang
                     </Button>
                </form>
-               {/* Updated Contact */}
 
                {/* END: KONTAK */}
                <Footer />
