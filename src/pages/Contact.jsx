@@ -1,5 +1,6 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import { Button, Label, TextInput, Textarea } from "flowbite-react";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
@@ -15,7 +16,57 @@ const Contact = () => {
                     <a href="https://instagram.com/anugerah" target="_blank" className="py-2 px-4 bg-black text-white rounded-md me-3">✔️ Instagram</a>
                </section> */}
 
+               {/* Updated Contact */}
+               <form className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-5">
+                    <div>
+                         <div className="mb-2 block">
+                              <Label
+                                   htmlFor="text"
+                                   value="Fullname"
+                              />
+                         </div>
+                         <TextInput
+                              id="text"
+                              placeholder="marko"
+                              required
+                              type="text"
+                         />
+                    </div>
+                    <div>
+                         <div className="mb-2 block">
+                              <Label
+                                   htmlFor="email"
+                                   value="Email"
+                              />
+                         </div>
+                         <TextInput
+                              id="email"
+                              placeholder="marko@gmail.com"
+                              required
+                              type="email"
+                         />
+                    </div>
+                    <div>
+                         <div className="mb-2 block">
+                              <Label
+                                   htmlFor="massage"
+                                   value="Massage"
+                              />
+                         </div>
+                         <Textarea
+                              className="text-sm"
+                              id="massage"
+                              placeholder="Your massage..."
+                              required
+                              rows={4}
+                         />
+                    </div>
 
+                    <Button type="submit">
+                         kirim sekarang
+                    </Button>
+               </form>
+               {/* Updated Contact */}
 
                {/* END: KONTAK */}
                <Footer />
