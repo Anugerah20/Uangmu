@@ -22,12 +22,11 @@ const Contact = () => {
                          <div className="mb-2 block">
                               <Label
                                    htmlFor="text"
-                                   value="Fullname"
+                                   value="Nama Lengkap"
                               />
                          </div>
                          <TextInput
                               id="text"
-                              placeholder="marko"
                               required
                               type="text"
                          />
@@ -41,7 +40,6 @@ const Contact = () => {
                          </div>
                          <TextInput
                               id="email"
-                              placeholder="marko@gmail.com"
                               required
                               type="email"
                          />
@@ -50,13 +48,12 @@ const Contact = () => {
                          <div className="mb-2 block">
                               <Label
                                    htmlFor="massage"
-                                   value="Massage"
+                                   value="Pesan"
                               />
                          </div>
                          <Textarea
                               className="text-sm"
                               id="massage"
-                              placeholder="Your massage..."
                               required
                               rows={4}
                          />
