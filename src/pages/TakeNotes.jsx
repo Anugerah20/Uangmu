@@ -106,7 +106,6 @@ const TakeNotes = () => {
                     >
                          <h1 className="text-center text-2xl font-bold">Total Uang Sekarang</h1>
                          <hr />
-                         {/* <h2 className="text-center text-xl">Rp {totalUang.length === 0 ? totalUang : 0}</h2> */}
                          <h2 className="text-center text-xl">Rp {totalUang !== 0 ? totalUang : 0}</h2>
                     </Card>
                     {/* END: TOTAL MONEY */}
