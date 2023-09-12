@@ -1,6 +1,7 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
+import { FaEnvelope, FaUserAlt } from "react-icons/fa";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
@@ -26,6 +27,7 @@ const Contact = () => {
                               />
                          </div>
                          <TextInput
+                              rightIcon={FaUserAlt}
                               id="text"
                               required
                               type="text"
@@ -39,6 +41,7 @@ const Contact = () => {
                               />
                          </div>
                          <TextInput
+                              rightIcon={FaEnvelope}
                               id="email"
                               required
                               type="email"
