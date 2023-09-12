@@ -31,6 +31,7 @@ const Contact = () => {
                               id="text"
                               required
                               type="text"
+                              autoComplete="off"
                          />
                     </div>
                     <div>
@@ -45,6 +46,7 @@ const Contact = () => {
                               id="email"
                               required
                               type="email"
+                              autoComplete="off"
                          />
                     </div>
                     <div>
@@ -59,6 +61,7 @@ const Contact = () => {
                               id="massage"
                               required
                               rows={4}
+                              autoComplete="off"
                          />
                     </div>
 
