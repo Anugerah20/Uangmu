@@ -12,7 +12,7 @@ const TakeNotes = () => {
      const [nominal, setNominal] = useState("");
      const [savedData, setSavedData] = useState([]);
      const [openModal, setOpenModal] = useState(false);
-     const [jenisCatatan, setJenisCatatan] = useState("pemasukan");
+     const [jenisCatatan, setJenisCatatan] = useState("");
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
@@ -40,7 +40,7 @@ const TakeNotes = () => {
      const handleSubmit = (e) => {
           e.preventDefault();
 
-          if (deskripsi === "" || tanggal === "" || nominal === "") {
+          if (deskripsi === "" || tanggal === "" || nominal === "" || jenisCatatan === "") {
                alert("Harus diisi semua");
                return;
           } else if (isNaN(nominal)) {
@@ -58,7 +58,7 @@ const TakeNotes = () => {
           // Calculate money
           let totalUangBaru = totalUang;
 
-          if (jenisCatatan === "pemasukan") {
+          if (jenisCatatan == "pemasukan") {
                setTotalPemasukan(totalPemasukan + newDataNote.nominal);
                totalUangBaru += newDataNote.nominal;
           } else {
@@ -106,8 +106,8 @@ const TakeNotes = () => {
                     >
                          <h1 className="text-center text-2xl font-bold">Total Uang Sekarang</h1>
                          <hr />
-                         {/* <h2 className="text-center text-xl">Rp {totalPemasukan}</h2> */}
-                         <h2 className="text-center text-xl">Rp {totalUang > 0 ? totalUang : 0}</h2>
+                         {/* <h2 className="text-center text-xl">Rp {totalUang.length === 0 ? totalUang : 0}</h2> */}
+                         <h2 className="text-center text-xl">Rp {totalUang !== 0 ? totalUang : 0}</h2>
                     </Card>
                     {/* END: TOTAL MONEY */}
 
@@ -176,7 +176,7 @@ const TakeNotes = () => {
                                                   name="jenisCatatan"
                                                   value="pemasukan"
                                                   checked={jenisCatatan === "pemasukan"}
-                                                  onChange={(e) => setJenisCatatan(e, "jenisCatatan")}
+                                                  onChange={(e) => setJenisCatatan("pemasukan")}
                                              />
                                              <label htmlFor="pemasukan" className="mr-2">Pemasukan</label>
                                              <input
@@ -185,7 +185,7 @@ const TakeNotes = () => {
                                                   name="jenisCatatan"
                                                   value="pengeluaran"
                                                   checked={jenisCatatan === "pengeluaran"}
-                                                  onChange={(e) => setJenisCatatan(e, "jenisCatatan")}
+                                                  onChange={(e) => setJenisCatatan("pengeluaran")}
                                              />
                                              <label htmlFor="pengeluaran">Pengeluaran</label>
                                         </div>
