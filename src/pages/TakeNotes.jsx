@@ -112,7 +112,7 @@ const TakeNotes = () => {
 
                     {/* START: MODAL KEUANGAN */}
                     <div className="flex flex-col gap-4 mx-auto w-4/5 sm:w-3/6 md:w-2/5">
-                         <Button onClick={() => setOpenModal(true)} className="bg-green-600 flex justify-center items-center">Buat Catatan Sekarang</Button>
+                         <Button color="success" onClick={() => setOpenModal(true)} className="flex justify-center items-center">Buat Catatan Sekarang</Button>
                          <Modal
                               show={openModal}
                               size="md"
@@ -189,7 +189,7 @@ const TakeNotes = () => {
                                              <label htmlFor="pengeluaran">Pengeluaran</label>
                                         </div>
 
-                                        <Button type="submit" className="bg-green-500 hover:bg-green-700" onClick={handleSubmit}>Kirim Sekarang</Button>
+                                        <Button color="success" type="submit" onClick={handleSubmit}>Kirim Sekarang</Button>
                                    </div>
                               </Modal.Body>
                          </Modal>
