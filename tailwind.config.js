@@ -5,6 +5,9 @@ export default {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    colors: {
+      "dark": "#09090b"
+    },
     extend: {},
   },
   plugins: [require("flowbite/plugin")],
