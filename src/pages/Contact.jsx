@@ -13,15 +13,18 @@ const Contact = () => {
 
                <form className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-5">
                     <div>
+
                          <div className="mb-2 block">
                               <Label
-                                   htmlFor="text"
+                                   color="gray"
+                                   htmlFor="input-gray"
                                    value="Nama Lengkap"
                               />
                          </div>
                          <TextInput
+                              color="gray"
+                              id="input-gray"
                               rightIcon={FaUserAlt}
-                              id="text"
                               required
                               type="text"
                               autoComplete="off"
@@ -30,13 +33,15 @@ const Contact = () => {
                     <div>
                          <div className="mb-2 block">
                               <Label
-                                   htmlFor="email"
+                                   color="gray"
+                                   htmlFor="input-gray"
                                    value="Email"
                               />
                          </div>
                          <TextInput
+                              color="gray"
+                              id="input-gray"
                               rightIcon={FaEnvelope}
-                              id="email"
                               required
                               type="email"
                               autoComplete="off"
@@ -45,20 +50,22 @@ const Contact = () => {
                     <div>
                          <div className="mb-2 block">
                               <Label
-                                   htmlFor="massage"
+                                   color="gray"
+                                   htmlFor="input-gray"
                                    value="Pesan"
                               />
                          </div>
                          <Textarea
+                              color="gray"
+                              id="input-gray"
                               className="text-sm"
-                              id="massage"
                               required
                               rows={4}
                               autoComplete="off"
                          />
                     </div>
 
-                    <Button type="submit">
+                    <Button color="success" type="submit">
                          kirim sekarang
                     </Button>
                </form>
