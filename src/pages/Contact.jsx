@@ -59,7 +59,7 @@ const Contact = () => {
                               value={formik.values.username}
                          />
                          {formik.errors.username && formik.touched.username && (
-                              <div className="text-red-500">{formik.errors.username}</div>
+                              <div className="text-red-600 font-medium">{formik.errors.username}</div>
                          )}
                     </div>
                     <div>
@@ -80,10 +80,10 @@ const Contact = () => {
                               onChange={handleForm}
                               value={formik.values.email}
                          />
+                         {formik.errors.email && formik.touched.email && (
+                              <div className="text-red-600 font-medium">{formik.errors.email}</div>
+                         )}
                     </div>
-                    {formik.errors.email && formik.touched.email && (
-                         <div className="text-red-500">{formik.errors.email}</div>
-                    )}
                     <div>
                          <div className="mb-2 block">
                               <Label
@@ -103,7 +103,7 @@ const Contact = () => {
                               value={formik.values.message}
                          />
                          {formik.errors.message && formik.touched.message && (
-                              <div className="text-red-500">{formik.errors.message}</div>
+                              <div className="text-red-600 font-medium">{formik.errors.message}</div>
                          )}
                     </div>
 
