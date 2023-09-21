@@ -21,7 +21,7 @@ const Contact = () => {
           },
           onSubmit: sendMessage,
           validationSchema: yup.object().shape({
-               username: yup.string().required("Nama lengkap tidak boleh kosong").min(10).max(50),
+               username: yup.string().required("Nama lengkap tidak boleh kosong").min(5, "Nama lengkap minimal 5 karakter").max(50),
                email: yup.string().required("Email tidak boleh kosong").email(),
                message: yup.string().required("Pesan tidak boleh kosong")
           }),
