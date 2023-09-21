@@ -37,7 +37,6 @@ const Contact = () => {
                <Navigation />
                <h1 className="text-2xl font-bold text-center">Kirim Pesanmu Disini</h1>
                {/* START: KONTAK */}
-
                <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-5">
                     <div>
 
@@ -47,18 +46,21 @@ const Contact = () => {
                                    htmlFor="input-gray"
                                    value="Nama Lengkap"
                               />
-                              
+
                          </div>
                          <TextInput
                               color="gray"
                               id="input-gray"
                               name="username"
                               rightIcon={FaUserAlt}
-                              required
                               type="text"
                               autoComplete="off"
                               onChange={handleForm}
+                              value={formik.values.username}
                          />
+                         {formik.errors.username && formik.touched.username && (
+                              <div className="text-red-500">{formik.errors.username}</div>
+                         )}
                     </div>
                     <div>
                          <div className="mb-2 block">
@@ -73,12 +75,15 @@ const Contact = () => {
                               id="input-gray"
                               name="email"
                               rightIcon={FaEnvelope}
-                              required
                               type="email"
                               autoComplete="off"
                               onChange={handleForm}
+                              value={formik.values.email}
                          />
                     </div>
+                    {formik.errors.email && formik.touched.email && (
+                         <div className="text-red-500">{formik.errors.email}</div>
+                    )}
                     <div>
                          <div className="mb-2 block">
                               <Label
@@ -92,11 +97,14 @@ const Contact = () => {
                               id="input-gray"
                               name="message"
                               className="text-sm"
-                              required
                               rows={4}
                               autoComplete="off"
                               onChange={handleForm}
+                              value={formik.values.message}
                          />
+                         {formik.errors.message && formik.touched.message && (
+                              <div className="text-red-500">{formik.errors.message}</div>
+                         )}
                     </div>
 
                     <Button color="success" type="submit">
