@@ -43,14 +43,14 @@ const Contact = () => {
                          <div className="mb-2 block">
                               <Label
                                    color="gray"
-                                   htmlFor="input-gray"
+                                   htmlFor="input-username"
                                    value="Nama Lengkap"
                               />
 
                          </div>
                          <TextInput
                               color="gray"
-                              id="input-gray"
+                              id="input-username"
                               name="username"
                               rightIcon={FaUserAlt}
                               type="text"
@@ -66,13 +66,13 @@ const Contact = () => {
                          <div className="mb-2 block">
                               <Label
                                    color="gray"
-                                   htmlFor="input-gray"
+                                   htmlFor="input-email"
                                    value="Email"
                               />
                          </div>
                          <TextInput
                               color="gray"
-                              id="input-gray"
+                              id="input-email"
                               name="email"
                               rightIcon={FaEnvelope}
                               type="email"
@@ -88,13 +88,13 @@ const Contact = () => {
                          <div className="mb-2 block">
                               <Label
                                    color="gray"
-                                   htmlFor="input-gray"
+                                   htmlFor="input-message"
                                    value="Pesan"
                               />
                          </div>
                          <Textarea
                               color="gray"
-                              id="input-gray"
+                              id="input-message"
                               name="message"
                               className="text-sm"
                               rows={4}
