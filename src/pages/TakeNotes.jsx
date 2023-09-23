@@ -172,28 +172,28 @@ const TakeNotes = () => {
                                              />
                                         </div>
 
-                                        <div className="mb-2 block">
-                                             <Label htmlFor="jenisCatatan" value="Jenis Catatan" />
+                                        <div className="block">
+                                             <Label htmlFor="pemasukan" value="Jenis Catatan" />
                                         </div>
-                                        <div className="block mt-2">
+                                        <div className="block">
                                              <input
                                                   type="radio"
                                                   id="pemasukan"
-                                                  name="jenisCatatan"
+                                                  name="pemasuka"
                                                   value="pemasukan"
                                                   checked={jenisCatatan === "pemasukan"}
                                                   onChange={(e) => setJenisCatatan("pemasukan")}
                                              />
-                                             <label htmlFor="pemasukan" className="mr-2">Pemasukan</label>
+                                             <Label htmlFor="pemasukan" className="mr-2" value="Pemasukan" />
                                              <input
                                                   type="radio"
                                                   id="pengeluaran"
-                                                  name="jenisCatatan"
+                                                  name="pengeluaran"
                                                   value="pengeluaran"
                                                   checked={jenisCatatan === "pengeluaran"}
                                                   onChange={(e) => setJenisCatatan("pengeluaran")}
                                              />
-                                             <label htmlFor="pengeluaran">Pengeluaran</label>
+                                             <Label htmlFor="pengeluaran" value="Pengeluaran" />
                                         </div>
 
                                         <Button color="success" type="submit" onClick={handleSubmit}>Kirim Sekarang</Button>
