@@ -1,32 +1,3 @@
-// import { Footer } from 'flowbite-react';
-
-// export default function MyFooter() {
-//   return (
-//     <Footer container className="my-5">
-//       <div className="w-full text-center">
-//         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-//           <Footer.Brand
-//             href="/"
-//             name="Uangmu"
-//           />
-//           <Footer.LinkGroup>
-//             <Footer.Link href="#" className="px-2">
-//               About
-//             </Footer.Link>
-//             <Footer.Link href="#" className="px-2">
-//               Privacy Policy
-//             </Footer.Link>
-//             <Footer.Link href="#" className="px-2">
-//               Licensing
-//             </Footer.Link>
-//           </Footer.LinkGroup>
-//         </div>
-//         <Footer.Divider />
-//       </div>
-//     </Footer>
-//   )
-// }
-
 import { Footer } from "flowbite-react";
 
 export default function MyFooter() {
