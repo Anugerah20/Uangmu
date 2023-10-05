@@ -37,9 +37,9 @@ const Contact = () => {
      return (
           <>
                <Navigation />
-               <h1 className="text-2xl font-bold text-center">Kirim Pesanmu Disini</h1>
+               {/* <h1 className="text-2xl mt-5 font-bold text-center">Kirim Pesanmu Disini</h1> */}
                {/* START: KONTAK */}
-               <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-5">
+               <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
                     <div>
 
                          <div className="mb-2 block">
