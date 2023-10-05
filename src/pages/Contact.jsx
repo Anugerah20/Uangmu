@@ -4,6 +4,7 @@ import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { FaEnvelope, FaUserAlt } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useState } from "react";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
@@ -11,6 +12,7 @@ const Contact = () => {
      // Validation form
      const sendMessage = () => {
           alert("Pesan anda sudah terkirim");
+          formik.resetForm()
      }
 
      const formik = useFormik({
