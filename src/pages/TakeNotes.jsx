@@ -91,7 +91,7 @@ const TakeNotes = () => {
           const partDate = tanggal.split("-");
           const formattedDate = `${partDate[2]}/${partDate[1]}/${partDate[0]}`;
           return (
-               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+               <Table.Row className="bg-primary dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap">{deskripsi}</Table.Cell>
                     <Table.Cell>{formattedDate}</Table.Cell>
                     <Table.Cell>Rp {formatAmountID}</Table.Cell>
@@ -108,17 +108,59 @@ const TakeNotes = () => {
 
                     {/* START: TOTAL MONEY */}
                     <Card
-                         className="w-4/5 sm:w-3/6 md:w-2/5 flex flex-col mx-auto"
+                         className="w-4/5 sm:w-3/6 md:w-2/5 card-note"
                     >
                          <h1 className="text-center text-2xl font-bold">Total Uang Sekarang</h1>
                          <hr />
                          <h2 className="text-center text-xl">Rp {totalUang !== 0 ? numberFormatAmount(totalUang) : 0}</h2>
+
                     </Card>
                     {/* END: TOTAL MONEY */}
 
+                    {/* START: MEMASUKKAN DATA */}
+                    <div className="flex flex-col mx-auto mt-10 mb-5 w-full sm:w-full md:w-2/5 overflow-ellipsis whitespace-nowrap">
+
+                         <Table className="text-center px-5 max-w-[100%]">
+                              <Table.Head>
+                                   <Table.HeadCell>
+                                        Deskripsi
+                                   </Table.HeadCell>
+                                   <Table.HeadCell>
+                                        Tanggal
+                                   </Table.HeadCell>
+                                   <Table.HeadCell>
+                                        Nominal
+                                   </Table.HeadCell>
+                                   <Table.HeadCell>
+                                        Jenis
+                                   </Table.HeadCell>
+                              </Table.Head>
+                              <Table.Body className="divide-x max-w-[100%]">
+                                   {savedData.length === 0 ? (
+                                        <tr>
+                                             <td colSpan="4" className=" font-bold py-2">
+                                                  Catatan uangmu tidak tersedia
+                                             </td>
+                                        </tr>
+                                   ) : (
+                                        savedData.map((data, index) => (
+                                             <DataNoteTable
+                                                  key={index}
+                                                  deskripsi={data.deskripsi}
+                                                  tanggal={data.tanggal}
+                                                  nominal={data.nominal}
+                                                  jenis={data.jenis}
+                                             />
+                                        ))
+                                   )}
+                              </Table.Body>
+                         </Table>
+                    </div>
+                    {/* END: MEMASUKKAN DATA */}
+
                     {/* START: MODAL KEUANGAN */}
-                    <div className="flex flex-col gap-4 mx-auto w-4/5 sm:w-3/6 md:w-2/5">
-                         <Button color="success" onClick={() => setOpenModal(true)} className="flex justify-center items-center">Buat Catatan Sekarang</Button>
+                    <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5">
+                         <Button onClick={() => setOpenModal(true)} className="btn-note">Buat Catatan</Button>
                          <Modal
                               show={openModal}
                               size="md"
@@ -181,7 +223,7 @@ const TakeNotes = () => {
                                                   name="pemasuka"
                                                   value="pemasukan"
                                                   checked={jenisCatatan === "pemasukan"}
-                                                  onChange={(e) => setJenisCatatan("pemasukan")}
+                                                  onChange={() => setJenisCatatan("pemasukan")}
                                              />
                                              <Label htmlFor="pemasukan" className="mr-2" value="Pemasukan" />
                                              <input
@@ -190,7 +232,7 @@ const TakeNotes = () => {
                                                   name="pengeluaran"
                                                   value="pengeluaran"
                                                   checked={jenisCatatan === "pengeluaran"}
-                                                  onChange={(e) => setJenisCatatan("pengeluaran")}
+                                                  onChange={() => setJenisCatatan("pengeluaran")}
                                              />
                                              <Label htmlFor="pengeluaran" value="Pengeluaran" />
                                         </div>
@@ -201,47 +243,6 @@ const TakeNotes = () => {
                          </Modal>
                     </div>
                     {/* END: MODAL KEUANGAN */}
-
-                    {/* START: MEMASUKKAN DATA */}
-                    <div className="flex flex-col mx-auto mt-10 mb-5 w-4/5 sm:w-2/4 md:w-2/5">
-
-                         <Table className="text-center">
-                              <Table.Head>
-                                   <Table.HeadCell>
-                                        Deskripsi
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Tanggal
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Nominal
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Jenis
-                                   </Table.HeadCell>
-                              </Table.Head>
-                              <Table.Body className="divide-y">
-                                   {savedData.length === 0 ? (
-                                        <tr>
-                                             <td colSpan="4" className="text-center font-bold py-2">
-                                                  Catatan uangmu tidak tersedia
-                                             </td>
-                                        </tr>
-                                   ) : (
-                                        savedData.map((data, index) => (
-                                             <DataNoteTable
-                                                  key={index}
-                                                  deskripsi={data.deskripsi}
-                                                  tanggal={data.tanggal}
-                                                  nominal={data.nominal}
-                                                  jenis={data.jenis}
-                                             />
-                                        ))
-                                   )}
-                              </Table.Body>
-                         </Table>
-                    </div>
-                    {/* END: MEMASUKKAN DATA */}
 
                </div >
                <Footer />
