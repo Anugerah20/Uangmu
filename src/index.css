@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Components button TakeNotes */
+@layer components {
+     .card-note {
+          display: flex;
+          flex-direction: column;
+          margin: 3rem auto;
+     }
+
+     .container-note {
+          display: flex;
+          flex-direction: column;
+          gap: 4;
+          margin: 2.5rem auto;
+     }
+
+     .btn-note {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #068b61 !important;
+          color: #fff;
+          padding: 5px 14px !important;
+          margin: -1rem 3rem;
+          transition: all 0.3s ease-in-out;
+     }
+
+     .btn-note:hover {
+          background: #046949 !important;
+     }
+}
