@@ -1,55 +1,56 @@
-import React, { useState, useRef } from 'react';
-import { Button, Card, Label, TextInput } from 'flowbite-react';
-import { Modal, Table } from 'flowbite-react';
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
+import { useState } from 'react';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+import TotalMoney from '../components/TotalAmout';
+import DataNoteTable from '../components/DataNoteTable';
+import ModalNote from '../components/ModalNote';
 
 const TakeNotes = () => {
-     document.title = "Uangmu | Catatan";
+     document.title = 'Uangmu | Catatan';
 
-     const [deskripsi, setDeskripsi] = useState("");
-     const [tanggal, setTanggal] = useState("");
-     const [nominal, setNominal] = useState("");
+     const [deskripsi, setDeskripsi] = useState('');
+     const [tanggal, setTanggal] = useState('');
+     const [nominal, setNominal] = useState('');
      const [savedData, setSavedData] = useState([]);
      const [openModal, setOpenModal] = useState(false);
-     const [jenisCatatan, setJenisCatatan] = useState("");
+     const [jenisCatatan, setJenisCatatan] = useState('');
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
-     const setModal = useRef(null);
 
      // State Input
      const handlerInputChange = (e, inputName) => {
           const newValue = e.target.value;
           switch (inputName) {
-               case "deskripsi":
+               case 'deskripsi':
                     setDeskripsi(newValue);
                     break;
-               case "tanggal":
+               case 'tanggal':
                     setTanggal(newValue);
                     break;
-               case "nominal":
+               case 'nominal':
                     setNominal(newValue);
+                    break;
+               case 'jenisCatatan':
+                    setJenisCatatan(newValue);
                     break;
                default:
                     break;
           }
-     };
-
-     // Number format function
-     const numberFormatAmount = (number) => {
-          return new Intl.NumberFormat("id-ID").format(number);
      }
 
      // Validation input
      const handleSubmit = (e) => {
           e.preventDefault();
 
-          if (deskripsi === "" || tanggal === "" || nominal === "" || jenisCatatan === "") {
-               alert("Harus diisi semua");
+          if (deskripsi === '' || tanggal === '' || nominal === '' || jenisCatatan === '') {
+               alert('Harus mengisi semua input');
                return;
-          } else if (isNaN(nominal)) {
-               return alert("Nominal hanya menerima angka");
+          }
+
+          if (isNaN(nominal)) {
+               alert('Nominal hanya menerima angka');
+               return;
           }
 
           // Storage
@@ -60,10 +61,9 @@ const TakeNotes = () => {
                jenis: jenisCatatan,
           };
 
-          // Calculate money
           let totalUangBaru = totalUang;
 
-          if (jenisCatatan == "pemasukan") {
+          if (jenisCatatan === 'pemasukan') {
                setTotalPemasukan(totalPemasukan + newDataNote.nominal);
                totalUangBaru += newDataNote.nominal;
           } else {
@@ -76,28 +76,11 @@ const TakeNotes = () => {
           const updatedData = [...savedData, newDataNote];
           setSavedData(updatedData);
 
-          // Clear input
-          setDeskripsi("");
-          setTanggal("");
-          setNominal("");
+          setDeskripsi('');
+          setTanggal('');
+          setNominal('');
+          setJenisCatatan('');
           setOpenModal(false);
-     };
-
-
-     // Function table
-     const DataNoteTable = ({ deskripsi, tanggal, nominal, jenis }) => {
-          const formatAmountID = new Intl.NumberFormat("id-ID").format(nominal);
-
-          const partDate = tanggal.split("-");
-          const formattedDate = `${partDate[2]}/${partDate[1]}/${partDate[0]}`;
-          return (
-               <Table.Row className="bg-primary dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="whitespace-nowrap">{deskripsi}</Table.Cell>
-                    <Table.Cell>{formattedDate}</Table.Cell>
-                    <Table.Cell>Rp {formatAmountID}</Table.Cell>
-                    <Table.Cell>{jenis === "pemasukan" ? "pemasukan" : "pengeluaran"}</Table.Cell>
-               </Table.Row>
-          );
      };
 
      return (
@@ -105,40 +88,25 @@ const TakeNotes = () => {
                <Navigation />
 
                <div className="flex flex-wrap">
-
                     {/* START: TOTAL MONEY */}
-                    <Card
-                         className="w-4/5 sm:w-3/6 md:w-2/5 card-note"
-                    >
-                         <h1 className="text-center text-2xl font-bold">Total Uang Sekarang</h1>
-                         <hr />
-                         <h2 className="text-center text-xl">Rp {totalUang !== 0 ? numberFormatAmount(totalUang) : 0}</h2>
-
-                    </Card>
+                    <TotalMoney totalUang={totalUang} />
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
-                    <div className="flex flex-col mx-auto mt-10 mb-5 w-full sm:w-full md:w-2/5 overflow-ellipsis whitespace-nowrap">
-
-                         <Table className="text-center px-5 max-w-[100%]">
-                              <Table.Head>
-                                   <Table.HeadCell>
-                                        Deskripsi
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Tanggal
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Nominal
-                                   </Table.HeadCell>
-                                   <Table.HeadCell>
-                                        Jenis
-                                   </Table.HeadCell>
-                              </Table.Head>
-                              <Table.Body className="divide-x max-w-[100%]">
+                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[85%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
+                         <table className="border-collapse border border-gray-300 rounded-md text-center">
+                              <thead className="border">
+                                   <tr>
+                                        <th className="border-gray-300">Deskripsi</th>
+                                        <th className="border-gray-300">Tanggal</th>
+                                        <th className="border-gray-300">Nominal</th>
+                                        <th className="border-gray-300">Jenis</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
                                    {savedData.length === 0 ? (
                                         <tr>
-                                             <td colSpan="4" className=" font-bold py-2">
+                                             <td colSpan="4" className="border font-bold p-4">
                                                   Catatan uangmu tidak tersedia
                                              </td>
                                         </tr>
@@ -146,104 +114,28 @@ const TakeNotes = () => {
                                         savedData.map((data, index) => (
                                              <DataNoteTable
                                                   key={index}
-                                                  deskripsi={data.deskripsi}
-                                                  tanggal={data.tanggal}
-                                                  nominal={data.nominal}
-                                                  jenis={data.jenis}
+                                                  savedData={data}
                                              />
                                         ))
                                    )}
-                              </Table.Body>
-                         </Table>
-                    </div>
+                              </tbody>
+                         </table>
+                    </div >
                     {/* END: MEMASUKKAN DATA */}
 
                     {/* START: MODAL KEUANGAN */}
-                    <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5">
-                         <Button onClick={() => setOpenModal(true)} className="btn-note">Buat Catatan</Button>
-                         <Modal
-                              show={openModal}
-                              size="md"
-                              popup
-                              onClose={() => setOpenModal(false)}
-                              initialFocus={setModal}
-                         >
-                              <Modal.Header />
-                              <Modal.Body>
-                                   <div className="space-y-6">
-                                        <h3 className="text-xl font-medium text-gray-900 dark:text-white">Tambah Catatan Keuangan</h3>
-                                        <div>
-                                             <div className="mb-2 block">
-                                                  <Label htmlFor="deskripsi" value="Deskripsi" />
-                                             </div>
-                                             <TextInput
-                                                  id="deskripsi"
-                                                  name="deskripsi"
-                                                  placeholder="contoh: beli kopi"
-                                                  type="text"
-                                                  autoComplete="off"
-                                                  value={deskripsi}
-                                                  onChange={(e) => handlerInputChange(e, "deskripsi")}
-                                             />
-                                        </div>
-                                        <div>
-                                             <div className="mb-2 block">
-                                                  <Label htmlFor="tanggal" value="Tanggal" />
-                                             </div>
-                                             <TextInput
-                                                  id="tanggal"
-                                                  name="tanggal"
-                                                  type="date"
-                                                  value={tanggal}
-                                                  onChange={(e) => handlerInputChange(e, "tanggal")}
-                                             />
-                                        </div>
-                                        <div>
-                                             <div className="mb-2 block">
-                                                  <Label htmlFor="nominal" value="Nominal" />
-                                             </div>
-                                             <TextInput
-                                                  id="nominal"
-                                                  name="nominal"
-                                                  placeholder="contoh: 10000"
-                                                  type="text"
-                                                  autoComplete="off"
-                                                  value={nominal}
-                                                  onChange={(e) => handlerInputChange(e, "nominal")}
-                                             />
-                                        </div>
-
-                                        <div className="block">
-                                             <Label htmlFor="pemasukan" value="Jenis Catatan" />
-                                        </div>
-                                        <div className="block">
-                                             <input
-                                                  type="radio"
-                                                  id="pemasukan"
-                                                  name="pemasuka"
-                                                  value="pemasukan"
-                                                  checked={jenisCatatan === "pemasukan"}
-                                                  onChange={() => setJenisCatatan("pemasukan")}
-                                             />
-                                             <Label htmlFor="pemasukan" className="mr-2" value="Pemasukan" />
-                                             <input
-                                                  type="radio"
-                                                  id="pengeluaran"
-                                                  name="pengeluaran"
-                                                  value="pengeluaran"
-                                                  checked={jenisCatatan === "pengeluaran"}
-                                                  onChange={() => setJenisCatatan("pengeluaran")}
-                                             />
-                                             <Label htmlFor="pengeluaran" value="Pengeluaran" />
-                                        </div>
-
-                                        <Button color="success" type="submit" onClick={handleSubmit}>Kirim Sekarang</Button>
-                                   </div>
-                              </Modal.Body>
-                         </Modal>
-                    </div>
+                    <ModalNote
+                         openModal={openModal}
+                         setOpenModal={setOpenModal}
+                         deskripsi={deskripsi}
+                         tanggal={tanggal}
+                         nominal={nominal}
+                         jenisCatatan={jenisCatatan}
+                         setJenisCatatan={setJenisCatatan}
+                         handlerInputChange={handlerInputChange}
+                         handleSubmit={handleSubmit}
+                    />
                     {/* END: MODAL KEUANGAN */}
-
                </div >
                <Footer />
           </>

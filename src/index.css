@@ -5,30 +5,18 @@
 /* Components button TakeNotes */
 @layer components {
      .card-note {
-          display: flex;
-          flex-direction: column;
-          margin: 3rem auto;
+          @apply flex flex-col flex-wrap mx-auto my-[3rem];
      }
 
      .container-note {
-          display: flex;
-          flex-direction: column;
-          gap: 4;
-          margin: 2.5rem auto;
+          @apply flex flex-col gap-4 mx-auto my-[2.5rem];
      }
 
      .btn-note {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #068b61 !important;
-          color: #fff;
-          padding: 5px 14px !important;
-          margin: -1rem 3rem;
-          transition: all 0.3s ease-in-out;
+          @apply flex justify-center items-center bg-green-500 text-white w-[200px] h-[40px] rounded-md transition-all duration-300 ease-in-out;
      }
 
      .btn-note:hover {
-          background: #046949 !important;
+          @apply bg-[#046949];
      }
 }
