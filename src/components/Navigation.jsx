@@ -16,7 +16,7 @@ export default function Navigation() {
       <Navbar
         fluid
         rounded
-        className="mx-14 md:sm-10 lg:mx-20 my-2 sm:my-5 border-b-2 border-gray-200 py-2"
+        className="mx-5 md:mx-10 lg:mx-[4.5rem] my-2 sm:my-5 border-b-2 border-gray-200 py-2"
       >
         <Navbar.Brand
           href="/"

@@ -1,3 +1,5 @@
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
+
 const DataNoteTable = ({ savedData }) => {
      if (!savedData) {
           return null;
@@ -13,6 +15,10 @@ const DataNoteTable = ({ savedData }) => {
                <td>{formattedDate}</td>
                <td>{formatAmountID}</td>
                <td>{savedData.jenis === "pemasukan" ? "pemasukan" : "pengeluaran"}</td>
+               <td className="flex justify-center gap-2 mt-1">
+                    <a href="#" title="Hapus"><FaTrashAlt /></a>
+                    <a href="#" title="Ubah"><FaEdit /></a>
+               </td>
           </tr>
      );
 };

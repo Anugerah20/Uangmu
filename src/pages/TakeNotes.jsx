@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import TotalMoney from '../components/TotalAmout';
@@ -44,7 +44,7 @@ const TakeNotes = () => {
           e.preventDefault();
 
           if (deskripsi === '' || tanggal === '' || nominal === '' || jenisCatatan === '') {
-               alert('Harus mengisi semua input');
+               alert('Semua harus diisi');
                return;
           }
 
@@ -60,6 +60,9 @@ const TakeNotes = () => {
                nominal: parseFloat(nominal),
                jenis: jenisCatatan,
           };
+
+          console.log(localStorage.setItem("catatan", "tes"));
+
 
           let totalUangBaru = totalUang;
 
@@ -81,7 +84,29 @@ const TakeNotes = () => {
           setNominal('');
           setJenisCatatan('');
           setOpenModal(false);
+
+          const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
+          storageNotes.push(newDataNote);
+          localStorage.setItem("note", JSON.stringify(storageNotes));
      };
+
+     // Add Note Localstorage
+     useEffect(() => {
+          const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
+          setSavedData(storageNotes);
+
+          // Calculate
+          storageNotes.forEach((item) => {
+               if (item.jenis === 'pemasukan') {
+                    setTotalPemasukan((prevTotal) => prevTotal + item.nominal);
+               } else {
+                    setTotalPengeluaran((prevTotal) => prevTotal + item.nominal);
+               }
+          });
+
+          const total = storageNotes.reduce((correct, item) => correct + item.nominal, 0);
+          setTotalUang(total);
+     }, []);
 
      return (
           <>
@@ -101,12 +126,13 @@ const TakeNotes = () => {
                                         <th className="border-gray-300">Tanggal</th>
                                         <th className="border-gray-300">Nominal</th>
                                         <th className="border-gray-300">Jenis</th>
+                                        <th className="border-gray-300">Aksi</th>
                                    </tr>
                               </thead>
                               <tbody>
                                    {savedData.length === 0 ? (
                                         <tr>
-                                             <td colSpan="4" className="border font-bold p-4">
+                                             <td colSpan="5" className="border font-bold p-4 text-red-500">
                                                   Catatan uangmu tidak tersedia
                                              </td>
                                         </tr>

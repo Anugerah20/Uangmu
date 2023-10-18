@@ -2,9 +2,8 @@ import { Modal, Button, Label, TextInput } from 'flowbite-react';
 
 const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenisCatatan, setJenisCatatan, handlerInputChange, handleSubmit, setModal }) => {
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5">
-               {/* <Button onClick={() => setOpenModal(true)} className="btn-note">Buat Catatan</Button> */}
-               <button onClick={() => setOpenModal(true)} className="btn-note">Buat Catatan</button>
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-10 md:ml-10 lg:ml-[4.5rem]">
+               <button onClick={() => setOpenModal(true)} className="btn-note -mt-5 md:-mt-10 lg:-mt-10">Buat Catatan</button>
                <Modal
                     show={openModal}
                     size="md"
