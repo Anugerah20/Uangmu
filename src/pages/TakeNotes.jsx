@@ -53,16 +53,15 @@ const TakeNotes = () => {
                return;
           }
 
-          // Storage
+          const uniqueId = Math.random();
+          console.log(uniqueId)
           const newDataNote = {
+               id: uniqueId,
                deskripsi,
                tanggal,
                nominal: parseFloat(nominal),
                jenis: jenisCatatan,
           };
-
-          console.log(localStorage.setItem("catatan", "tes"));
-
 
           let totalUangBaru = totalUang;
 
@@ -85,12 +84,12 @@ const TakeNotes = () => {
           setJenisCatatan('');
           setOpenModal(false);
 
+          // Add Save Note Localstorage
           const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
           storageNotes.push(newDataNote);
           localStorage.setItem("note", JSON.stringify(storageNotes));
      };
 
-     // Add Note Localstorage
      useEffect(() => {
           const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
           setSavedData(storageNotes);
@@ -107,6 +106,23 @@ const TakeNotes = () => {
           const total = storageNotes.reduce((correct, item) => correct + item.nominal, 0);
           setTotalUang(total);
      }, []);
+
+     // Delete Note
+     const deleteNote = (noteId) => {
+          const updateData = savedData.filter((data) => data.id !== noteId);
+          setSavedData(updateData);
+
+          const updateLocalStorage = updateData.map((data) => {
+               return {
+                    id: data.id,
+                    deskripsi: data.deskripsi,
+                    tanggal: data.tanggal,
+                    nominal: data.nominal,
+                    jenis: data.jenis,
+               };
+          });
+          localStorage.setItem('note', JSON.stringify(updateLocalStorage));
+     }
 
      return (
           <>
@@ -141,6 +157,7 @@ const TakeNotes = () => {
                                              <DataNoteTable
                                                   key={index}
                                                   savedData={data}
+                                                  handleDelete={deleteNote}
                                              />
                                         ))
                                    )}

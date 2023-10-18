@@ -1,6 +1,7 @@
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const DataNoteTable = ({ savedData }) => {
+const DataNoteTable = ({ savedData, handleDelete }) => {
      if (!savedData) {
           return null;
      }
@@ -16,8 +17,8 @@ const DataNoteTable = ({ savedData }) => {
                <td>{formatAmountID}</td>
                <td>{savedData.jenis === "pemasukan" ? "pemasukan" : "pengeluaran"}</td>
                <td className="flex justify-center gap-2 mt-1">
-                    <a href="#" title="Hapus"><FaTrashAlt /></a>
-                    <a href="#" title="Ubah"><FaEdit /></a>
+                    <Link to="#" title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
+                    <Link to="#" title="Ubah" className="text-green-500"><FaEdit /></Link>
                </td>
           </tr>
      );
