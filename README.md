@@ -1,8 +1,33 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Uangmu
 
-Currently, two official plugins are available:
+Simple money recording that is very easy to use on any device.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Feature :**
+- Create
+- Read 
+- Update
+- Delete
+
+##
+
+**Step 1:** Fork and clone this repository.
+
+```bash
+  git clone https://github.com/Anugerah20/Uangmu.git
+```
+**Step 2:** Install node_modules.
+
+```bash
+  npm install
+```
+**Step 3:** Run the app in development mode.
+
+```bash
+  npm run dev
+```
+
+
+## Authors
+
+- [@Anugerah20](https://github.com/Anugerah20)
