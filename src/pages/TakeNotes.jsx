@@ -17,6 +17,7 @@ const TakeNotes = () => {
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
+     const [editNoteId, setEditNoteId] = useState(null);
 
      // State Input
      const handlerInputChange = (e, inputName) => {
@@ -84,7 +85,7 @@ const TakeNotes = () => {
           setJenisCatatan('');
           setOpenModal(false);
 
-          // Add Save Note Localstorage
+          // Save Note Localstorage
           const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
           storageNotes.push(newDataNote);
           localStorage.setItem("note", JSON.stringify(storageNotes));
@@ -95,17 +96,20 @@ const TakeNotes = () => {
           setSavedData(storageNotes);
 
           // Calculate
-          storageNotes.forEach((item) => {
-               if (item.jenis === 'pemasukan') {
-                    setTotalPemasukan((prevTotal) => prevTotal + item.nominal);
-               } else {
-                    setTotalPengeluaran((prevTotal) => prevTotal + item.nominal);
-               }
-          });
+          const totalPemasukan = storageNotes
+               .filter((item) => item.jenis === 'pemasukan')
+               .reduce((total, item) => total + item.nominal, 0);
 
-          const total = storageNotes.reduce((correct, item) => correct + item.nominal, 0);
-          setTotalUang(total);
-     }, []);
+          const totalPengeluaran = storageNotes
+               .filter((item) => item.jenis === 'pengeluaran')
+               .reduce((total, item) => total + item.nominal, 0);
+
+          const totalUang = totalPemasukan - totalPengeluaran;
+
+          setTotalPemasukan(totalPemasukan);
+          setTotalPengeluaran(totalPengeluaran);
+          setTotalUang(totalUang);
+     }, [totalUang]);
 
      // Delete Note
      const deleteNote = (noteId) => {
@@ -124,6 +128,71 @@ const TakeNotes = () => {
           localStorage.setItem('note', JSON.stringify(updateLocalStorage));
      }
 
+     const editNote = (noteId) => {
+          const editData = savedData.find((data) => data.id === noteId);
+          if (editData) {
+               setDeskripsi(editData.deskripsi);
+               setTanggal(editData.tanggal);
+               setNominal(editData.nominal);
+               setJenisCatatan(editData.jenis);
+               setEditNoteId(noteId);
+               setOpenModal(true);
+          }
+     }
+
+     // Handle Form Edit
+     const handleEditSubmit = (e) => {
+          e.preventDefault();
+
+          if (deskripsi === '' || tanggal === '' || nominal === '') {
+               alert('Semua harus diisi');
+               return;
+          }
+
+          if (isNaN(nominal)) {
+               alert('Nominal hanya menerima angka');
+               return;
+          }
+
+          const updatedData = savedData.map((data) => {
+               if (data.id === editNoteId) {
+                    return {
+                         ...data,
+                         deskripsi,
+                         tanggal,
+                         nominal: parseFloat(nominal),
+                         jenis: jenisCatatan,
+                    };
+               }
+               return data;
+          });
+
+          // Update Total Money
+          const updatedMoney = updatedData.reduce((total, item) => {
+               if (item.jenis === 'pemasukan') {
+                    return total + item.nominal;
+               } else {
+                    if (item.id === editNoteId) {
+                         return total - savedData.find((data) => data.id === editNoteId).nominal + parseFloat(nominal);
+                    } else {
+                         return total - item.nominal
+                    }
+               }
+          }, 0);
+
+          // save localStorage
+          localStorage.setItem('note', JSON.stringify(updatedData));
+          setSavedData(updatedData);
+          setTotalUang(updatedMoney);
+
+          // Reset SetState
+          setDeskripsi('');
+          setTanggal('');
+          setNominal('');
+          setJenisCatatan('');
+          setEditNoteId(null);
+          setOpenModal(false);
+     }
      return (
           <>
                <Navigation />
@@ -158,6 +227,7 @@ const TakeNotes = () => {
                                                   key={index}
                                                   savedData={data}
                                                   handleDelete={deleteNote}
+                                                  handleEdit={editNote}
                                              />
                                         ))
                                    )}
@@ -177,6 +247,8 @@ const TakeNotes = () => {
                          setJenisCatatan={setJenisCatatan}
                          handlerInputChange={handlerInputChange}
                          handleSubmit={handleSubmit}
+                         editNote={editNoteId}
+                         handleEdit={handleEditSubmit}
                     />
                     {/* END: MODAL KEUANGAN */}
                </div >
