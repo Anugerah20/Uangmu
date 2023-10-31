@@ -1,5 +1,3 @@
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { FaEnvelope, FaUserAlt } from "react-icons/fa";
 import { useFormik } from "formik";
@@ -35,7 +33,6 @@ const Contact = () => {
 
      return (
           <>
-               <Navigation />
                <h1 className="text-2xl mt-10 font-bold text-center">Kirim Pesanmu Disini</h1>
                {/* START: KONTAK */}
                <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
@@ -114,7 +111,6 @@ const Contact = () => {
                </form>
 
                {/* END: KONTAK */}
-               <Footer />
           </>
      )
 }

@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
 import TotalMoney from '../components/TotalAmout';
 import DataNoteTable from '../components/DataNoteTable';
 import ModalNote from '../components/ModalNote';
@@ -195,8 +193,6 @@ const TakeNotes = () => {
      }
      return (
           <>
-               <Navigation />
-
                <div className="flex flex-wrap">
                     {/* START: TOTAL MONEY */}
                     <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran} />
@@ -252,7 +248,6 @@ const TakeNotes = () => {
                     />
                     {/* END: MODAL KEUANGAN */}
                </div >
-               <Footer />
           </>
      );
 };
