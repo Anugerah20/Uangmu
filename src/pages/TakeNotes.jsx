@@ -98,11 +98,11 @@ const TakeNotes = () => {
           // Calculate
           const totalPemasukan = storageNotes
                .filter((item) => item.jenis === 'pemasukan')
-               .reduce((total, item) => total + item.nominal, 0);
+               .reduce((total, item) => total + parseFloat(item.nominal), 0);
 
           const totalPengeluaran = storageNotes
                .filter((item) => item.jenis === 'pengeluaran')
-               .reduce((total, item) => total + item.nominal, 0);
+               .reduce((total, item) => total + parseFloat(item.nominal), 0);
 
           const totalUang = totalPemasukan - totalPengeluaran;
 
@@ -170,12 +170,12 @@ const TakeNotes = () => {
           // Update Total Money
           const updatedMoney = updatedData.reduce((total, item) => {
                if (item.jenis === 'pemasukan') {
-                    return total + item.nominal;
+                    return total + parseFloat(item.nominal);
                } else {
                     if (item.id === editNoteId) {
-                         return total - savedData.find((data) => data.id === editNoteId).nominal + parseFloat(nominal);
+                         return total - parseFloat(savedData.find((data) => data.id === editNoteId).nominal) + parseFloat(nominal);
                     } else {
-                         return total - item.nominal
+                         return total - parseFloat(item.nominal)
                     }
                }
           }, 0);
@@ -199,7 +199,7 @@ const TakeNotes = () => {
 
                <div className="flex flex-wrap">
                     {/* START: TOTAL MONEY */}
-                    <TotalMoney totalUang={totalUang} />
+                    <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran} />
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
