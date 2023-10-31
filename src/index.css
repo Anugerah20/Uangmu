@@ -19,4 +19,10 @@
      .btn-note:hover {
           @apply bg-[#046949];
      }
+
+     /* Footer */
+     .footer {
+          @apply flex justify-between sm:justify-between;
+     }
+
 }

@@ -2,8 +2,8 @@ import { Footer } from "flowbite-react";
 
 export default function MyFooter() {
   return (
-    <div className="mx-5 md:mx-10 lg:mx-[4.5rem]">
-      <Footer container className="flex justify-between sm:justify-between">
+    <>
+      <Footer container className="footer space-footer">
         <Footer.Copyright
           by="Uangmu"
           href="/"
@@ -20,6 +20,6 @@ export default function MyFooter() {
           </Footer.Link>
         </Footer.LinkGroup>
       </Footer>
-    </div>
+    </>
   )
 }
