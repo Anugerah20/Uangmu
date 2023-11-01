@@ -214,39 +214,41 @@ const TakeNotes = () => {
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
-                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[85%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
+                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
                          <div className="mb-5">
                               <FilterMoney />
                          </div>
-                         <table className="border-collapse border border-gray-300 rounded-md text-center">
-                              <thead className="border">
-                                   <tr>
-                                        <th className="border-gray-300">Deskripsi</th>
-                                        <th className="border-gray-300">Tanggal</th>
-                                        <th className="border-gray-300">Nominal</th>
-                                        <th className="border-gray-300">Jenis</th>
-                                        <th className="border-gray-300">Aksi</th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   {savedData.length === 0 ? (
+                         <div className="overflow-auto">
+                              <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
+                                   <thead className="border">
                                         <tr>
-                                             <td colSpan="5" className="border font-bold p-4 text-red-500">
-                                                  Catatan uangmu tidak tersedia
-                                             </td>
+                                             <th className="border-gray-300">Deskripsi</th>
+                                             <th className="border-gray-300">Tanggal</th>
+                                             <th className="border-gray-300">Nominal</th>
+                                             <th className="border-gray-300">Jenis</th>
+                                             <th className="border-gray-300">Aksi</th>
                                         </tr>
-                                   ) : (
-                                        savedData.map((data, index) => (
-                                             <DataNoteTable
-                                                  key={index}
-                                                  savedData={data}
-                                                  handleDelete={deleteNote}
-                                                  handleEdit={editNote}
-                                             />
-                                        ))
-                                   )}
-                              </tbody>
-                         </table>
+                                   </thead>
+                                   <tbody>
+                                        {savedData.length === 0 ? (
+                                             <tr>
+                                                  <td colSpan="5" className="border font-bold p-4 text-red-500">
+                                                       Catatan uangmu tidak tersedia
+                                                  </td>
+                                             </tr>
+                                        ) : (
+                                             savedData.map((data, index) => (
+                                                  <DataNoteTable
+                                                       key={index}
+                                                       savedData={data}
+                                                       handleDelete={deleteNote}
+                                                       handleEdit={editNote}
+                                                  />
+                                             ))
+                                        )}
+                                   </tbody>
+                              </table>
+                         </div>
                     </div >
                     {/* END: MEMASUKKAN DATA */}
 
