@@ -218,7 +218,7 @@ const TakeNotes = () => {
                          <div className="mb-5">
                               <FilterMoney />
                          </div>
-                         <div className="overflow-auto">
+                         <div className="overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
                                    <thead className="border">
                                         <tr>
