@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import TotalMoney from '../components/TotalAmout';
 import DataNoteTable from '../components/DataNoteTable';
 import ModalNote from '../components/ModalNote';
+import FilterMoney from '../components/FilterMoney'
 
 const TakeNotes = () => {
      document.title = 'Uangmu | Catatan';
@@ -200,6 +201,9 @@ const TakeNotes = () => {
 
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[85%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
+                         <div className="mb-5">
+                              <FilterMoney />
+                         </div>
                          <table className="border-collapse border border-gray-300 rounded-md text-center">
                               <thead className="border">
                                    <tr>
@@ -247,6 +251,7 @@ const TakeNotes = () => {
                          handleEdit={handleEditSubmit}
                     />
                     {/* END: MODAL KEUANGAN */}
+
                </div >
           </>
      );

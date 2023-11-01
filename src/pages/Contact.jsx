@@ -109,7 +109,6 @@ const Contact = () => {
                          kirim sekarang
                     </Button>
                </form>
-
                {/* END: KONTAK */}
           </>
      )

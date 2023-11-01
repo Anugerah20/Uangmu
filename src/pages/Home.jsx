@@ -1,5 +1,3 @@
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
 import CardList from "./Card";
 
 const Home = () => {
@@ -13,9 +11,6 @@ const Home = () => {
                     <CardList />
                </section>
                {/* END: DESKRIPSI */}
-
-
-               {/* <Footer /> */}
           </>
      )
 }
