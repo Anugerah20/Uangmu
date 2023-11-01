@@ -125,6 +125,20 @@ const TakeNotes = () => {
                };
           });
           localStorage.setItem('note', JSON.stringify(updateLocalStorage));
+
+          // Reset money
+          const updateTotalIncome = updateData
+               .filter((item) => item.jenis === 'pemasukan')
+               .reduce((total, item) => total + parseFloat(item.nominal), 0);
+          const updateTotalExpenses = updateData
+               .filter((item) => item.jenis === 'pengeluaran')
+               .reduce((total, item) => total + parseFloat(item.nominal), 0)
+          const updateTotalMoney = updateTotalIncome - updateTotalExpenses;
+
+          // Update state
+          setTotalPemasukan(updateTotalIncome);
+          setTotalPengeluaran(updateTotalExpenses);
+          setTotalUang(updateTotalMoney);
      }
 
      const editNote = (noteId) => {
