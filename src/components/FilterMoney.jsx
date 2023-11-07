@@ -1,24 +1,22 @@
-import { Dropdown } from "flowbite-react"
+const FilterMoney = ({ selectMonth, setSelectMonth }) => {
+     const months = [
+          'Semua Bulan', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+          'Agustus', 'September', 'Oktober', 'November', 'Desember'
+     ];
 
-const FilterMoney = () => {
      return (
-          <>
-               <Dropdown label="Laporan Bulanan" dismissOnClick={false}>
-                    <Dropdown.Item>Januari</Dropdown.Item>
-                    <Dropdown.Item>Februari</Dropdown.Item>
-                    <Dropdown.Item>Maret</Dropdown.Item>
-                    <Dropdown.Item>April</Dropdown.Item>
-                    <Dropdown.Item>Mei</Dropdown.Item>
-                    <Dropdown.Item>Juni</Dropdown.Item>
-                    <Dropdown.Item>Juli</Dropdown.Item>
-                    <Dropdown.Item>Agustus</Dropdown.Item>
-                    <Dropdown.Item>September</Dropdown.Item>
-                    <Dropdown.Item>Oktober</Dropdown.Item>
-                    <Dropdown.Item>November</Dropdown.Item>
-                    <Dropdown.Item>Desember</Dropdown.Item>
-               </Dropdown>
-          </>
-     )
-}
+          <div>
+               <label htmlFor="selectMonth">Filter Bulanan :</label>
+               <select className="rounded-md h-10 ml-2" id="selectMonth" value={selectMonth} onChange={(e) => setSelectMonth(e.target.value)}>
+                    <option value={months}></option>
+                    {months.map((month) => (
+                         <option key={month} value={month}>
+                              {month}
+                         </option>
+                    ))}
+               </select>
+          </div>
+     );
+};
 
 export default FilterMoney;
