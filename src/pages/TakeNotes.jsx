@@ -17,6 +17,7 @@ const TakeNotes = () => {
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
      const [editNoteId, setEditNoteId] = useState(null);
+     const [selectMonth, setSelectMonth] = useState('Semua Bulan');
 
      // State Input
      const handlerInputChange = (e, inputName) => {
@@ -54,7 +55,6 @@ const TakeNotes = () => {
           }
 
           const uniqueId = Math.random();
-          console.log(uniqueId)
           const newDataNote = {
                id: uniqueId,
                deskripsi,
@@ -139,6 +139,11 @@ const TakeNotes = () => {
           setTotalPemasukan(updateTotalIncome);
           setTotalPengeluaran(updateTotalExpenses);
           setTotalUang(updateTotalMoney);
+
+          // check selected month
+          if (!updateData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth)) {
+               setSelectMonth('Semua Bulan');
+          }
      }
 
      const editNote = (noteId) => {
@@ -210,41 +215,66 @@ const TakeNotes = () => {
           <>
                <div className="flex flex-wrap">
                     {/* START: TOTAL MONEY */}
-                    <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran} />
+                    <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran}
+                         selectMonth={selectMonth} savedData={savedData}
+                    />
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
                          <div className="mb-5">
-                              <FilterMoney />
+                              <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
                          </div>
-                         <div className="overflow-x-auto">
+                         <div className="relative overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
                                    <thead className="border">
                                         <tr>
-                                             <th className="border-gray-300">Deskripsi</th>
-                                             <th className="border-gray-300">Tanggal</th>
-                                             <th className="border-gray-300">Nominal</th>
-                                             <th className="border-gray-300">Jenis</th>
-                                             <th className="border-gray-300">Aksi</th>
+                                             <th className="border-gray-300 px-6 py-3">Deskripsi</th>
+                                             <th className="border-gray-300 px-6 py-3">Tanggal</th>
+                                             <th className="border-gray-300 px-6 py-3">Nominal</th>
+                                             <th className="border-gray-300 px-6 py-3">Jenis</th>
+                                             <th className="border-gray-300 px-6 py-3">Aksi</th>
                                         </tr>
                                    </thead>
                                    <tbody>
-                                        {savedData.length === 0 ? (
-                                             <tr>
-                                                  <td colSpan="5" className="border font-bold p-4 text-red-500">
-                                                       Catatan uangmu tidak tersedia
-                                                  </td>
-                                             </tr>
+                                        {/* Month filter */}
+                                        {selectMonth === 'Semua Bulan' ? (
+                                             savedData.length === 0 ? (
+                                                  <tr>
+                                                       <td colSpan="5" className="border font-bold p-4 text-red-500">
+                                                            Catatan uangmu tidak tersedia
+                                                       </td>
+                                                  </tr>
+                                             ) : (
+                                                  savedData
+                                                       .map((data, index) => (
+                                                            <DataNoteTable
+                                                                 key={index}
+                                                                 savedData={data}
+                                                                 handleDelete={deleteNote}
+                                                                 handleEdit={editNote}
+                                                            />
+                                                       ))
+                                             )
                                         ) : (
-                                             savedData.map((data, index) => (
-                                                  <DataNoteTable
-                                                       key={index}
-                                                       savedData={data}
-                                                       handleDelete={deleteNote}
-                                                       handleEdit={editNote}
-                                                  />
-                                             ))
+                                             !savedData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth) ? (
+                                                  <tr>
+                                                       <td colSpan="5" className="border font-bold p-4 text-red-500">
+                                                            Catatan uangmu tidak tersedia
+                                                       </td>
+                                                  </tr>
+                                             ) : (
+                                                  savedData
+                                                       .filter(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth)
+                                                       .map((data, index) => (
+                                                            <DataNoteTable
+                                                                 key={index}
+                                                                 savedData={data}
+                                                                 handleDelete={deleteNote}
+                                                                 handleEdit={editNote}
+                                                            />
+                                                       ))
+                                             )
                                         )}
                                    </tbody>
                               </table>
