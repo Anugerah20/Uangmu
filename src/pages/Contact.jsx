@@ -2,13 +2,16 @@ import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { FaEnvelope, FaUserAlt } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Toaster, toast } from "sonner";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
 
      // Validation form
      const sendMessage = () => {
-          alert("Pesan anda sudah terkirim");
+          toast.success("Pesan anda sudah terkirim", {
+               duration: 2000,
+          });
           formik.resetForm()
      }
 
@@ -34,6 +37,7 @@ const Contact = () => {
      return (
           <>
                <h1 className="text-2xl mt-10 font-bold text-center">Kirim Pesanmu Disini</h1>
+               <Toaster />
                {/* START: KONTAK */}
                <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
                     <div>
