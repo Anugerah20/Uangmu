@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import TotalMoney from '../components/TotalAmout';
 import DataNoteTable from '../components/DataNoteTable';
 import ModalNote from '../components/ModalNote';
-import FilterMoney from '../components/FilterMoney'
+import FilterMoney from '../components/FilterMoney';
+import { Toaster, toast } from 'sonner';
+import DownloadPdf from '../components/DownloadPdf';
 
 const TakeNotes = () => {
      document.title = 'Uangmu | Catatan';
@@ -45,12 +47,16 @@ const TakeNotes = () => {
           e.preventDefault();
 
           if (deskripsi === '' || tanggal === '' || nominal === '' || jenisCatatan === '') {
-               alert('Semua harus diisi');
+               toast.error('Semua harus diisi', {
+                    duration: 2000,
+               });
                return;
           }
 
           if (isNaN(nominal)) {
-               alert('Nominal hanya menerima angka');
+               toast.error('Nominal hanya menerima angka', {
+                    duration: 2000,
+               });
                return;
           }
 
@@ -88,6 +94,11 @@ const TakeNotes = () => {
           const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
           storageNotes.push(newDataNote);
           localStorage.setItem("note", JSON.stringify(storageNotes));
+
+          // Notification Success
+          toast.success('Catatan Uangmu berhasil dibuat', {
+               duration: 2000,
+          })
      };
 
      useEffect(() => {
@@ -144,6 +155,10 @@ const TakeNotes = () => {
           if (!updateData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth)) {
                setSelectMonth('Semua Bulan');
           }
+
+          toast.success('Catatan Uangmu berhasil dihapus', {
+               duration: 2000,
+          })
      }
 
      const editNote = (noteId) => {
@@ -161,17 +176,6 @@ const TakeNotes = () => {
      // Handle Form Edit
      const handleEditSubmit = (e) => {
           e.preventDefault();
-
-          if (deskripsi === '' || tanggal === '' || nominal === '') {
-               alert('Semua harus diisi');
-               return;
-          }
-
-          if (isNaN(nominal)) {
-               alert('Nominal hanya menerima angka');
-               return;
-          }
-
           const updatedData = savedData.map((data) => {
                if (data.id === editNoteId) {
                     return {
@@ -210,10 +214,17 @@ const TakeNotes = () => {
           setJenisCatatan('');
           setEditNoteId(null);
           setOpenModal(false);
+
+          toast.success('Catatan Uangmu berhasil diperbarui', {
+               duration: 2000,
+          })
      }
+
      return (
           <>
                <div className="flex flex-wrap">
+                    <Toaster />
+
                     {/* START: TOTAL MONEY */}
                     <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran}
                          selectMonth={selectMonth} savedData={savedData}
@@ -225,6 +236,9 @@ const TakeNotes = () => {
                          <div className="mb-5">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
                          </div>
+                         {/* START: DOWNLOAD PDF */}
+                         <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
+                         {/* END: DOWNLOAD PDF */}
                          <div className="relative overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
                                    <thead className="border">
