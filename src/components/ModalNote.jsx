@@ -1,20 +1,43 @@
 import { Modal, Button, Label, TextInput } from 'flowbite-react';
+import { useState, useEffect } from 'react';
 
 const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenisCatatan, setJenisCatatan, handlerInputChange, handleSubmit, setModal, editNote, handleEdit }) => {
+
+     const [statusModalNote, setStatusModalNote] = useState('');
+
+     useEffect(() => {
+          setStatusModalNote(editNote ? 'edit' : 'tambah');
+     }, [editNote]);
+
+     // Reset close modal
+     const resetModalNote = () => {
+          handlerInputChange({ target: { value: '' } }, 'deskripsi');
+          handlerInputChange({ target: { value: '' } }, 'tanggal');
+          handlerInputChange({ target: { value: '' } }, 'nominal');
+          setJenisCatatan('');
+     }
+
+     // Reset status modal when closing the modal
+     const resetModalStatus = () => {
+          setStatusModalNote('');
+     };
+
      return (
           <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-7 md:ml-10 lg:ml-[4.5rem]">
-               <button onClick={() => setOpenModal(true)} className="btn-note -mt-5 md:-mt-10 lg:-mt-10">Buat Catatan</button>
+               <button onClick={() => { setOpenModal(true); resetModalNote(); }} className="btn-note -mt-5 md:-mt-10 lg:-mt-10">Buat Catatan</button>
                <Modal
                     show={openModal}
                     size="md"
                     popup
-                    onClose={() => setOpenModal(false)}
+                    onClose={() => { setOpenModal(false); resetModalStatus(); }}
                     initialFocus={setModal}
                >
                     <Modal.Header />
                     <Modal.Body>
                          <div className="space-y-6">
-                              <h3 className="text-xl font-medium text-gray-900 dark:text-white">Tambah Catatan Keuangan</h3>
+                              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                                   {statusModalNote === 'edit' ? 'Edit Catatan Keuangan' : 'Tambah Catatan Keuangan' || statusModalNote === 'tambah' ? 'Tambah Catatan Keuangan' : 'Edit Catatan Keuangan'}
+                              </h3>
                               <div>
                                    <div className="mb-2 block">
                                         <Label htmlFor="deskripsi" value="Deskripsi" />
@@ -49,7 +72,7 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                                         id="nominal"
                                         name="nominal"
                                         placeholder="contoh: 10000"
-                                        type="number"
+                                        type="text"
                                         autoComplete="off"
                                         value={nominal}
                                         onChange={(e) => handlerInputChange(e, "nominal")}
