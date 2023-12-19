@@ -3,9 +3,16 @@ import { FaEnvelope, FaUserAlt } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Toaster, toast } from "sonner";
+import AOS from "aos";
+import "aos/dist/aos.css"
+import { useEffect } from "react";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
+
+     useEffect(() => {
+          AOS.init();
+     }, []);
 
      // Validation form
      const sendMessage = () => {
@@ -35,7 +42,12 @@ const Contact = () => {
      };
 
      return (
-          <>
+          <div
+               data-aos="fade-up"
+               data-aos-offset="200"
+               data-aos-delay="100"
+               data-aos-duration="1000"
+          >
                <h1 className="text-2xl mt-10 font-bold text-center">Kirim Pesanmu Disini</h1>
                <Toaster />
                {/* START: KONTAK */}
@@ -114,7 +126,7 @@ const Contact = () => {
                     </Button>
                </form>
                {/* END: KONTAK */}
-          </>
+          </div>
      )
 }
 

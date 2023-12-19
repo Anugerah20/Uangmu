@@ -5,9 +5,15 @@ import ModalNote from '../components/ModalNote';
 import FilterMoney from '../components/FilterMoney';
 import { Toaster, toast } from 'sonner';
 import DownloadPdf from '../components/DownloadPdf';
+import AOS from "aos";
+import "aos/dist/aos.css"
 
 const TakeNotes = () => {
      document.title = 'Uangmu | Catatan';
+
+     useEffect(() => {
+          AOS.init();
+     }, []);
 
      const [deskripsi, setDeskripsi] = useState('');
      const [tanggal, setTanggal] = useState('');
@@ -222,7 +228,12 @@ const TakeNotes = () => {
 
      return (
           <>
-               <div className="flex flex-wrap">
+               <div
+                    data-aos="fade-up"
+                    data-aos-offset="200"
+                    data-aos-delay="100"
+                    data-aos-duration="1000"
+                    className="flex flex-wrap">
                     <Toaster />
 
                     {/* START: TOTAL MONEY */}
