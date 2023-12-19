@@ -8,6 +8,7 @@ Simple money recording that is very easy to use on any device.
 - Read 
 - Update
 - Delete
+- Download PDF
 
 ##
 
