@@ -1,7 +1,4 @@
-import { Button, Label, TextInput, Textarea } from "flowbite-react";
-import { FaEnvelope, FaUserAlt } from "react-icons/fa";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { Toaster, toast } from "sonner";
 import AOS from "aos";
 import "aos/dist/aos.css"
@@ -10,36 +7,23 @@ import { useEffect } from "react";
 const Contact = () => {
      document.title = "Uangmu | Kontak";
 
+     // Validation form
+     const {
+          register,
+          handleSubmit,
+          formState: { errors },
+          reset,
+     } = useForm();
+
+     const onSubmit = () => {
+          toast.success("Pesan berhasil terkirim");
+          reset();
+     };
+
+     // Animation AOS
      useEffect(() => {
           AOS.init();
      }, []);
-
-     // Validation form
-     const sendMessage = () => {
-          toast.success("Pesan anda sudah terkirim", {
-               duration: 2000,
-          });
-          formik.resetForm()
-     }
-
-     const formik = useFormik({
-          initialValues: {
-               username: "",
-               email: "",
-               message: "",
-          },
-          onSubmit: sendMessage,
-          validationSchema: yup.object().shape({
-               username: yup.string().required("Nama lengkap tidak boleh kosong").min(5, "Nama lengkap minimal 5 karakter").max(50),
-               email: yup.string().required("Email tidak boleh kosong").email(),
-               message: yup.string().required("Pesan tidak boleh kosong")
-          }),
-     });
-
-     const handleForm = (e) => {
-          const { target } = e;
-          formik.setFieldValue(target.name, target.value);
-     };
 
      return (
           <div
@@ -51,79 +35,51 @@ const Contact = () => {
                <h1 className="text-2xl mt-10 font-bold text-center">Kirim Pesanmu Disini</h1>
                <Toaster />
                {/* START: KONTAK */}
-               <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
+               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
                     <div>
 
                          <div className="mb-2 block">
-                              <Label
-                                   color="gray"
-                                   htmlFor="input-username"
-                                   value="Nama Lengkap"
-                              />
-
+                              <label htmlFor="username">Nama Lengkap</label>
                          </div>
-                         <TextInput
-                              color="gray"
-                              id="input-username"
-                              name="username"
-                              rightIcon={FaUserAlt}
+                         <input
                               type="text"
+                              id="username"
                               autoComplete="off"
-                              onChange={handleForm}
-                              value={formik.values.username}
+                              {...register("username", { required: true, minLength: 5 })} autoFocus
                          />
-                         {formik.errors.username && formik.touched.username && (
-                              <div className="text-red-600 font-medium">{formik.errors.username}</div>
-                         )}
+                         {errors.username && errors.username.type === "required" && <span className="text-sm text-red-400">Username required</span>}
+                         {errors.username && errors.username.type === "minLength" && <span className="text-sm text-red-400">Username min 5 character</span>}
                     </div>
                     <div>
                          <div className="mb-2 block">
-                              <Label
-                                   color="gray"
-                                   htmlFor="input-email"
-                                   value="Email"
-                              />
+                              <label htmlFor="email">Email</label>
                          </div>
-                         <TextInput
-                              color="gray"
-                              id="input-email"
-                              name="email"
-                              rightIcon={FaEnvelope}
+                         <input
+                              id="email"
                               type="email"
                               autoComplete="off"
-                              onChange={handleForm}
-                              value={formik.values.email}
+                              {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, })}
                          />
-                         {formik.errors.email && formik.touched.email && (
-                              <div className="text-red-600 font-medium">{formik.errors.email}</div>
-                         )}
+                         {errors.email && errors.email.type === "required" && <span className="text-sm text-red-400">Email required</span>}
+                         {errors.email && errors.email.type === "pattern" && <span className="text-sm text-red-400">Invalid Email</span>}
                     </div>
                     <div>
                          <div className="mb-2 block">
-                              <Label
-                                   color="gray"
-                                   htmlFor="input-message"
-                                   value="Pesan"
-                              />
+                              <label htmlFor="message">Pesan</label>
                          </div>
-                         <Textarea
-                              color="gray"
-                              id="input-message"
-                              name="message"
-                              className="text-sm"
+                         <textarea
+                              id="message"
                               rows={4}
                               autoComplete="off"
-                              onChange={handleForm}
-                              value={formik.values.message}
+                              {...register("message", { required: true, minLength: 15 })}
                          />
-                         {formik.errors.message && formik.touched.message && (
-                              <div className="text-red-600 font-medium">{formik.errors.message}</div>
-                         )}
+                         {errors.message && errors.message.type === "required" && <span className="text-sm text-red-400">Message required</span>}
+                         {errors.message && errors.message.type === "minLength" && <span className="text-sm text-red-400">Message min 15 character</span>}
                     </div>
 
-                    <Button color="success" type="submit">
+                    <button className="btn-contact" type="submit">
                          kirim sekarang
-                    </Button>
+                    </button>
                </form>
                {/* END: KONTAK */}
           </div>
