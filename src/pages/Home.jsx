@@ -18,8 +18,8 @@ const Home = () => {
           >
                {/* START: DESKRIPSI */}
                <section className="text-center">
-                    <h1 className="text-4xl font-bold mt-10">Uangmu</h1>
-                    <p className="text-xl mt-5 w-4/5 md:w-4/5 mx-auto sm:w-full">Sekarang kamu bisa mencatat keuangan kamu disini, tanpa perlu menginstall aplikasi</p>
+                    <h1 className="text-4xl font-bold mt-10 text-sky-600">Uangmu</h1>
+                    <p className="text-xl mt-5 w-4/5 md:w-4/5 mx-auto sm:w-full text-sky-600">Sekarang kamu bisa mencatat keuangan kamu disini, tanpa perlu menginstall aplikasi</p>
                     <CardList />
                </section>
                {/* END: DESKRIPSI */}
