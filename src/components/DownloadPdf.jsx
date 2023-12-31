@@ -5,7 +5,7 @@ const DownloadPdf = ({ financialData, selectMonth }) => {
           const pdf = new jsPDF();
           pdf.text('Laporan Keuangan', 20, 10);
 
-          const filteredData = selectMonth === 'Semua Bulan' ? financialData : financialData.filter(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth);
+          const filteredData = selectMonth === 'Semua Bulan' ? financialData : financialData.filter((data) => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth);
 
           // Set COl & Row
           const headerYPos = 40;
@@ -38,11 +38,12 @@ const DownloadPdf = ({ financialData, selectMonth }) => {
           pdf.save('laporan_keuangan.pdf');
      }
 
-     const checkButtonVisible = financialData.lenght > 0 || (selectMonth === 'Semua Bulan' || financialData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth));
+     const checkButtonVisible = financialData.length > 0 && (selectMonth === 'Semua Bulan' || financialData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth));
+
      return (
-          <>
-               <button className={checkButtonVisible ? "btn-note lg:my-5 md:my-5 my-5" : "hidden btn-note lg:my-5 md:my-5 my-5"}
-                    onClick={downloadFile}>Download PDF</button>
+          <>   {checkButtonVisible && (
+               <button className="btn-note lg:my-5 md:my-5 my-5" onClick={downloadFile}>Download PDF</button>
+          )}
           </>
      )
 }
