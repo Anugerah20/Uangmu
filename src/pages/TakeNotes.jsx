@@ -266,7 +266,7 @@ const TakeNotes = () => {
                                         {selectMonth === 'Semua Bulan' ? (
                                              savedData.length === 0 ? (
                                                   <tr>
-                                                       <td colSpan="5" className="border font-bold p-4 text-red-500">
+                                                       <td colSpan="5" className="border font-bold p-4">
                                                             Catatan uangmu tidak tersedia
                                                        </td>
                                                   </tr>
@@ -284,7 +284,7 @@ const TakeNotes = () => {
                                         ) : (
                                              !savedData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth) ? (
                                                   <tr>
-                                                       <td colSpan="5" className="border font-bold p-4 text-red-500">
+                                                       <td colSpan="5" className="border font-bold p-4">
                                                             Catatan uangmu tidak tersedia
                                                        </td>
                                                   </tr>
