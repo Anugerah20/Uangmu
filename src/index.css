@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Components button TakeNotes */
+/* Components button TakeNotes, Login, Register */
 @layer components {
      .card-note {
           @apply flex flex-col flex-wrap mx-auto my-[3rem];
@@ -12,17 +12,35 @@
           @apply flex flex-col gap-4 mx-auto my-[2.5rem];
      }
 
-     .btn-note {
-          @apply flex justify-center items-center bg-green-500 text-white w-[140px] h-[40px] rounded-md transition-all duration-300 ease-in-out;
+     .btn-note, 
+     .btn-contact, 
+     .btn-modal {
+          @apply flex justify-center items-center bg-sky-600 text-white w-[140px] h-[40px] rounded-md active:bg-sky-900 transition-all duration-300 ease-in-out;
      }
 
-     .btn-note:hover {
-          @apply bg-[#046949];
+     .btn-login, .btn-register {
+          @apply w-full h-10 rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold
      }
 
      /* Footer */
      .footer {
           @apply flex justify-between sm:justify-between;
      }
+
+/* Component Input Text, Email, Password, Number, Date, Time, File, Textarea, Select */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="file"],
+textarea {
+     @apply w-full px-3 py-3 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
+}
+
+select {
+     @apply w-1/2 px-2 py-2 mt-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
+}
 
 }
