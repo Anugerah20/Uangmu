@@ -21,7 +21,7 @@ export default function Navigation() {
         <Navbar.Brand
           href="/"
         >
-          <span className="self-center whitespace-nowrap text-4xl sm:text-4xl font-semibold dark:text-white">
+          <span className="self-center whitespace-nowrap text-4xl sm:text-4xl font-semibold text-sky-600 dark:text-white">
             Uangmu
           </span>
         </Navbar.Brand>
@@ -30,23 +30,23 @@ export default function Navigation() {
           <Navbar.Link
             as={NavLink}
             to="/"
-            className={activeLink === "/" ? "active" : ""}
+            className={`text-sky-600 font-normal ${activeLink === "/" ? "active" : ""}`}
           >
-            <p className="hover:text-gray-700">Beranda</p>
+            <p>Beranda</p>
           </Navbar.Link>
           <Navbar.Link
             as={NavLink}
             to="/takenotes"
-            className={activeLink === "/takenotes" ? "active" : ""}
+            className={`text-sky-600 font-normal ${activeLink === "/takenotes" ? "active" : ""}`}
           >
-            <p className="hover:text-gray-700"> Buat Catatan</p>
+            <p>Buat Catatan</p>
           </Navbar.Link>
           <Navbar.Link
             as={NavLink}
             to="/contact"
-            className={activeLink === "/contact" ? "active" : ""}
+            className={`text-sky-600 font-normal ${activeLink === "/contact" ? "active" : ""}`}
           >
-            <p className="hover:text-gray-700">Kontak</p>
+            <p>Kontak</p>
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
