@@ -10,7 +10,13 @@ const DataNoteTable = ({ savedData, handleDelete, handleEdit }) => {
      const formatAmountID = new Intl.NumberFormat("id-ID").format(savedData.nominal);
 
      // Format Date
-     const formattedDate = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(savedData.tanggal));
+     const formattedDate = savedData.tanggal ? new Intl.DateTimeFormat('id-ID',
+          {
+               day: 'numeric',
+               month: 'short',
+               year: 'numeric'
+          }).format(new Date(savedData.tanggal))
+          : null;
 
      const splitDate = formattedDate.split(' ');
      const dateSlash = `${splitDate[0]}/${splitDate[1]}/${splitDate[2]}`;
