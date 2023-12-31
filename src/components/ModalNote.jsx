@@ -1,9 +1,9 @@
-import { Modal, Button, Label, TextInput } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import { useState, useEffect } from 'react';
 
 const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenisCatatan, setJenisCatatan, handlerInputChange, handleSubmit, setModal, editNote, handleEdit }) => {
 
-     const [statusModalNote, setStatusModalNote] = useState('');
+     const [statusModalNote, setStatusModalNote] = useState('tambah');
 
      useEffect(() => {
           setStatusModalNote(editNote ? 'edit' : 'tambah');
@@ -36,13 +36,13 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                     <Modal.Body>
                          <div className="space-y-6">
                               <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                                   {statusModalNote === 'edit' ? 'Edit Catatan Keuangan' : 'Tambah Catatan Keuangan' || statusModalNote === 'tambah' ? 'Tambah Catatan Keuangan' : 'Edit Catatan Keuangan'}
+                                   {statusModalNote === 'edit' ? 'Edit Catatan Keuangan' : 'Tambah Catatan Keuangan'}
                               </h3>
                               <div>
                                    <div className="mb-2 block">
-                                        <Label htmlFor="deskripsi" value="Deskripsi" />
+                                        <label htmlFor="deskripsi">Deskripsi</label>
                                    </div>
-                                   <TextInput
+                                   <input
                                         id="deskripsi"
                                         name="deskripsi"
                                         placeholder="contoh: beli kopi"
@@ -50,13 +50,14 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                                         autoComplete="off"
                                         value={deskripsi}
                                         onChange={(e) => handlerInputChange(e, "deskripsi")}
+                                        autoFocus
                                    />
                               </div>
                               <div>
                                    <div className="mb-2 block">
-                                        <Label htmlFor="tanggal" value="Tanggal" />
+                                        <label htmlFor="tanggal">Tanggal</label>
                                    </div>
-                                   <TextInput
+                                   <input
                                         id="tanggal"
                                         name="tanggal"
                                         type="date"
@@ -66,9 +67,9 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                               </div>
                               <div>
                                    <div className="mb-2 block">
-                                        <Label htmlFor="nominal" value="Nominal" />
+                                        <label htmlFor="nominal">Nominal</label>
                                    </div>
-                                   <TextInput
+                                   <input
                                         id="nominal"
                                         name="nominal"
                                         placeholder="contoh: 10000"
@@ -80,7 +81,7 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                               </div>
 
                               <div className="block">
-                                   <Label htmlFor="pemasukan" value="Jenis Catatan" />
+                                   <label htmlFor="pemasukan">Jenis Catatan</label>
                               </div>
                               <div className="block">
                                    <input
@@ -91,7 +92,7 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                                         checked={jenisCatatan === "pemasukan"}
                                         onChange={() => setJenisCatatan("pemasukan")}
                                    />
-                                   <Label htmlFor="pemasukan" className="mr-2" value="Pemasukan" />
+                                   <label htmlFor="pemasukan" className="mr-2">Pemasukan</label>
                                    <input
                                         type="radio"
                                         id="pengeluaran"
@@ -100,13 +101,12 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
                                         checked={jenisCatatan === "pengeluaran"}
                                         onChange={() => setJenisCatatan("pengeluaran")}
                                    />
-                                   <Label htmlFor="pengeluaran" value="Pengeluaran" />
+                                   <label htmlFor="pemasukan">Pengeluaran</label>
                               </div>
 
-                              {/* <Button color="success" type="submit" onClick={handleSubmit}>Kirim Sekarang</Button> */}
-                              <Button color="success" type="submit" onClick={editNote ? handleEdit : handleSubmit}>
-                                   {editNote ? 'Simpan Perubahan' : 'Kirim Sekarang'}
-                              </Button>
+                              <button className="btn-modal" type="submit" onClick={editNote ? handleEdit : handleSubmit}>
+                                   {editNote ? 'Simpan data' : 'Kirim sekarang'}
+                              </button>
                          </div>
                     </Modal.Body>
                </Modal>
