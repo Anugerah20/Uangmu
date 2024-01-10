@@ -23,7 +23,7 @@ const ModalNote = ({ openModal, setOpenModal, deskripsi, tanggal, nominal, jenis
      };
 
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-7 md:ml-10 lg:ml-[4.5rem]">
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-[3.3rem] md:ml-10 lg:ml-[4.5rem]">
                <button onClick={() => { setOpenModal(true); resetModalNote(); }} className="btn-note -mt-5 md:-mt-10 lg:-mt-10">Buat Catatan</button>
                <Modal
                     show={openModal}
