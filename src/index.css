@@ -22,6 +22,10 @@
           @apply w-full h-10 rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold
      }
 
+     .btn-navigation {
+          @apply rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold ml-2 lg:ml-0 md:ml-0 w-full lg:w-20 md:w-20 h-10
+     }
+
      /* Footer */
      .footer {
           @apply flex justify-between sm:justify-between;
@@ -34,9 +38,12 @@ input[type="password"],
 input[type="number"],
 input[type="date"],
 input[type="time"],
-input[type="file"],
 textarea {
      @apply w-full px-3 py-3 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
+}
+
+input[type="file"] {
+     @apply rounded-lg
 }
 
 select {
