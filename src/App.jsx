@@ -2,31 +2,71 @@ import Home from "./pages/Home";
 import TakeNotes from "./pages/TakeNotes";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import LoginCard from "./components/LoginCard";
 import RegisterCard from "./components/RegisterCard";
+import PrivateRoute from "../utils/PrivateRoute";
+import EditProfile from "./components/EditProfile";
 
 function App() {
-  const authPage = window.location.pathname === "/login" || window.location.pathname === "/register";
+
+  // Hidden Navigation & Footer
+  const location = useLocation();
+
+  const hiddenPage = /^\/(login|register)($|\/)/.test(location.pathname);
+
+  // Check Authenticated 
+  const isAuthenticated = () => {
+    const tokenUser = localStorage.getItem("tokenUser");
+    return !!tokenUser;
+  }
 
   return (
     <>
-      {!authPage && <Navigation />}
-      <div>
-        <div className="h-screen">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/takenotes" element={<TakeNotes />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/register" element={<RegisterCard />} />
-            <Route path="/login" element={<LoginCard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        {!authPage && <Footer />}
+      {!hiddenPage && <Navigation />}
+      <div className="h-screen">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/takenotes"
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path="/takenotes"
+                element={TakeNotes}
+              />
+            }
+          />
+          <Route
+            path="/edit-profil/:id"
+            element={
+              <PrivateRoute
+                authenticated={isAuthenticated()}
+                path="/edit-profil/:id"
+                element={EditProfile}
+              />
+            }
+          />
+          <Route
+            path="/contact"
+            element={<PrivateRoute
+              authenticated={isAuthenticated()}
+              path="/contact"
+              element={Contact}
+            />
+            }
+          />
+          <Route path="/register" element={<RegisterCard />} />
+          <Route
+            path="/login"
+            element={<LoginCard />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
+      {!hiddenPage && <Footer />}
     </>
   );
 }
