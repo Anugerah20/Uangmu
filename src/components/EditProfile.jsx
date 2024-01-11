@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { userApiEditGet, userApiEditData } from "../services/apiService";
 import { Link } from "react-router-dom";
+import { FaArrowLeft, FaRegUser } from "react-icons/fa";
+import { Toaster, toast } from "sonner";
 
 const EditProfile = () => {
 
-     // const [getEditData, setGetEditData] = useState([]);
      const [getEditData, setGetEditData] = useState({});
-     const [file, setFile] = useState()
+     const [file, setFile] = useState();
+     const [updateImage, setUpdateImage] = useState("");
+     const [loadingEditProfile, setLoadingEditProfile] = useState(false);
 
      // Get Data User
      useEffect(() => {
@@ -20,6 +23,9 @@ const EditProfile = () => {
 
                     const response = await userApiEditGet(`/edit-profil/${userId}`);
                     setGetEditData(response?.data);
+
+                    // Set URL avatar dari Cloudinary saat mengambil data pengguna
+                    setUpdateImage(response?.data?.image);
 
                } catch (error) {
                     console.log("Get Data Edit Profile Error: ", error);
@@ -38,14 +44,17 @@ const EditProfile = () => {
           }));
      };
 
+     // Get image user
      const handleImage = (e) => {
-          setFile(
-               e.target.files[0],
-          );
+          setFile(e.target.files[0]);
      }
 
+     // Update Profile User
      const handleSubmit = async (e) => {
           e.preventDefault();
+
+          // Active process loading
+          setLoadingEditProfile(true);
 
           const data = new FormData();
           data.append("fullname", getEditData.fullname);
@@ -54,23 +63,42 @@ const EditProfile = () => {
 
           try {
                const userId = localStorage.getItem("userId");
-               const res = await userApiEditData(`/edit-profil/${userId}`, data);
-               console.log(res);
+               const response = await userApiEditData(`/edit-profil/${userId}`, data);
+
+               if (response.status === 200) {
+                    toast.success("Edit Profil Successfully");
+               } else if (response.status === 400) {
+                    toast.error("Edit Profil Failed");
+               }
+
+               console.log("Edit Profile User: ", response);
 
           } catch (error) {
                console.log("Update Data Edit Profile Error: ", error)
+          } finally {
+               setLoadingEditProfile(false);
           }
      }
 
      // Get Edit Data Image Avatar User
      const getEditAvatarUser = () => {
-          return `https://ui-avatars.com/api/?name=${getEditData?.fullname}&background=random&length=1&rounded=true`;
+          return updateImage || `https://ui-avatars.com/api/?name=${getEditData?.fullname}&background=random&length=1&rounded=true`;
      }
 
      return (
           <div>
                <form encType="multipart/form-data" onSubmit={handleSubmit} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
-                    <h1 className="text-2xl font-bold mb-8">EDIT PROFIL | <span className="text-sky-500 border-b-2 border-sky-500">UANGMU</span></h1>
+                    <Toaster />
+                    <div className="flex justify-between mb-5">
+                         <div className="flex justify-center items-center gap-2">
+                              <FaRegUser className="w-5 h-5" />
+                              <h1 className="text-2xl font-bold">Edit Profil</h1>
+                         </div>
+                         <div className="flex justify-center items-center gap-3">
+                              <FaArrowLeft className="w-5 h-5" />
+                              <Link to="/">Ke Beranda</Link>
+                         </div>
+                    </div>
 
                     <div className="mb-2 block">
                          <label htmlFor="gambar">Gambar</label>
@@ -111,15 +139,16 @@ const EditProfile = () => {
                          </div>
                          <textarea
                               id="bio" type="email"
+                              className="rounded h-20"
                               name="bio" value={getEditData?.bio || ""}
                               onChange={handleChange}
                          ></textarea>
                     </div>
 
-                    <button type="submit" className="btn-login mt-4">Simpan profil saya</button>
-
-                    <div className="mt-4 text-center underline">
-                         <Link to="/takenotes">Kembali ke beranda</Link>
+                    <div>
+                         <button type="submit" className="btn-login" disabled={loadingEditProfile}>
+                              {loadingEditProfile ? "Menyimpan Data" : "Simpan profil saya"}
+                         </button>
                     </div>
                </form>
           </div>
