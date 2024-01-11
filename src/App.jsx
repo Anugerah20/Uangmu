@@ -4,10 +4,10 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
-import Navigation from "./components/Navigation";
-import LoginCard from "./components/LoginCard";
-import RegisterCard from "./components/RegisterCard";
-import PrivateRoute from "../utils/PrivateRoute";
+import Navigation from "./components/Navigation/Navigation";
+import LoginCard from "./pages/LoginUser/LoginCard";
+import RegisterCard from "./pages/RegisterUser/RegisterCard";
+import PrivateRoute from "./utils/PrivateRoute";
 import EditProfile from "./components/EditProfile";
 
 function App() {
