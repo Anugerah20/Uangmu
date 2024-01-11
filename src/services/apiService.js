@@ -1,26 +1,25 @@
 import axios from "axios";
 
 // Make api
-const urlDev = "http://localhost:3000/user";
+const urlApi = "http://localhost:3000/user";
 const token = localStorage.getItem("tokenUser");
 console.log("LIHAT TOKEN: ", token);
 
 const apiService = axios.create({
-     baseURL: urlDev,
+     baseURL: urlApi,
      headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
      }
 });
 
-// Interceptor buat menyesuaikan setiap ada permintaan
-// Mempengaruhi edit profil, harus dimodifikasi
+// Interceptor to customize every request
+// Affects profile edit, must be modified
 apiService.interceptors.request.use(
      (config) => {
-          // Ambil token dari local storage
+          // Retrieve tokens from local storage
           const token = localStorage.getItem("tokenUser");
 
-          // Jika token tersedia, tambahkan header Authorization
+          // If the token is available, add the Authorization header
           if (token) {
                config.headers["Authorization"] = `Bearer ${token}`;
           }
