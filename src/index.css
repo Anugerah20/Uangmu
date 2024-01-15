@@ -43,11 +43,11 @@ textarea {
 }
 
 input[type="file"] {
-     @apply rounded-lg
+     @apply px-2 py-2 rounded-lg border-2 border-gray-300 w-full my-2
 }
 
 select {
-     @apply w-1/2 px-2 py-2 mt-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
+     @apply w-1/2 px-2.5 py-2 mt-2.5 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
 }
 
 }
