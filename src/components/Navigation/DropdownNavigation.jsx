@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { FaSignOutAlt, FaUserEdit } from "react-icons/fa";
 import { useApiGet, userLogout } from "../../services/apiService";
 import { Link } from "react-router-dom";
+import { joinedAtDate } from "../../services/apiDate";
+
 const DropdownNavigation = () => {
 
      const [userData, setUserData] = useState(null);
@@ -47,8 +49,9 @@ const DropdownNavigation = () => {
                     }
                >
                     <Dropdown.Header>
-                         <div className="bg-red-200 text-red-500 p-3 font-normal rounded-md">Profil kamu belum lengkap</div>
-                         <div className="flex items-center my-2 space-x-2">
+                         {/* <div className="bg-red-200 text-red-500 p-3 font-normal rounded-md">Profil kamu belum lengkap</div> */}
+                         {/* <div className="flex items-center my-2 space-x-2"> */}
+                         <div className="flex items-center space-x-2">
                               <img src={avatarUserDropdown()}
                                    alt="Profile User" className="mt-2 w-10 h-10 rounded-full"
                               />
@@ -56,7 +59,9 @@ const DropdownNavigation = () => {
                                    <p className="py-1 text-primary">Hai, <span className="font-bold">
                                         {userData?.fullname || 'User'}
                                    </span></p>
-                                   <small className="text-gray-600">Bergabung 3 Des 2024</small>
+                                   <small className="text-gray-600">
+                                        Bergabung, {joinedAtDate(userData?.joinedAt)}
+                                   </small>
                               </span>
                          </div>
                     </Dropdown.Header>

@@ -87,9 +87,9 @@ const EditProfile = () => {
 
      return (
           <div>
-               <form encType="multipart/form-data" onSubmit={handleSubmit} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
+               <form encType="multipart/form-data" onSubmit={handleSubmit} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto my-10">
                     <Toaster />
-                    <div className="flex justify-between mb-5">
+                    <div className="flex justify-between mb-6">
                          <div className="flex justify-center items-center gap-2">
                               <FaRegUser className="w-5 h-5" />
                               <h1 className="text-2xl font-bold">Edit Profil</h1>
@@ -103,7 +103,7 @@ const EditProfile = () => {
                     <div className="mb-2 block">
                          <label htmlFor="gambar">Gambar</label>
                          <img src={getEditAvatarUser()}
-                              alt="Profile User" className="mt-2 w-20 h-20 rounded-full"
+                              alt="Profile User" className="mt-2 w-20 h-20 border-2 border-gray-300 rounded-full"
                               id="gambar"
                          />
                          <input className="mt-2" type="file" name="file" id="file"
@@ -150,8 +150,8 @@ const EditProfile = () => {
                               {loadingEditProfile ? "Menyimpan Data" : "Simpan profil saya"}
                          </button>
                     </div>
-               </form>
-          </div>
+               </form >
+          </div >
      )
 }
 
