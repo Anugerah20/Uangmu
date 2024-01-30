@@ -32,11 +32,12 @@ apiService.interceptors.request.use(
 );
 
 
-// Register User
+// Register & login user
 export const userApiPost = async (url, userData) => {
      try {
           const response = await apiService.post(url, userData);
           return response;
+
      } catch (error) {
           console.error("Register Failed", error);
           throw error;
