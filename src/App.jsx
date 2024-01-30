@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import Navigation from "./components/Navigation/Navigation";
 import LoginCard from "./pages/LoginUser/LoginCard";
 import RegisterCard from "./pages/RegisterUser/RegisterCard";
+import ResetPassword from "./pages/ForgotPassword/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import PrivateRoute from "./utils/PrivateRoute";
 import EditProfile from "./components/EditProfile";
 
@@ -15,7 +17,7 @@ function App() {
   // Hidden Navigation & Footer
   const location = useLocation();
 
-  const hiddenPage = /^\/(login|register)($|\/)/.test(location.pathname);
+  const hiddenPage = /^\/(login|register|forgot-password|reset-password)($|\/)/.test(location.pathname);
 
   // Check Authenticated 
   const isAuthenticated = () => {
@@ -59,10 +61,9 @@ function App() {
             }
           />
           <Route path="/register" element={<RegisterCard />} />
-          <Route
-            path="/login"
-            element={<LoginCard />}
-          />
+          <Route path="/login" element={<LoginCard />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

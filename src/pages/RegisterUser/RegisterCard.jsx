@@ -5,6 +5,7 @@ import { userApiPost } from '../../services/apiService';
 import { useState } from 'react';
 
 export default function RegisterCard() {
+     document.title = "Uangmu | Register";
 
      const [loading, setLoading] = useState(false);
 
@@ -63,8 +64,11 @@ export default function RegisterCard() {
      return (
           <div className="h-screen flex justify-center items-center">
                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
-                    <h1 className="text-2xl font-bold mb-8">REGISTER <span className="text-sky-500 border-b-2 border-sky-500">UANGMU</span></h1>
+                    <h1 className="text-2xl font-bold mb-8">Register <span className="text-sky-500 border-b-2 border-sky-500">Uangmu</span></h1>
                     <Toaster />
+                    <div className="flex items-center gap-2 my-4">
+                         <label htmlFor="login">Do you have an account? <a href="/login" className="text-sky-500 font-bold"> Login</a></label>
+                    </div>
                     <div>
                          <div className="mb-1 block">
                               <label htmlFor="username" className="text-sm font-medium">Username</label>
@@ -89,11 +93,10 @@ export default function RegisterCard() {
                          {errors.password && errors.password.type === "required" && <span className="text-sm text-red-400">Password required</span>}
                          {errors.password && errors.password.type === "minLength" && <span className="text-sm text-red-400">Password min 8 character</span>}
                     </div>
-                    <div className="flex items-center gap-2 my-4">
-                         <label htmlFor="login">Do you have an account? <a href="/login" className="text-sky-500 font-bold"> login</a></label>
+                    <div className="mt-2 block">
+                         <button type="submit" className="btn-login">{loading ? "Process..." : "Register"}
+                         </button>
                     </div>
-                    <button type="submit" className="btn-login">{loading ? "Process..." : "Register"}
-                    </button>
                </form>
           </div>
      );
