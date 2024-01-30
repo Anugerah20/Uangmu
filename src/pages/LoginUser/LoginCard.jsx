@@ -5,6 +5,7 @@ import { Toaster, toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginCard() {
+     document.title = "Uangmu | Login";
 
      const [loading, setLoading] = useState(false);
 
@@ -65,8 +66,11 @@ export default function LoginCard() {
      return (
           <div className="h-screen flex justify-center items-center">
                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
-                    <h1 className="text-2xl font-bold mb-8">LOGIN <span className="text-sky-500 border-b-2 border-sky-500">UANGMU</span></h1>
+                    <h1 className="text-2xl font-bold mb-8">Login <span className="text-sky-500 border-b-2 border-sky-500">Uangmu</span></h1>
                     <Toaster />
+                    <div className="flex items-center gap-2 my-4">
+                         <label htmlFor="login">Don't have an account? <a href="/register" className="text-sky-500 font-bold"> Register</a></label>
+                    </div>
                     <div>
                          <div className="mb-2 block">
                               <label htmlFor="email">Email</label>
@@ -83,10 +87,12 @@ export default function LoginCard() {
                          {errors.password && errors.password.type === "required" && <span className="text-sm text-red-400">Password required</span>}
                          {errors.password && errors.password.type === "minLength" && <span className="text-sm text-red-400">Password min 8 character</span>}
                     </div>
-                    <div className="flex items-center gap-2 my-4">
-                         <label htmlFor="login">Don't have an account? <a href="/register" className="text-sky-500 font-bold"> register</a></label>
+                    <div className="mt-2 block">
+                         <button type="submit" className="btn-login">{loading ? "Process..." : "Login"}</button>
                     </div>
-                    <button type="submit" className="btn-login">{loading ? "Process..." : "Login"}</button>
+                    <div className="flex items-center gap-2 my-4">
+                         <label htmlFor="login">Forgot Password? <a href="/forgot-password" className="text-sky-500 font-bold"> Change password</a></label>
+                    </div>
                </form>
           </div>
      );
