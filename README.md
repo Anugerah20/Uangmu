@@ -4,11 +4,11 @@
 Simple money recording that is very easy to use on any device.
 
 **Feature :**
-- Create
-- Read 
-- Update
-- Delete
-- Download PDF
+- CRUD
+- LOGIN
+- REGISTER
+- FORGOT PASSWORD
+- DOWNLOAD PDF
 
 ##
 
