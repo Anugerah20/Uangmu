@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { redirect, Outlet, Navigate } from "react-router-dom";
 
 const user = localStorage.getItem("tokenUser");
 
@@ -11,7 +11,7 @@ export const UserLogin = () => {
 }
 
 export const ProtechUser = () => {
-     if (!!user) {
+     if (!user) {
           return <Navigate to="/login" />
      }
      return <Outlet />
