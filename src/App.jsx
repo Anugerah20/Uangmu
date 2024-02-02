@@ -9,7 +9,7 @@ import LoginCard from "./pages/LoginUser/LoginCard";
 import RegisterCard from "./pages/RegisterUser/RegisterCard";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
-import PrivateRoute from "./utils/PrivateRoute";
+import { UserLogin, ProtechUser } from "./utils/PrivateRoute";
 import EditProfile from "./components/EditProfile";
 
 function App() {
@@ -17,13 +17,8 @@ function App() {
   // Hidden Navigation & Footer
   const location = useLocation();
 
+  // Perintah ini berfungsi untuk mengabaikan navigasi dan footer
   const hiddenPage = /^\/(login|register|forgot-password|reset-password)($|\/)/.test(location.pathname);
-
-  // Check Authenticated 
-  const isAuthenticated = () => {
-    const tokenUser = localStorage.getItem("tokenUser");
-    return !!tokenUser;
-  }
 
   return (
     <>
@@ -31,39 +26,23 @@ function App() {
       <div className="h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/takenotes"
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path="/takenotes"
-                element={TakeNotes}
-              />
-            }
-          />
-          <Route
-            path="/edit-profil/:id"
-            element={
-              <PrivateRoute
-                authenticated={isAuthenticated()}
-                path="/edit-profil/:id"
-                element={EditProfile}
-              />
-            }
-          />
-          <Route
-            path="/contact"
-            element={<PrivateRoute
-              authenticated={isAuthenticated()}
-              path="/contact"
-              element={Contact}
-            />
-            }
-          />
-          <Route path="/register" element={<RegisterCard />} />
-          <Route path="/login" element={<LoginCard />} />
+
+          {/* Private route hanya bisa diakses ketika sudah melakukan login */}
+          <Route element={<ProtechUser />}>
+            <Route path="/takenotes" element={<TakeNotes />} />
+            <Route path="/edit-profil/:id" element={<EditProfile />} />
+            <Route path="/contact" element={<Contact />} />
+          </Route>
+
+          {/* ketika sudah login maka tidak bisa akses ke route login dan register sebelum logout */}
+          <Route element={<UserLogin />}>
+            <Route path="/register" element={<RegisterCard />} />
+            <Route path="/login" element={<LoginCard />} />
+          </Route>
+
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
