@@ -45,7 +45,6 @@ export default function LoginCard() {
           } catch (error) {
                if (error.message === "Network Error") {
                     toast.error("Internal Server Error");
-                    console.log("Internal Server Error: ", error);
                     reset();
                     return;
                }
