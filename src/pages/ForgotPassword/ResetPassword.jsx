@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Button } from 'flowbite-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import MessagePasswordSuccess from './MessagePasswordSuccess';
 import { useApiGet, userApiPost } from '../../services/apiService';
 
 export default function ResetPassword() {
@@ -79,21 +79,7 @@ export default function ResetPassword() {
      return (
           <div className="h-screen flex justify-center items-center">
                {success &&
-                    <div className="h-screen flex flex-col items-center justify-start">
-                         <div className="card flex flex-col items-center space-y-2 p-6">
-                              <div className="text-center">
-                                   <h2 className="font-semibold">Password berhasil diubah</h2>
-                                   <p className="text-gray-500">
-                                        Silahkan login dengan password baru kamu
-                                   </p>
-                                   <Link to="/login">
-                                        <Button color="dark" className="w-full my-6">
-                                             Login
-                                        </Button>
-                                   </Link>
-                              </div>
-                         </div>
-                    </div>
+                    <MessagePasswordSuccess />
                }
 
                <form onSubmit={handleSubmit(onSubmit)} className={`max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10 ${success ? 'hidden' : 'block'}`}>
