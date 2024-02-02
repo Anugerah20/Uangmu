@@ -2,14 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { userApiPost } from '../../services/apiService';
 import { Toaster, toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
 
 export default function LoginCard() {
      document.title = "Uangmu | Login";
 
      const [loading, setLoading] = useState(false);
-
-     const navigate = useNavigate();
 
      const {
           register,
@@ -38,7 +35,7 @@ export default function LoginCard() {
 
                     toast.success("Login Successfully");
                     setTimeout(() => {
-                         navigate("/takenotes");
+                         window.location.href = "/takenotes";
                     }, 500);
                     reset();
                }
