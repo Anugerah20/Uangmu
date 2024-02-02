@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Toaster, toast } from "sonner";
 import { userApiPost } from '../../services/apiService';
 import { useState } from 'react';
@@ -8,8 +7,6 @@ export default function RegisterCard() {
      document.title = "Uangmu | Register";
 
      const [loading, setLoading] = useState(false);
-
-     const navigate = useNavigate();
 
      const {
           register,
@@ -37,8 +34,8 @@ export default function RegisterCard() {
 
                     toast.success("Register Successfully");
                     setTimeout(() => {
-                         navigate("/takenotes");
-                    }, 600);
+                         window.location.href = "/takenotes";
+                    }, 500);
                     reset();
                }
 
