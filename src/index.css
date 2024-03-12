@@ -4,50 +4,50 @@
 
 /* Components button TakeNotes, Login, Register */
 @layer components {
-     .card-note {
-          @apply flex flex-col flex-wrap mx-auto my-[3rem];
-     }
+  .card-note {
+    @apply flex flex-col flex-wrap mx-auto my-[3rem];
+  }
 
-     .container-note {
-          @apply flex flex-col gap-4 mx-auto my-[2.5rem];
-     }
+  .container-note {
+    @apply flex flex-col gap-4 mx-auto my-[2.5rem];
+  }
 
-     .btn-note, 
-     .btn-contact, 
-     .btn-modal {
-          @apply flex justify-center items-center bg-sky-600 text-white w-[140px] h-[40px] rounded-md active:bg-sky-900 transition-all duration-300 ease-in-out;
-     }
+  .btn-note,
+  .btn-contact,
+  .btn-modal {
+    @apply flex justify-center items-center bg-sky-600 text-white w-[140px] h-[40px] rounded-md active:bg-sky-900 transition-all duration-300 ease-in-out;
+  }
 
-     .btn-login, .btn-register {
-          @apply w-full h-10 rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold
-     }
+  .btn-login,
+  .btn-register {
+    @apply w-full h-10 rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold;
+  }
 
-     .btn-navigation {
-          @apply rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold ml-2 lg:ml-0 md:ml-0 w-full lg:w-20 md:w-20 h-10
-     }
+  .btn-navigation {
+    @apply rounded-lg bg-sky-600 hover:bg-sky-800 text-white transition duration-200 ease-in-out focus:font-bold ml-2 lg:ml-0 md:ml-0 w-full lg:w-20 md:w-20 h-10;
+  }
 
-     /* Footer */
-     .footer {
-          @apply flex justify-between sm:justify-between;
-     }
+  /* Footer */
+  .footer {
+    @apply flex justify-between sm:justify-between;
+  }
 
-/* Component Input Text, Email, Password, Number, Date, Time, File, Textarea, Select */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="date"],
-input[type="time"],
-textarea {
-     @apply w-full px-3 py-3 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
-}
+  /* Component Input Text, Email, Password, Number, Date, Time, File, Textarea, Select */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  textarea {
+    @apply w-full px-3 py-3 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
+  }
 
-input[type="file"] {
-     @apply px-2 py-2 rounded-lg border-2 border-gray-300 w-full my-2
-}
+  input[type="file"] {
+    @apply px-2 py-2 my-2 file:bg-gray-300 file:text-black hover:file:bg-gray-400;
+  }
 
-select {
-     @apply w-1/2 px-2.5 py-2 mt-2.5 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out
-}
-
+  select {
+    @apply w-1/2 px-2.5 py-2 mt-2.5 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
+  }
 }
