@@ -24,7 +24,6 @@ const TakeNotes = () => {
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
-     const [editNoteId, setEditNoteId] = useState(null);
      const [selectMonth, setSelectMonth] = useState('Semua Bulan');
 
      // State Input
@@ -96,134 +95,10 @@ const TakeNotes = () => {
           setJenisCatatan('');
           setOpenModal(false);
 
-          // Save Note Localstorage
-          const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
-          storageNotes.push(newDataNote);
-          localStorage.setItem("note", JSON.stringify(storageNotes));
-
           // Notification Success
           toast.success('Catatan Uangmu berhasil dibuat', {
                duration: 2000,
-          })
-     };
-
-     useEffect(() => {
-          const storageNotes = JSON.parse(localStorage.getItem("note")) || [];
-          setSavedData(storageNotes);
-
-          // Calculate
-          const totalPemasukan = storageNotes
-               .filter((item) => item.jenis === 'pemasukan')
-               .reduce((total, item) => total + parseFloat(item.nominal), 0);
-
-          const totalPengeluaran = storageNotes
-               .filter((item) => item.jenis === 'pengeluaran')
-               .reduce((total, item) => total + parseFloat(item.nominal), 0);
-
-          const totalUang = totalPemasukan - totalPengeluaran;
-
-          setTotalPemasukan(totalPemasukan);
-          setTotalPengeluaran(totalPengeluaran);
-          setTotalUang(totalUang);
-     }, [totalUang]);
-
-     // Delete Note
-     const deleteNote = (noteId) => {
-          const updateData = savedData.filter((data) => data.id !== noteId);
-          setSavedData(updateData);
-
-          const updateLocalStorage = updateData.map((data) => {
-               return {
-                    id: data.id,
-                    deskripsi: data.deskripsi,
-                    tanggal: data.tanggal,
-                    nominal: data.nominal,
-                    jenis: data.jenis,
-               };
           });
-          localStorage.setItem('note', JSON.stringify(updateLocalStorage));
-
-          // Reset money
-          const updateTotalIncome = updateData
-               .filter((item) => item.jenis === 'pemasukan')
-               .reduce((total, item) => total + parseFloat(item.nominal), 0);
-          const updateTotalExpenses = updateData
-               .filter((item) => item.jenis === 'pengeluaran')
-               .reduce((total, item) => total + parseFloat(item.nominal), 0)
-          const updateTotalMoney = updateTotalIncome - updateTotalExpenses;
-
-          // Update state
-          setTotalPemasukan(updateTotalIncome);
-          setTotalPengeluaran(updateTotalExpenses);
-          setTotalUang(updateTotalMoney);
-
-          // check selected month
-          if (!updateData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth)) {
-               setSelectMonth('Semua Bulan');
-          }
-
-          toast.success('Catatan Uangmu berhasil dihapus', {
-               duration: 2000,
-          })
-     }
-
-     const editNote = (noteId) => {
-          const editData = savedData.find((data) => data.id === noteId);
-          if (editData) {
-               setDeskripsi(editData.deskripsi);
-               setTanggal(editData.tanggal);
-               setNominal(editData.nominal);
-               setJenisCatatan(editData.jenis);
-               setEditNoteId(noteId);
-               setOpenModal(true);
-          }
-     }
-
-     // Handle Form Edit
-     const handleEditSubmit = (e) => {
-          e.preventDefault();
-          const updatedData = savedData.map((data) => {
-               if (data.id === editNoteId) {
-                    return {
-                         ...data,
-                         deskripsi,
-                         tanggal,
-                         nominal: parseFloat(nominal),
-                         jenis: jenisCatatan,
-                    };
-               }
-               return data;
-          });
-
-          // Update Total Money
-          const updatedMoney = updatedData.reduce((total, item) => {
-               if (item.jenis === 'pemasukan') {
-                    return total + parseFloat(item.nominal);
-               } else {
-                    if (item.id === editNoteId) {
-                         return total - parseFloat(savedData.find((data) => data.id === editNoteId).nominal) + parseFloat(nominal);
-                    } else {
-                         return total - parseFloat(item.nominal)
-                    }
-               }
-          }, 0);
-
-          // save localStorage
-          localStorage.setItem('note', JSON.stringify(updatedData));
-          setSavedData(updatedData);
-          setTotalUang(updatedMoney);
-
-          // Reset SetState
-          setDeskripsi('');
-          setTanggal('');
-          setNominal('');
-          setJenisCatatan('');
-          setEditNoteId(null);
-          setOpenModal(false);
-
-          toast.success('Catatan Uangmu berhasil diperbarui', {
-               duration: 2000,
-          })
      }
 
      return (
@@ -245,10 +120,12 @@ const TakeNotes = () => {
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
                          <div className="mb-5">
-                              <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
+                              <div className="flex justify-between items-center">
+                                   <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
+                                   <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
+                              </div>
                          </div>
                          {/* START: DOWNLOAD PDF */}
-                         <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
                          {/* END: DOWNLOAD PDF */}
                          <div className="relative overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
@@ -276,8 +153,8 @@ const TakeNotes = () => {
                                                             <DataNoteTable
                                                                  key={index}
                                                                  savedData={data}
-                                                                 handleDelete={deleteNote}
-                                                                 handleEdit={editNote}
+                                                            // handleDelete={deleteNote}
+                                                            // handleEdit={editNote}
                                                             />
                                                        ))
                                              )
@@ -295,8 +172,8 @@ const TakeNotes = () => {
                                                             <DataNoteTable
                                                                  key={index}
                                                                  savedData={data}
-                                                                 handleDelete={deleteNote}
-                                                                 handleEdit={editNote}
+                                                            // handleDelete={deleteNote}
+                                                            // handleEdit={editNote}
                                                             />
                                                        ))
                                              )
@@ -318,8 +195,6 @@ const TakeNotes = () => {
                          setJenisCatatan={setJenisCatatan}
                          handlerInputChange={handlerInputChange}
                          handleSubmit={handleSubmit}
-                         editNote={editNoteId}
-                         handleEdit={handleEditSubmit}
                     />
                     {/* END: MODAL KEUANGAN */}
 
