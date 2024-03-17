@@ -29,8 +29,10 @@ const DataNoteTable = ({ savedData, handleDelete, handleEdit }) => {
                     <td className="px-6 py-3">{formatAmountID}</td>
                     <td className="px-6 py-3">{savedData.jenis === "pemasukan" ? "pemasukan" : "pengeluaran"}</td>
                     <td className="flex justify-center gap-4 mt-1 px-6 py-3">
-                         <Link to="#" title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
-                         <Link to="#" title="Edit" className="text-green-500" onClick={() => handleEdit(savedData.id)}><FaEdit /></Link>
+                         {/* <Link to="#" title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link> */}
+                         <Link to="#" title="Hapus" className="text-red-500"><FaTrashAlt /></Link>
+                         <Link to="#" title="Edit" className="text-green-500"><FaEdit /></Link>
+                         {/* <Link to="#" title="Edit" className="text-green-500" onClick={() => handleEdit(savedData.id)}><FaEdit /></Link> */}
                     </td>
                </tr>
           </>
