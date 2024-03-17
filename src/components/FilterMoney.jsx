@@ -6,8 +6,8 @@ const FilterMoney = ({ selectMonth, setSelectMonth }) => {
 
      return (
           <div>
-               <label htmlFor="selectMonth">Filter Bulanan :</label>
-               <select className="rounded-md h-10 ml-2" id="selectMonth" value={selectMonth} onChange={(e) => setSelectMonth(e.target.value)}>
+               {/* <label htmlFor="selectMonth">Filter Bulanan :</label> */}
+               <select className="rounded-md h-10 ml-2 w-full" id="selectMonth" value={selectMonth} onChange={(e) => setSelectMonth(e.target.value)}>
                     {months.map((month) => (
                          <option key={month} value={month}>
                               {month}
