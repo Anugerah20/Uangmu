@@ -42,7 +42,7 @@ const DownloadPdf = ({ financialData, selectMonth }) => {
 
      return (
           <>   {checkButtonVisible && (
-               <button className="btn-note lg:my-5 md:my-5 my-5" onClick={downloadFile}>Download PDF</button>
+               <button className="btn-note lg:my-4 md:my-5 my-5" onClick={downloadFile}>Download PDF</button>
           )}
           </>
      )
