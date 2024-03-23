@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import { Toaster, toast } from "sonner";
-import { userApiPost } from '../../services/apiService';
-import { useState } from 'react';
+import { userApiPost } from "../../services/apiService";
+import { useState } from "react";
 
 export default function RegisterCard() {
      document.title = "Uangmu | Register";
@@ -62,7 +62,6 @@ export default function RegisterCard() {
           <div className="h-screen flex justify-center items-center">
                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
                     <h1 className="text-2xl font-bold mb-8">Register <span className="text-sky-500 border-b-2 border-sky-500">Uangmu</span></h1>
-                    <Toaster />
                     <div className="flex items-center gap-2 my-4">
                          <label htmlFor="login">Do you have an account? <a href="/login" className="text-sky-500 font-bold"> Login</a></label>
                     </div>
