@@ -1,115 +1,76 @@
-import { useEffect, useState } from 'react';
-import TotalMoney from '../components/TotalAmout';
-import DataNoteTable from '../components/DataNoteTable';
-import ModalNote from '../components/ModalNote';
-import FilterMoney from '../components/FilterMoney';
-import { Toaster, toast } from 'sonner';
-import DownloadPdf from '../components/DownloadPdf';
+import { useEffect, useState } from "react";
+import TotalMoney from "../components/TotalAmout";
+import DataNoteTable from "../components/DataNoteTable";
+import ModalNote from "../components/ModalNote";
+import FilterMoney from "../components/FilterMoney";
+import DownloadPdf from "../components/DownloadPdf";
 import AOS from "aos";
-import "aos/dist/aos.css"
+import "aos/dist/aos.css";
+import { useApiGet, userApiPost } from "../services/apiService";
 
 const TakeNotes = () => {
-     document.title = 'Uangmu | Catatan';
+     document.title = "Uangmu | Catatan";
 
-     useEffect(() => {
-          AOS.init();
-     }, []);
-
-     const [deskripsi, setDeskripsi] = useState('');
-     const [tanggal, setTanggal] = useState('');
-     const [nominal, setNominal] = useState('');
      const [savedData, setSavedData] = useState([]);
-     const [openModal, setOpenModal] = useState(false);
-     const [jenisCatatan, setJenisCatatan] = useState('');
      const [totalPemasukan, setTotalPemasukan] = useState(0);
      const [totalPengeluaran, setTotalPengeluaran] = useState(0);
      const [totalUang, setTotalUang] = useState(0);
-     const [selectMonth, setSelectMonth] = useState('Semua Bulan');
+     const [selectMonth, setSelectMonth] = useState("Semua Bulan");
 
-     // State Input
-     const handlerInputChange = (e, inputName) => {
-          const newValue = e.target.value;
-          switch (inputName) {
-               case 'deskripsi':
-                    setDeskripsi(newValue);
-                    break;
-               case 'tanggal':
-                    setTanggal(newValue);
-                    break;
-               case 'nominal':
-                    setNominal(newValue);
-                    break;
-               case 'jenisCatatan':
-                    setJenisCatatan(newValue);
-                    break;
-               default:
-                    break;
+     const handleAddNote = async (newNote) => {
+          // Logika penambahan data catatan dan perhitungan total uang
+          try {
+               const response = await userApiPost("/note", newNote);
+
+               if (response.status === 200) {
+                    setSavedData([...savedData, response.data]);
+                    const notePrice = parseFloat(newNote.price);
+                    const updateTotalUang = totalUang + (newNote.noteType === "Pemasukan" ? notePrice : -notePrice);
+
+                    const updateTotalPemasukan = newNote.noteType === "Pemasukan" ? totalPemasukan + newNote.price : totalPemasukan;
+                    const updateTotalPengeluaran = newNote.noteType === "Pengeluaran" ? totalPengeluaran + newNote.price : totalPengeluaran;
+
+                    // Perbarui state total uang, pemasukan, dan pengeluaran
+                    setTotalUang(updateTotalUang);
+                    setTotalPemasukan(updateTotalPemasukan);
+                    setTotalPengeluaran(updateTotalPengeluaran);
+
+               } else {
+                    console.error("Failed show total money :", response.data);
+               }
+          } catch (error) {
+               console.error("Error add data total money :", error);
           }
-     }
+     };
 
-     // Validation input
-     const handleSubmit = (e) => {
-          e.preventDefault();
-
-          if (deskripsi === '' || tanggal === '' || nominal === '' || jenisCatatan === '') {
-               toast.error('Semua harus diisi', {
-                    duration: 2000,
-               });
-               return;
-          }
-
-          if (isNaN(nominal)) {
-               toast.error('Nominal hanya menerima angka', {
-                    duration: 2000,
-               });
-               return;
-          }
-
-          const uniqueId = Math.random();
-          const newDataNote = {
-               id: uniqueId,
-               deskripsi,
-               tanggal,
-               nominal: parseFloat(nominal),
-               jenis: jenisCatatan,
+     useEffect(() => {
+          // Fungsi untuk mengambil data catatan dari backend
+          const fetchData = async () => {
+               const userId = localStorage.getItem("userId");
+               try {
+                    const response = await useApiGet(`/get-note/${userId}`);
+                    setSavedData(response.data.showNotes);
+               } catch (error) {
+                    console.error("Error fetching data:", error);
+               }
           };
 
-          let totalUangBaru = totalUang;
+          fetchData();
 
-          if (jenisCatatan === 'pemasukan') {
-               setTotalPemasukan(totalPemasukan + newDataNote.nominal);
-               totalUangBaru += newDataNote.nominal;
-          } else {
-               setTotalPengeluaran(totalPengeluaran + newDataNote.nominal);
-               totalUangBaru -= newDataNote.nominal;
-          }
+     }, []);
 
-          setTotalUang(totalUangBaru);
-
-          const updatedData = [...savedData, newDataNote];
-          setSavedData(updatedData);
-
-          setDeskripsi('');
-          setTanggal('');
-          setNominal('');
-          setJenisCatatan('');
-          setOpenModal(false);
-
-          // Notification Success
-          toast.success('Catatan Uangmu berhasil dibuat', {
-               duration: 2000,
-          });
-     }
+     // useEffect(() => {
+     //      AOS.init();
+     // }, []);
 
      return (
           <>
                <div
-                    data-aos="fade-up"
-                    data-aos-offset="200"
-                    data-aos-delay="100"
-                    data-aos-duration="1000"
+                    // data-aos="fade-up"
+                    // data-aos-offset="200"
+                    // data-aos-delay="100"
+                    // data-aos-duration="1000"
                     className="flex flex-wrap">
-                    <Toaster />
 
                     {/* START: TOTAL MONEY */}
                     <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran}
@@ -120,12 +81,12 @@ const TakeNotes = () => {
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
                          <div className="mb-5">
+                              {/* START: DOWNLOAD PDF */}
                               <div className="flex justify-between items-center">
                                    <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
                                    <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
                               </div>
                          </div>
-                         {/* START: DOWNLOAD PDF */}
                          {/* END: DOWNLOAD PDF */}
                          <div className="relative overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
@@ -139,66 +100,32 @@ const TakeNotes = () => {
                                         </tr>
                                    </thead>
                                    <tbody>
-                                        {/* Month filter */}
-                                        {selectMonth === 'Semua Bulan' ? (
-                                             savedData.length === 0 ? (
-                                                  <tr>
-                                                       <td colSpan="5" className="border font-bold p-4">
-                                                            Catatan uangmu tidak tersedia
-                                                       </td>
-                                                  </tr>
-                                             ) : (
-                                                  savedData
-                                                       .map((data, index) => (
-                                                            <DataNoteTable
-                                                                 key={index}
-                                                                 savedData={data}
-                                                            // handleDelete={deleteNote}
-                                                            // handleEdit={editNote}
-                                                            />
-                                                       ))
-                                             )
+                                        {/* Condition for displaying message if no data available */}
+                                        {savedData && savedData.length === 0 ? (
+                                             <tr>
+                                                  <td colSpan="5" className="border font-bold p-4">
+                                                       Catatan uangmu tidak tersedia
+                                                  </td>
+                                             </tr>
                                         ) : (
-                                             !savedData.some(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth) ? (
-                                                  <tr>
-                                                       <td colSpan="5" className="border font-bold p-4">
-                                                            Catatan uangmu tidak tersedia
-                                                       </td>
-                                                  </tr>
-                                             ) : (
-                                                  savedData
-                                                       .filter(data => new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth)
-                                                       .map((data, index) => (
-                                                            <DataNoteTable
-                                                                 key={index}
-                                                                 savedData={data}
-                                                            // handleDelete={deleteNote}
-                                                            // handleEdit={editNote}
-                                                            />
-                                                       ))
-                                             )
+                                             // Render your data here
+                                             savedData.map((data, index) => (
+                                                  <DataNoteTable key={index} savedData={data} />
+                                             ))
                                         )}
                                    </tbody>
                               </table>
                          </div>
-                    </div >
+                    </div>
                     {/* END: MEMASUKKAN DATA */}
 
                     {/* START: MODAL KEUANGAN */}
                     <ModalNote
-                         openModal={openModal}
-                         setOpenModal={setOpenModal}
-                         deskripsi={deskripsi}
-                         tanggal={tanggal}
-                         nominal={nominal}
-                         jenisCatatan={jenisCatatan}
-                         setJenisCatatan={setJenisCatatan}
-                         handlerInputChange={handlerInputChange}
-                         handleSubmit={handleSubmit}
+                         handleAddNote={handleAddNote}
                     />
                     {/* END: MODAL KEUANGAN */}
 
-               </div >
+               </div>
           </>
      );
 };
