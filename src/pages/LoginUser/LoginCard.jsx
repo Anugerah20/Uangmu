@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { userApiPost } from '../../services/apiService';
-import { Toaster, toast } from 'sonner';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { userApiPost } from "../../services/apiService";
+import { Toaster, toast } from "sonner";
 
 export default function LoginCard() {
      document.title = "Uangmu | Login";
@@ -63,7 +63,6 @@ export default function LoginCard() {
           <div className="h-screen flex justify-center items-center">
                <form onSubmit={handleSubmit(onSubmit)} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto py-10">
                     <h1 className="text-2xl font-bold mb-8">Login <span className="text-sky-500 border-b-2 border-sky-500">Uangmu</span></h1>
-                    <Toaster />
                     <div className="flex items-center gap-2 my-4">
                          <label htmlFor="login">Don't have an account? <a href="/register" className="text-sky-500 font-bold"> Register</a></label>
                     </div>
