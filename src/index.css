@@ -40,7 +40,7 @@
   input[type="date"],
   input[type="time"],
   textarea {
-    @apply w-full px-3 py-3 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
+    @apply w-full px-2 py-2 mb-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
   }
 
   input[type="file"] {
@@ -48,6 +48,11 @@
   }
 
   select {
-    @apply w-1/2 px-2.5 py-2 mt-2.5 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
+    @apply w-full px-2 py-2 rounded-lg border-2 border-gray-300 outline-none focus:border-sky-500 transition ease-in-out;
   }
+
+  .text-danger {
+    @apply text-sm text-red-500;
+  }
+
 }
