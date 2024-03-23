@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { userApiPost } from '../../services/apiService';
-import { Alert } from 'flowbite-react';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { userApiPost } from "../../services/apiService";
+import { Alert } from "flowbite-react";
 
 export default function ForgotPassword() {
      document.title = "Uangmu | Forgot Password";
