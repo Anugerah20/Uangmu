@@ -1,9 +1,9 @@
-import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import MessagePasswordSuccess from './MessagePasswordSuccess';
-import { useApiGet, userApiPost } from '../../services/apiService';
+import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import MessagePasswordSuccess from "./MessagePasswordSuccess";
+import { useApiGet, userApiPost } from "../../services/apiService";
 
 export default function ResetPassword() {
 
@@ -24,7 +24,7 @@ export default function ResetPassword() {
 
      const params = new URLSearchParams(location.search);
 
-     const token = params.get('token');
+     const token = params.get("token");
 
      const decode = jwtDecode(token);
 
@@ -39,7 +39,7 @@ export default function ResetPassword() {
                console.log("Isi response", response);
 
                if (response.data.status === false) {
-                    navigate('/login');
+                    navigate("/login");
                }
 
           } catch (error) {
@@ -56,7 +56,7 @@ export default function ResetPassword() {
 
           try {
                setLoading(true);
-               const response = await userApiPost('/update-password', newPassword);
+               const response = await userApiPost("/update-password", newPassword);
 
                if (response.status === 200 && response.data.status === true) {
                     setSuccess(true);
