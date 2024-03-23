@@ -11,6 +11,7 @@ import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import { UserLogin, ProtechUser } from "./utils/PrivateRoute";
 import EditProfile from "./components/EditProfile";
+import { Toaster } from "sonner";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       {!hiddenPage && <Navigation />}
       <div className="h-screen">
         <Routes>
