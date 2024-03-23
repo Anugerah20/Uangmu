@@ -14,22 +14,22 @@ const TotalAmout = ({ totalUang, totalPemasukan, totalPengeluaran, selectMonth, 
           const filterPemasukan = savedData
                .filter((data) => {
                     return (
-                         (selectMonth === 'Semua Bulan' ||
-                              new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth) &&
-                         data.jenis === 'pemasukan'
+                         (selectMonth === "Semua Bulan" ||
+                              new Date(data.date).toLocaleString("id-ID", { month: "long" }) === selectMonth) &&
+                         data.noteType === "Pemasukan"
                     );
                })
-               .reduce((total, data) => total + data.nominal, 0);
+               .reduce((total, data) => total + data.price, 0);
 
           const filterPengeluaran = savedData
                .filter((data) => {
                     return (
-                         (selectMonth === 'Semua Bulan' ||
-                              new Date(data.tanggal).toLocaleString('id-ID', { month: 'long' }) === selectMonth) &&
-                         data.jenis === 'pengeluaran'
+                         (selectMonth === "Semua Bulan" ||
+                              new Date(data.date).toLocaleString("id-ID", { month: "long" }) === selectMonth) &&
+                         data.noteType === "Pengeluaran"
                     );
                })
-               .reduce((total, data) => total + data.nominal, 0);
+               .reduce((total, data) => total + data.price, 0);
 
           setFilterTotalPemasukan(filterPemasukan);
           setFilterTotalPengeluaran(filterPengeluaran);
@@ -42,7 +42,7 @@ const TotalAmout = ({ totalUang, totalPemasukan, totalPengeluaran, selectMonth, 
           <Card className="w-4/5 sm:w-1/2 md:w-2/5 card-note">
                <h1 className="text-center text-2xl">Total Uang Sekarang</h1>
                <hr />
-               <h2 className="text-center text-xl font-bold">Rp {filterTotalUang !== 0 ? numberFormatAmount(totalUang) : 0}</h2>
+               <h2 className="text-center text-xl font-bold">Rp {numberFormatAmount(filterTotalUang)}</h2>
                <section className="flex flex-wrap justify-between">
                     <div className="income">
                          <h5>🟢Income</h5>
