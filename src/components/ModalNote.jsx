@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { userApiPost } from "../services/apiService";
-// import { useNavigate } from "react-router-dom";
 
-const ModalNote = ({ handleAddNote }) => {
+const ModalNote = ({ onSubmitSuccess }) => {
      document.title = "Uangmu | Catatan";
 
      const [openModal, setOpenModal] = useState(false);
      const [loading, setLoading] = useState(false);
-
-     // const [description, setDescription] = useState("");
-     // const [date, setDate] = useState("");
-     // const [price, setPrice] = useState("");
-     // const [noteType, setNoteType] = useState("");
 
      const {
           register,
@@ -22,8 +16,6 @@ const ModalNote = ({ handleAddNote }) => {
           formState: { errors },
           reset
      } = useForm();
-
-     // const navigate = useNavigate();
 
      const onSubmit = async (data) => {
           try {
@@ -38,20 +30,20 @@ const ModalNote = ({ handleAddNote }) => {
 
                // Kirim data catatan ke API untuk ditambahkan
                const response = await userApiPost("/note", noteData);
-               // console.log("Data catatan ditambahkan: ", response);
+               // return console.log("Data catatan ditambahkan: ", response);
 
                // Notifikasi sukses
-               if (response.status === 200) {
+               if (response.status === 201) {
                     setLoading(false);
+                    setOpenModal(false);
+
                     // Notifikasi catatan berhasil ditambahkan
                     toast.success("Catatan berhasil ditambahkan");
-                    setTimeout(() => {
-                         window.location.href = "/takenotes";
-                    }, 500);
+                    onSubmitSuccess();
                     reset();
                }
           } catch (error) {
-               // Tangani error jika ada
+               // Menangani error jika ada
                console.error("Error adding note: ", error);
 
                // Notifikasi error
@@ -63,13 +55,6 @@ const ModalNote = ({ handleAddNote }) => {
                setLoading(false);
           }
      };
-
-     // Mengatur modal setelah ditutup
-     useEffect(() => {
-          if (!openModal) {
-               reset();
-          }
-     }, [openModal]);
 
      return (
           <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-[3.3rem] md:ml-10 lg:ml-[4.5rem]">
