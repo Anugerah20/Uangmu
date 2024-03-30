@@ -1,7 +1,8 @@
-import { Card } from "flowbite-react";
 import { useState, useEffect } from "react";
+import { TbSquareArrowDown } from "react-icons/tb";
+import { TbSquareArrowUp } from "react-icons/tb";
 
-const TotalAmout = ({ totalUang, totalPemasukan, totalPengeluaran, selectMonth, savedData }) => {
+const TotalAmout = ({ totalPemasukan, totalPengeluaran, selectMonth, savedData }) => {
      const [filterTotalPemasukan, setFilterTotalPemasukan] = useState(totalPemasukan);
      const [filterTotalPengeluaran, setFilterTotalPengeluaran] = useState(totalPengeluaran);
 
@@ -39,21 +40,24 @@ const TotalAmout = ({ totalUang, totalPemasukan, totalPengeluaran, selectMonth, 
      const filterTotalUang = filterTotalPemasukan - filterTotalPengeluaran;
 
      return (
-          <Card className="w-4/5 sm:w-1/2 md:w-2/5 card-note">
+          <div className="w-4/5 sm:w-1/2 md:w-2/5 card-note space-y-4 shadow-md p-4 bg-gradient-to-l from-indigo-500 to-teal-400 text-white">
                <h1 className="text-center text-2xl">Total Uang Sekarang</h1>
-               <hr />
                <h2 className="text-center text-xl font-bold">Rp {numberFormatAmount(filterTotalUang)}</h2>
                <section className="flex flex-wrap justify-between">
                     <div className="income">
-                         <h5>🟢Income</h5>
-                         <small className="ml-5 font-bold">Rp {numberFormatAmount(filterTotalPemasukan)}</small>
+                         <div className="flex items-center">
+                              <h5 className="flex items-center gap-1"><TbSquareArrowUp className="text-2xl" />Pemasukan</h5>
+                         </div>
+                         <small className="font-bold">Rp {numberFormatAmount(filterTotalPemasukan)}</small>
                     </div>
                     <div className="expenses">
-                         <h5>🔴Expenses</h5>
-                         <small className="ml-5 font-bold">Rp {numberFormatAmount(filterTotalPengeluaran)}</small>
+                         <div className="flex items-center">
+                              <h5 className="flex items-center gap-1"><TbSquareArrowDown className="text-2xl" />Pengeluaran</h5>
+                         </div>
+                         <small className="font-bold">Rp {numberFormatAmount(filterTotalPengeluaran)}</small>
                     </div>
                </section>
-          </Card>
+          </div>
      )
 }
 
