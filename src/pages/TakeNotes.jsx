@@ -6,7 +6,8 @@ import FilterMoney from "../components/FilterMoney";
 import DownloadPdf from "../components/DownloadPdf";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useApiGet, userApiPost } from "../services/apiService";
+import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
+import { toast } from "sonner";
 
 const TakeNotes = () => {
      document.title = "Uangmu | Catatan";
@@ -17,12 +18,16 @@ const TakeNotes = () => {
      const [totalUang, setTotalUang] = useState(0);
      const [selectMonth, setSelectMonth] = useState("Semua Bulan");
 
+     // State buat mengtrigger data catatan uang
+     const [triggerEffect, setTriggerEffect] = useState(false);
+
      const handleAddNote = async (newNote) => {
           // Logika penambahan data catatan dan perhitungan total uang
           try {
                const response = await userApiPost("/note", newNote);
 
                if (response.status === 200) {
+                    setTriggerEffect(true);
                     setSavedData([...savedData, response.data]);
                     const notePrice = parseFloat(newNote.price);
                     const updateTotalUang = totalUang + (newNote.noteType === "Pemasukan" ? notePrice : -notePrice);
@@ -43,21 +48,41 @@ const TakeNotes = () => {
           }
      };
 
+     // Fungsi untuk mengambil data catatan dari backend
+     const fetchData = async () => {
+          const userId = localStorage.getItem("userId");
+          try {
+               const response = await useApiGet(`/get-note/${userId}`);
+               setSavedData(response.data.showNotes);
+          } catch (error) {
+               console.error("Error fetching data:", error);
+          }
+     };
+
+     // Memanggil modal catatan
      useEffect(() => {
-          // Fungsi untuk mengambil data catatan dari backend
-          const fetchData = async () => {
-               const userId = localStorage.getItem("userId");
-               try {
-                    const response = await useApiGet(`/get-note/${userId}`);
-                    setSavedData(response.data.showNotes);
-               } catch (error) {
-                    console.error("Error fetching data:", error);
-               }
-          };
-
           fetchData();
+     }, [triggerEffect]);
 
-     }, []);
+     // Fungsi untuk menghapus data catatan berdasarkan id
+     const handleDelete = async (id) => {
+          const userId = localStorage.getItem("userId");
+          try {
+               const response = await userApiDelete(`/delete-note/${userId}`);
+               if (response.status === 201) {
+                    const updatedData = savedData.filter((data) => data.id !== id);
+                    setSavedData(updatedData);
+
+                    // Melakukan proses memperbarui data catatan
+                    fetchData();
+
+                    // toast.success("Catatan berhasil dihapus");
+               }
+          } catch (error) {
+               console.error("Error deleting note: ", error);
+          }
+     }
+
 
      // useEffect(() => {
      //      AOS.init();
@@ -80,16 +105,15 @@ const TakeNotes = () => {
 
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
-                         <div className="mb-5">
-                              {/* START: DOWNLOAD PDF */}
-                              <div className="flex justify-between items-center">
-                                   <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
-                                   <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
-                              </div>
+                         {/* START: DOWNLOAD PDF */}
+                         <div className="flex justify-between items-center">
+                              <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
+                              <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
                          </div>
+
                          {/* END: DOWNLOAD PDF */}
                          <div className="relative overflow-x-auto">
-                              <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto">
+                              <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto ">
                                    <thead className="border">
                                         <tr>
                                              <th className="border-gray-300 px-6 py-3">Deskripsi</th>
@@ -110,7 +134,7 @@ const TakeNotes = () => {
                                         ) : (
                                              // Render your data here
                                              savedData.map((data, index) => (
-                                                  <DataNoteTable key={index} savedData={data} />
+                                                  <DataNoteTable key={index} savedData={data} onDelete={handleDelete} onSubmitSuccess={() => setTriggerEffect(!triggerEffect)} />
                                              ))
                                         )}
                                    </tbody>
@@ -122,6 +146,7 @@ const TakeNotes = () => {
                     {/* START: MODAL KEUANGAN */}
                     <ModalNote
                          handleAddNote={handleAddNote}
+                         onSubmitSuccess={() => setTriggerEffect(!triggerEffect)}
                     />
                     {/* END: MODAL KEUANGAN */}
 
