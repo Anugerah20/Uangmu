@@ -14,22 +14,22 @@ const apiService = axios.create({
 
 // Interceptor to customize every request
 // Affects profile edit, must be modified
-apiService.interceptors.request.use(
-     (config) => {
-          // Retrieve tokens from local storage
-          const token = localStorage.getItem("tokenUser");
+// apiService.interceptors.request.use(
+//      (config) => {
+//           // Retrieve tokens from local storage
+//           const token = localStorage.getItem("tokenUser");
 
-          // If the token is available, add the Authorization header
-          if (token) {
-               config.headers["Authorization"] = `Bearer ${token}`;
-          }
+//           // If the token is available, add the Authorization header
+//           if (token) {
+//                config.headers["Authorization"] = `Bearer ${token}`;
+//           }
 
-          return config;
-     },
-     (error) => {
-          return Promise.reject("Token Interceptor Failed: ", error);
-     }
-);
+//           return config;
+//      },
+//      (error) => {
+//           return Promise.reject("Token Interceptor Failed: ", error);
+//      }
+// );
 
 
 // Register & login user
@@ -76,6 +76,17 @@ export const userApiEditData = async (url, userData) => {
 
      } catch (error) {
           console.log("Put Edit Data User: ", error);
+     }
+}
+
+// Delete note user by id
+export const userApiDelete = async (url) => {
+     try {
+          const response = await apiService.delete(url);
+          return response.data;
+
+     } catch (error) {
+          console.log("Delete Data User: ", error);
      }
 }
 
