@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { userApiPost } from "../../services/apiService";
 import { useState } from "react";
 
