@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { userApiPost } from "../../services/apiService";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 export default function LoginCard() {
      document.title = "Uangmu | Login";
