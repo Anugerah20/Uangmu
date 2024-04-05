@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -17,6 +17,7 @@ const ModalNote = ({ onSubmitSuccess }) => {
           reset
      } = useForm();
 
+     // Fungsi untuk menambahkan catatan
      const onSubmit = async (data) => {
           try {
                setLoading(true);
