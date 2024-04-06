@@ -50,10 +50,11 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
           try {
                const response = await userApiEditData(`/edit-note/${userId}`, data);
                // console.log(response);
-               toast.success("Catatan berhasil diubah");
-               setLoading(false);
-               onSubmitSuccess();
-
+               if (response.status === 200) {
+                    toast.success("Catatan berhasil diubah");
+                    setLoading(false);
+                    onSubmitSuccess();
+               }
           } catch (error) {
                console.error("Error edit note: ", error);
           }
