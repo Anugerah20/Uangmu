@@ -23,16 +23,17 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
      // Format Date
      const formattedDate = savedData.date ? new Intl.DateTimeFormat("id-ID",
           {
-               day: "numeric",
-               month: "short",
-               year: "numeric"
+               day: "2-digit",
+               month: "2-digit",
+               year: "numeric",
           }).format(new Date(savedData.date))
           : "";
 
      console.log(formattedDate);
 
-     const splitDate = formattedDate.split(" ");
-     const dateSlash = `${splitDate[0]}-${splitDate[1]}-${splitDate[2]}`;
+     // const splitDate = formattedDate.split(" ");
+     // const dateSlash = `${splitDate[0]}-${splitDate[1]}-${splitDate[2]}`;
+     const dateSlash = formattedDate.split(" ");
 
      useEffect(() => {
           onSubmitSuccess();
@@ -46,11 +47,12 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
                     <td className="px-6 py-3">{formatAmountID}</td>
                     <td className="px-6 py-3">{savedData.noteType}</td>
                     <td className="flex justify-center gap-4 mt-1 px-6 py-3">
-                         <Link to={`/delete/${savedData.id}`} title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
+                         {/* <Link to={`/delete/${savedData.id}`} title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link> */}
+                         <Link to="#" title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
 
                          <EditModalNote date={formattedDate} isOpen={isOpenEdit} data={savedData} onSubmitSuccess={() => setTriggerEffect(!triggerEffect)} />
                     </td>
-               </tr>
+               </tr >
           </>
      );
 };
