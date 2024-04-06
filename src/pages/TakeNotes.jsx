@@ -7,7 +7,6 @@ import DownloadPdf from "../components/DownloadPdf";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
-import { toast } from "sonner";
 
 const TakeNotes = () => {
      document.title = "Uangmu | Catatan";
@@ -48,7 +47,8 @@ const TakeNotes = () => {
           }
      };
 
-     // Fungsi untuk mengambil data catatan dari backend
+     // 1. Fungsi untuk mengambil data catatan dari backend
+     // 2. Fungsi untuk mengambil id edit catatan
      const fetchData = async () => {
           const userId = localStorage.getItem("userId");
           try {
@@ -75,8 +75,6 @@ const TakeNotes = () => {
 
                     // Melakukan proses memperbarui data catatan
                     fetchData();
-
-                    // toast.success("Catatan berhasil dihapus");
                }
           } catch (error) {
                console.error("Error deleting note: ", error);
@@ -127,14 +125,18 @@ const TakeNotes = () => {
                                         {/* Condition for displaying message if no data available */}
                                         {savedData && savedData.length === 0 ? (
                                              <tr>
-                                                  <td colSpan="5" className="border font-bold p-4">
+                                                  <td colSpan="5" className="border p-4">
                                                        Catatan uangmu tidak tersedia
                                                   </td>
                                              </tr>
                                         ) : (
                                              // Render your data here
                                              savedData.map((data, index) => (
-                                                  <DataNoteTable key={index} savedData={data} onDelete={handleDelete} onSubmitSuccess={() => setTriggerEffect(!triggerEffect)} />
+                                                  <DataNoteTable
+                                                       key={index} savedData={data} onDelete={handleDelete}
+                                                       onEdit={fetchData}
+                                                       onSubmitSuccess={() => setTriggerEffect(!triggerEffect)}
+                                                  />
                                              ))
                                         )}
                                    </tbody>

@@ -2,15 +2,17 @@ import Home from "./pages/Home";
 import TakeNotes from "./pages/TakeNotes";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation/Navigation";
 import LoginCard from "./pages/LoginUser/LoginCard";
 import RegisterCard from "./pages/RegisterUser/RegisterCard";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
-import { UserLogin, ProtechUser } from "./utils/PrivateRoute";
 import EditProfile from "./components/EditProfile";
+import EditModalNote from "./components/EditModalNote";
+
+import { Route, Routes, useLocation } from "react-router-dom";
+import { UserLogin, ProtechUser } from "./utils/PrivateRoute";
 import { Toaster } from "sonner";
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
           <Route element={<ProtechUser />}>
             <Route path="/takenotes" element={<TakeNotes />} />
             <Route path="/edit-profil/:id" element={<EditProfile />} />
+            <Route path="/edit-catatan/:id" element={<EditModalNote />} />
             <Route path="/contact" element={<Contact />} />
           </Route>
 
