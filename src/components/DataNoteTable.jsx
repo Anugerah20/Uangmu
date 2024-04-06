@@ -35,12 +35,11 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
      const dateSlash = `${splitDate[0]}-${splitDate[1]}-${splitDate[2]}`;
 
      useEffect(() => {
-          setIsOpenEdit(false);
+          onSubmitSuccess();
      }, [triggerEffect])
 
      return (
           <>
-               <EditModalNote date={formattedDate} isOpen={isOpenEdit} data={savedData} onSubmitSuccess={() => setTriggerEffect(!triggerEffect)} />
                <tr className="bg-primary border-gray-300">
                     <td className="whitespace-nowrap px-6 py-3">{savedData.description}</td>
                     <td className="px-6 py-3">{dateSlash}</td>
@@ -49,7 +48,7 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
                     <td className="flex justify-center gap-4 mt-1 px-6 py-3">
                          <Link to={`/delete/${savedData.id}`} title="Hapus" className="text-red-500" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
 
-                         <button title="Edit" className="text-green-500" onClick={() => setIsOpenEdit(!isOpenEdit)}><FaEdit /></button>
+                         <EditModalNote date={formattedDate} isOpen={isOpenEdit} data={savedData} onSubmitSuccess={() => setTriggerEffect(!triggerEffect)} />
                     </td>
                </tr>
           </>
