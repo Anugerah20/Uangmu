@@ -70,11 +70,9 @@ const TakeNotes = () => {
           try {
                const response = await userApiDelete(`/delete-note/${userId}`);
                if (response.status === 201) {
+                    // Memperbarui data catatan setelah dihapus
                     const updatedData = savedData.filter((data) => data.id !== id);
                     setSavedData(updatedData);
-
-                    // Melakukan proses memperbarui data catatan
-                    fetchData();
                }
           } catch (error) {
                console.error("Error deleting note: ", error);
