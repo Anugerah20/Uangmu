@@ -1,9 +1,9 @@
 function formatDate(dateString) {
      const date = new Date(dateString);
+     const day = date.getUTCDate();
+     const month = date.getUTCMonth() + 1;
      const year = date.getUTCFullYear();
-     const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-     const day = String(date.getUTCDate()).padStart(2, '0');
-     return `${year}-${month}-${day}`;
+     return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
 }
 
 export { formatDate };
