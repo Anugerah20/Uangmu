@@ -1,4 +1,4 @@
-function formatDate(dateString) {
+const formatDate = (dateString) => {
      const date = new Date(dateString);
      const day = date.getUTCDate();
      const month = date.getUTCMonth() + 1;
@@ -6,4 +6,4 @@ function formatDate(dateString) {
      return `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
 }
 
-export { formatDate };
+export default formatDate;
