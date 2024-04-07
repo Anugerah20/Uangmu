@@ -3,7 +3,7 @@ import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { userApiEditData, useApiGet } from "../services/apiService";
 import { toast } from "sonner";
-import { formatDate } from "../services/formatDate";
+import formatDate from "../services/formatDate";
 import { FaEdit } from "react-icons/fa";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
@@ -41,10 +41,10 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      // }
 
      useEffect(() => {
-          setValue("description", data.description)
-          setValue("date", formatDate(data.date))
-          setValue("price", data.price)
-          setValue("noteType", data.noteType)
+          setValue("description", data.description);
+          setValue("date", formatDate(data.date));
+          setValue("price", data.price);
+          setValue("noteType", data.noteType);
      }, [isOpen]);
 
      // Fungsi untuk edit catatan
