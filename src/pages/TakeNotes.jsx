@@ -59,25 +59,27 @@ const TakeNotes = () => {
           }
      };
 
-     // Memanggil modal catatan
-     useEffect(() => {
-          fetchData();
-     }, [triggerEffect]);
-
      // Fungsi untuk menghapus data catatan berdasarkan id
      const handleDelete = async (id) => {
           const userId = localStorage.getItem("userId");
           try {
                const response = await userApiDelete(`/delete-note/${userId}`);
-               if (response.status === 201) {
+               if (response.status === 200) {
                     // Memperbarui data catatan setelah dihapus
                     const updatedData = savedData.filter((data) => data.id !== id);
                     setSavedData(updatedData);
+
+                    window.location.href("/takenotes");
                }
           } catch (error) {
                console.error("Error deleting note: ", error);
           }
      }
+
+     // Memanggil modal catatan
+     useEffect(() => {
+          fetchData();
+     }, [triggerEffect]);
 
 
      // useEffect(() => {
