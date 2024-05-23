@@ -64,7 +64,7 @@ const TakeNotes = () => {
           const userId = localStorage.getItem("userId");
           try {
                const response = await userApiDelete(`/delete-note/${userId}`);
-               if (response.status === 200) {
+               if (response.status === 201) {
                     // Memperbarui data catatan setelah dihapus
                     const updatedData = savedData.filter((data) => data.id !== id);
                     setSavedData(updatedData);
