@@ -9,10 +9,8 @@ import { FaEdit } from "react-icons/fa";
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      document.title = "Uangmu | Edit Catatan";
 
-     // console.log(data)
-
      const [loading, setLoading] = useState(false);
-     const [editData, setEditData] = useState(null);
+     const [editData] = useState(null);
      const [openModal, setOpenModal] = useState(false);
 
      const {
@@ -26,23 +24,10 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      // Fungsi untuk mengambil data yang akan di edit bedasarkan id
      const userId = localStorage.getItem("userId");
 
-     // const getEditNote = async () => {
-     //      try {
-     //           const response = await useApiGet(`/get-note/${userId}`);
-     //           setEditData(response.data);
-     //           setValue("description", response.data.description)
-     //           setValue("date", formatDate(data.date))
-     //           setValue("price", response.data.price)
-     //           setValue("noteType", response.data.noteType)
-
-     //      } catch (error) {
-     //           console.error("Error edit data: ", error);
-     //      }
-     // }
-
      useEffect(() => {
           setValue("description", data.description);
-          setValue("date", formatDate(data.date));
+          // setValue("date", formatDate(data.date));
+          setValue("date", formatDate(data.date, 'YYYY-MM-DD'));
           setValue("price", data.price);
           setValue("noteType", data.noteType);
      }, [isOpen]);
@@ -53,7 +38,7 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
           data.price = parseInt(data.price);
           try {
                const response = await userApiEditData(`/edit-note/${userId}`, data);
-               console.log(response);
+               // console.log(response);
                if (response.status === 201) {
                     toast.success("Catatan berhasil diubah");
                     setLoading(false);
