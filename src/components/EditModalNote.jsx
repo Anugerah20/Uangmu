@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
-import { userApiEditData, useApiGet } from "../services/apiService";
+import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
 import { FaEdit } from "react-icons/fa";
@@ -62,7 +62,7 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
 
      return (
           <Fragment>
-               <button title="Edit" className="text-green-500" onClick={() => setOpenModal(!openModal)}><FaEdit /></button>
+               <button title="Edit" onClick={() => setOpenModal(!openModal)}><FaEdit /></button>
                <Modal
                     show={openModal}
                     size="md"
