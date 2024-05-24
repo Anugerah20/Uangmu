@@ -9,7 +9,6 @@ const ModalNote = ({ onSubmitSuccess }) => {
 
      const [openModal, setOpenModal] = useState(false);
      const [loading, setLoading] = useState(false);
-
      const {
           register,
           handleSubmit,
@@ -31,7 +30,6 @@ const ModalNote = ({ onSubmitSuccess }) => {
 
                // Kirim data catatan ke API untuk ditambahkan
                const response = await userApiPost("/note", noteData);
-               // return console.log("Data catatan ditambahkan: ", response);
 
                // Notifikasi sukses
                if (response.status === 201) {
@@ -91,7 +89,8 @@ const ModalNote = ({ onSubmitSuccess }) => {
                                         <div className="mb-2 block">
                                              <label htmlFor="price">Nominal</label>
                                         </div>
-                                        <input type="number" id="price" {...register("price", { required: true, min: 0 })} />
+                                        <input type="number" id="price" {...register("price", { required: true, min: 0 })}
+                                        />
                                         {errors.price && errors.price.type === "required" && <span className="text-danger">Nominal harus diisi</span>}
                                         {errors.price && errors.price.type === "min" && <span className="text-danger">Nominal tidak boleh negatif</span>}
                                    </div>
