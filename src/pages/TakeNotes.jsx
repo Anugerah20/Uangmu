@@ -20,6 +20,12 @@ const TakeNotes = () => {
      // State buat mengtrigger data catatan uang
      const [triggerEffect, setTriggerEffect] = useState(false);
 
+     // State untuk pagination notes
+     const [totalPage, setTotalPage] = useState(1);
+     const [currentPage, setCurrentPage] = useState(1);
+     const limit = 3;
+
+     // Fungsi buat menambahkan catatan keuangan baru
      const handleAddNote = async (newNote) => {
           // Logika penambahan data catatan dan perhitungan total uang
           try {
@@ -49,15 +55,29 @@ const TakeNotes = () => {
 
      // 1. Fungsi untuk mengambil data catatan dari backend
      // 2. Fungsi untuk mengambil id edit catatan
-     const fetchData = async () => {
+     const fetchData = async (page = 1, limit = 3) => {
           const userId = localStorage.getItem("userId");
           try {
-               const response = await useApiGet(`/get-note/${userId}`);
-               setSavedData(response.data.showNotes);
+               const response = await useApiGet(`/get-note/${userId}?page=${page}&limit=${limit}`);
+               setSavedData(response.data.showNotes || []); // Jika tidak ada data maka set sebagai array kosong
+
+               // Memasukkan total halaman, halaman saat ini, dan limit data per halaman pagination
+               setTotalPage(response.data.totalPages || 1); // set total halaman, jika tidak tersedia set sebagai 1
+               setCurrentPage(response.data.currentPage || 1); // set halaman saat ini, jika tidak tersedia set sebagai 1
           } catch (error) {
                console.error("Error fetching data:", error);
           }
      };
+
+     // Mengambil data catatan ketika halaman pertama dimuat
+     useEffect(() => {
+          fetchData(currentPage, limit);
+     }, [triggerEffect, currentPage]);
+
+     // Fungsi mengubah halaman catatan ketika pindah halaman
+     const handlePageChange = (newPage) => {
+          setCurrentPage(newPage);
+     }
 
      // Fungsi untuk menghapus data catatan berdasarkan id
      const handleDelete = async (id) => {
@@ -76,24 +96,9 @@ const TakeNotes = () => {
           }
      }
 
-     // Memanggil modal catatan
-     useEffect(() => {
-          fetchData();
-     }, [triggerEffect]);
-
-
-     // useEffect(() => {
-     //      AOS.init();
-     // }, []);
-
      return (
           <>
-               <div
-                    // data-aos="fade-up"
-                    // data-aos-offset="200"
-                    // data-aos-delay="100"
-                    // data-aos-duration="1000"
-                    className="flex flex-wrap">
+               <div className="flex flex-wrap">
 
                     {/* START: TOTAL MONEY */}
                     <TotalMoney totalUang={totalUang} totalPemasukan={totalPemasukan} totalPengeluaran={totalPengeluaran}
@@ -102,14 +107,12 @@ const TakeNotes = () => {
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
-                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%]">
-                         {/* START: DOWNLOAD PDF */}
+                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
                          <div className="flex justify-between items-center">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
                               <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
                          </div>
 
-                         {/* END: DOWNLOAD PDF */}
                          <div className="relative overflow-x-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto ">
                                    <thead className="border">
@@ -122,15 +125,13 @@ const TakeNotes = () => {
                                         </tr>
                                    </thead>
                                    <tbody>
-                                        {/* Condition for displaying message if no data available */}
-                                        {savedData && savedData.length === 0 ? (
+                                        {savedData.length === 0 ? (
                                              <tr>
                                                   <td colSpan="5" className="border p-4">
                                                        Catatan uangmu tidak tersedia
                                                   </td>
                                              </tr>
                                         ) : (
-                                             // Render your data here
                                              savedData.map((data, index) => (
                                                   <DataNoteTable
                                                        key={index} savedData={data} onDelete={handleDelete}
@@ -141,7 +142,28 @@ const TakeNotes = () => {
                                         )}
                                    </tbody>
                               </table>
+
+
                          </div>
+                         {/* START: PAGINATION */}
+                         <div className="flex justify-center mt-4">
+                              <button
+                                   onClick={() => handlePageChange(currentPage - 1)}
+                                   disabled={currentPage === 1}
+                                   className="bg-sky-500 text-white px-4 py-2 rounded-md mr-2"
+                              >
+                                   Previous
+                              </button>
+                              <span className="text-gray-400 font-semibold flex items-center justify-center">Showing {currentPage} to {totalPage} of {limit} Entries</span>
+                              <button
+                                   onClick={() => handlePageChange(currentPage + 1)}
+                                   disabled={currentPage === totalPage}
+                                   className="bg-sky-500 text-white px-4 py-2 rounded-md ml-2"
+                              >
+                                   Next
+                              </button>
+                         </div>
+                         {/* END: PAGINATION */}
                     </div>
                     {/* END: MEMASUKKAN DATA */}
 
