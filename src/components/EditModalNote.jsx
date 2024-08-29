@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
+import { formatToIDR } from "../utils/currencyMoney";
 import { FaEdit } from "react-icons/fa";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
@@ -55,7 +56,7 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
           if (editData) {
                setValue("description", data.description)
                setValue("date", formatDate(data.date))
-               setValue("price", data.price)
+               setValue("price", formatToIDR(data.price))
                setValue("noteType", data.noteType)
           }
      }, [editData]);
