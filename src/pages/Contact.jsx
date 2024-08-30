@@ -3,6 +3,7 @@ import { Toaster, toast } from "sonner";
 import AOS from "aos";
 import "aos/dist/aos.css"
 import { useEffect } from "react";
+import { userApiPost } from "../services/apiService";
 
 const Contact = () => {
      document.title = "Uangmu | Kontak";
@@ -15,9 +16,27 @@ const Contact = () => {
           reset,
      } = useForm();
 
-     const onSubmit = () => {
-          toast.success("Pesan berhasil terkirim");
-          reset();
+     // Submit form contact
+     const onSubmit = async (data) => {
+          try {
+               const contactData = {
+                    fullname: data.fullname,
+                    email: data.email,
+                    message: data.message
+               };
+
+               const response = await userApiPost("/contact", contactData);
+
+               // Check status send message
+               if (response.status === 201) {
+                    toast.success("Pesan berhasil terkirim");
+                    reset();
+               } else {
+                    toast.error("Pesan gagal terkirim");
+               }
+          } catch (error) {
+               toast.error("Pesan gagal terkirim");
+          }
      };
 
      // Animation AOS
@@ -32,7 +51,7 @@ const Contact = () => {
                data-aos-delay="100"
                data-aos-duration="1000"
           >
-               <h1 className="text-2xl mt-10 font-bold text-center">Kirim Pesanmu Disini</h1>
+               <h1 className="text-2xl mt-10 font-bold text-center text-sky-600">Kirim Pesanmu Disini</h1>
                <Toaster />
                {/* START: KONTAK */}
                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mx-auto w-4/5 sm:max-w-md mt-10">
@@ -43,12 +62,12 @@ const Contact = () => {
                          </div>
                          <input
                               type="text"
-                              id="username"
+                              id="fullname"
                               autoComplete="off"
-                              {...register("username", { required: true, minLength: 5 })} autoFocus
+                              {...register("fullname", { required: true, minLength: 5 })} autoFocus
                          />
-                         {errors.username && errors.username.type === "required" && <span className="text-sm text-red-400">Username required</span>}
-                         {errors.username && errors.username.type === "minLength" && <span className="text-sm text-red-400">Username min 5 character</span>}
+                         {errors.fullname && errors.fullname.type === "required" && <span className="text-sm text-red-400">fullname required</span>}
+                         {errors.fullname && errors.fullname.type === "minLength" && <span className="text-sm text-red-400">fullname min 5 character</span>}
                     </div>
                     <div>
                          <div className="mb-2 block">
@@ -71,7 +90,7 @@ const Contact = () => {
                               id="message"
                               rows={4}
                               autoComplete="off"
-                              {...register("message", { required: true, minLength: 15 })}
+                              {...register("message", { required: true, minLength: 5 })}
                          />
                          {errors.message && errors.message.type === "required" && <span className="text-sm text-red-400">Message required</span>}
                          {errors.message && errors.message.type === "minLength" && <span className="text-sm text-red-400">Message min 15 character</span>}
