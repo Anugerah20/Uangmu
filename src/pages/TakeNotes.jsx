@@ -7,6 +7,7 @@ import FilterMoney from "../components/FilterMoney";
 // import AOS from "aos";
 import "aos/dist/aos.css";
 import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
+import ChartMoney from "../components/chartMoney";
 
 const TakeNotes = () => {
      document.title = "Uangmu | Catatan";
@@ -109,14 +110,10 @@ const TakeNotes = () => {
                     />
                     {/* END: TOTAL MONEY */}
 
-
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
                          <div className="flex justify-between items-center">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
-
-                              {/* EDITOR: Nabil 06/06/2024 */}
-                              {/* <DownloadPdf financialData={savedData} selectMonth={selectMonth} /> */}
                          </div>
 
                          <div className="relative overflow-x-auto">
@@ -149,6 +146,7 @@ const TakeNotes = () => {
                                    </tbody>
                               </table>
                          </div>
+
                          {/* START: PAGINATION */}
                          <div className="flex justify-center mt-4">
                               <button
@@ -159,8 +157,6 @@ const TakeNotes = () => {
                                    Previous
                               </button>
 
-                              {/* Membuat kondisi jika catatan belum ada di user lain */}
-                              {/* Menampilkan halaman saat ini dan total halaman */}
                               {savedData.length > 0 && (
                                    <span className="text-gray-400 font-semibold flex items-center justify-center text-center text-xs">Show {currentPage} to total page {totalPage}</span>
                               )}
@@ -185,6 +181,12 @@ const TakeNotes = () => {
                     {/* END: MODAL KEUANGAN */}
 
                </div>
+
+               {/* START: CHART */}
+               <div className="flex justify-center flex-col">
+                    <ChartMoney className="w-[400px] h-[300px]" />
+               </div>
+               {/* END: CHART */}
           </>
      );
 };
