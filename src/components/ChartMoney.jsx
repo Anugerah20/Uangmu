@@ -27,8 +27,8 @@ const ChartMoney = () => {
      };
 
      return (
-          <div>
-               <h1>Chart</h1>
+          <div className="mx-12">
+               <h1 className="my-5">Laporan Data Keuangan</h1>
                <Line data={data} options={options} />
           </div>
      );
