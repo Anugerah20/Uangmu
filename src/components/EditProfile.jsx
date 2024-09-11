@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { userApiEditGet, userApiEditData } from "../services/apiService";
 import { Link } from "react-router-dom";
-import { FaArrowLeft, FaRegUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
+import { IoMdArrowBack } from "react-icons/io";
 import { Toaster, toast } from "sonner";
 
 const EditProfile = () => {
@@ -90,12 +91,12 @@ const EditProfile = () => {
                <form encType="multipart/form-data" onSubmit={handleSubmit} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto my-10">
                     <Toaster />
                     <div className="flex justify-between mb-6">
-                         <div className="flex justify-center items-center gap-2">
-                              <FaRegUser className="w-5 h-5" />
-                              <h1 className="text-2xl font-bold">Edit Profil</h1>
+                         <div className="flex justify-center items-center gap-3">
+                              <FaRegUser className="w-5 h-5 !font-bold" />
+                              <p className="text-xl">Edit Profil</p>
                          </div>
                          <div className="flex justify-center items-center gap-3">
-                              <FaArrowLeft className="w-5 h-5" />
+                              <IoMdArrowBack className="w-5 h-5" />
                               <Link to="/">Ke Beranda</Link>
                          </div>
                     </div>
