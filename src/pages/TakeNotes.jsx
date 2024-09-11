@@ -3,11 +3,11 @@ import TotalMoney from "../components/TotalAmout";
 import DataNoteTable from "../components/DataNoteTable";
 import ModalNote from "../components/ModalNote";
 import FilterMoney from "../components/FilterMoney";
+import ChartMoney from "../components/ChartMoney";
 // import DownloadPdf from "../components/DownloadPdf";
 // import AOS from "aos";
 import "aos/dist/aos.css";
 import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
-import ChartMoney from "../components/chartMoney";
 
 const TakeNotes = () => {
      document.title = "Uangmu | Catatan";
