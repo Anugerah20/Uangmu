@@ -3,7 +3,6 @@ import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { userApiPost } from "../services/apiService";
-import ChartMoney from "../components/chartMoney";
 
 const ModalNote = ({ onSubmitSuccess }) => {
      document.title = "Uangmu | Catatan";
