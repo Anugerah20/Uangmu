@@ -5,6 +5,7 @@ import EditModalNote from "./EditModalNote";
 import { useEffect, useState } from "react";
 import formatDate from "../services/formatDate";
 import ConfirmDeleteNote from "./ConfirmDeleteNote";
+import { formatToIDR } from "../utils/currencyMoney";
 
 const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
      const [isOpenEdit] = useState(false);
@@ -18,6 +19,7 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
           setIsConfirmDeleteOpen(true);
      }
 
+     // Fungsi konfirmasi hapus data berdasarkan id catatan
      const confirmDelete = () => {
           if (deleteId !== null) {
                onDelete(deleteId);
@@ -28,22 +30,7 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
           }
      };
 
-     // Fungsi konfrimasi hapus data
-     // const handleDelete = (id) => {
-     //      const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus catatan ini?");
-     //      if (confirmDelete) {
-     //           onDelete(id);
-     //           toast.success("Catatan berhasil dihapus");
-     //           savedData(savedData.filter((data) => data.id !== id));
-     //           onSubmitSuccess();
-     //      }
-     // }
-
-     // Format Amount
-     const formatAmountID = new Intl.NumberFormat("id-ID").format(savedData.price);
-
-     const formattedDate = formatDate(savedData.date, 'DD-MM-YYYY');
-
+     // Fungsi untuk mengupdate data setelah data berhasil dihapus
      useEffect(() => {
           onSubmitSuccess();
      }, [triggerEffect])
@@ -52,8 +39,8 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
           <>
                <tr className="bg-primary border-gray-300">
                     <td className="whitespace-nowrap px-6 py-3">{savedData.description}</td>
-                    <td className="px-6 py-3">{formattedDate}</td>
-                    <td className="px-6 py-3">{formatAmountID}</td>
+                    <td className="px-6 py-3">{formatDate(savedData.date)}</td>
+                    <td className="px-6 py-3">{formatToIDR(savedData.price)}</td>
                     <td className="px-6 py-3">{savedData.noteType}</td>
                     <td className="flex justify-center gap-4 mt-1 px-6 py-3">
                          <Link to="#" title="Hapus" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>

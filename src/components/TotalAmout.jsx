@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { TbSquareArrowDown } from "react-icons/tb";
 import { TbSquareArrowUp } from "react-icons/tb";
+import { formatToIDR } from "../utils/currencyMoney";
 
 const TotalAmout = ({ totalPemasukan, totalPengeluaran, selectMonth, savedData }) => {
      const [filterTotalPemasukan, setFilterTotalPemasukan] = useState(totalPemasukan);
      const [filterTotalPengeluaran, setFilterTotalPengeluaran] = useState(totalPengeluaran);
-
-     const numberFormatAmount = (number) => {
-          return new Intl.NumberFormat("id-ID").format(number);
-     }
 
      useEffect(() => {
           // Calculate pemasukan & pengeluaran
@@ -40,21 +37,21 @@ const TotalAmout = ({ totalPemasukan, totalPengeluaran, selectMonth, savedData }
      const filterTotalUang = filterTotalPemasukan - filterTotalPengeluaran;
 
      return (
-          <div className="w-4/5 sm:w-1/2 md:w-2/5 card-note space-y-4 shadow-md p-4 bg-gradient-to-l from-indigo-500 to-teal-400 text-white">
+          <div className="w-4/5 sm:w-1/2 md:w-2/5 h-48 card-note space-y-4 shadow-md p-4 bg-gradient-to-l from-indigo-500 to-teal-400 text-white">
                <h1 className="text-center text-2xl">Total Uang Sekarang</h1>
-               <h2 className="text-center text-xl font-bold">Rp {numberFormatAmount(filterTotalUang)}</h2>
+               <h2 className="text-center text-xl font-bold">{formatToIDR(filterTotalUang)}</h2>
                <section className="flex flex-wrap justify-between">
                     <div className="income">
                          <div className="flex items-center">
                               <h5 className="flex items-center gap-1"><TbSquareArrowUp className="text-2xl" />Pemasukan</h5>
                          </div>
-                         <small className="font-bold">Rp {numberFormatAmount(filterTotalPemasukan)}</small>
+                         <small className="font-bold">{formatToIDR(filterTotalPemasukan)}</small>
                     </div>
                     <div className="expenses">
                          <div className="flex items-center">
                               <h5 className="flex items-center gap-1"><TbSquareArrowDown className="text-2xl" />Pengeluaran</h5>
                          </div>
-                         <small className="font-bold">Rp {numberFormatAmount(filterTotalPengeluaran)}</small>
+                         <small className="font-bold">{formatToIDR(filterTotalPengeluaran)}</small>
                     </div>
                </section>
           </div>

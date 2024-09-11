@@ -1,21 +1,15 @@
-// EDITOR: Nabil (23/05/2024)
-// const formatDate = (dateString) => {
-//      const date = new Date(dateString);
-//      const year = date.getFullYear();
-//      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-//      const day = date.getDate().toString().padStart(2, "0");
-//      return `${year}-${month}-${day}`;
-// }
-// export default formatDate;
-
-const formatDate = (dateString, format = "DD-MM-YYYY") => {
+// Fungsi untuk mengubah format tanggal
+const formatDate = (dateString, format = "DD/MM/YYYY") => {
      const date = new Date(dateString);
      const year = date.getFullYear();
      const month = (date.getMonth() + 1).toString().padStart(2, "0");
      const day = date.getDate().toString().padStart(2, "0");
 
-     if (format === "DD-MM-YYYY") {
-          return `${day}-${month}-${year}`;
+     // Cek format tanggal apakah "DD/MM/YYYY" atau "YYYY/MM/DD"
+     // Jika "DD/MM/YYYY" maka tampilkan "day/month/year"
+     // Jika "YYYY/MM/DD" maka tampilkan "year/month/day"
+     if (format === "DD/MM/YYYY") {
+          return `${day}/${month}/${year}`;
      } else if (format === "YYYY-MM-DD") {
           return `${year}-${month}-${day}`;
      }

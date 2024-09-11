@@ -3,8 +3,9 @@ import TotalMoney from "../components/TotalAmout";
 import DataNoteTable from "../components/DataNoteTable";
 import ModalNote from "../components/ModalNote";
 import FilterMoney from "../components/FilterMoney";
-import DownloadPdf from "../components/DownloadPdf";
-import AOS from "aos";
+import ChartMoney from "../components/ChartMoney";
+// import DownloadPdf from "../components/DownloadPdf";
+// import AOS from "aos";
 import "aos/dist/aos.css";
 import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
 
@@ -62,8 +63,11 @@ const TakeNotes = () => {
                setSavedData(response.data.showNotes || []); // Jika tidak ada data maka set sebagai array kosong
 
                // Memasukkan total halaman, halaman saat ini, dan limit data per halaman pagination
-               setTotalPage(response.data.totalPages || 1); // set total halaman, jika tidak tersedia set sebagai 1
-               setCurrentPage(response.data.currentPage || 1); // set halaman saat ini, jika tidak tersedia set sebagai 1
+               // set total halaman, jika tidak tersedia set sebagai 1
+               setTotalPage(response.data.totalPages || 1);
+
+               // set halaman saat ini, jika tidak tersedia set sebagai 1
+               setCurrentPage(response.data.currentPage || 1);
           } catch (error) {
                console.error("Error fetching data:", error);
           }
@@ -110,7 +114,6 @@ const TakeNotes = () => {
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
                          <div className="flex justify-between items-center">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
-                              <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
                          </div>
 
                          <div className="relative overflow-x-auto">
@@ -142,23 +145,26 @@ const TakeNotes = () => {
                                         )}
                                    </tbody>
                               </table>
-
-
                          </div>
+
                          {/* START: PAGINATION */}
                          <div className="flex justify-center mt-4">
                               <button
                                    onClick={() => handlePageChange(currentPage - 1)}
                                    disabled={currentPage === 1}
-                                   className="bg-sky-500 text-white px-4 py-2 rounded-md mr-2"
+                                   className={`${currentPage === 1 ? "bg-gray-300" : "bg-sky-500"} text-white w-20 h-10 rounded-md mr-2`}
                               >
                                    Previous
                               </button>
-                              <span className="text-gray-400 font-semibold flex items-center justify-center">Showing {currentPage} to {totalPage} of {limit} Entries</span>
+
+                              {savedData.length > 0 && (
+                                   <span className="text-gray-400 font-semibold flex items-center justify-center text-center text-xs">Show {currentPage} to total page {totalPage}</span>
+                              )}
+
                               <button
                                    onClick={() => handlePageChange(currentPage + 1)}
                                    disabled={currentPage === totalPage}
-                                   className="bg-sky-500 text-white px-4 py-2 rounded-md ml-2"
+                                   className={`${currentPage === totalPage ? "bg-gray-300 ml-2" : "bg-sky-500 ml-2"} text-white px-4 py-2 rounded-md mr-2`}
                               >
                                    Next
                               </button>
@@ -175,6 +181,12 @@ const TakeNotes = () => {
                     {/* END: MODAL KEUANGAN */}
 
                </div>
+
+               {/* START: CHART */}
+               <div className="flex justify-center flex-col">
+                    <ChartMoney className="w-[400px] h-[300px]" />
+               </div>
+               {/* END: CHART */}
           </>
      );
 };
