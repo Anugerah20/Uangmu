@@ -1,35 +1,54 @@
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import { Line } from 'react-chartjs-2'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, plugins } from 'chart.js'
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(
+     CategoryScale,
+     LinearScale,
+     PointElement,
+     LineElement,
+     Title,
+     Tooltip,
+     Legend
+)
 
 const ChartMoney = () => {
-     const data = {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-          datasets: [
-               {
-                    label: 'Earnings',
-                    data: [3000, 2000, 4000, 5000, 7000, 6000],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: true,
-                    tension: 0.4,
-               },
-          ],
-     };
 
      const options = {
-          scales: {
-               y: {
-                    beginAtZero: true,
+          reponsive: true,
+          plugins: {
+               legend: {
+                    position: 'top'
                },
-          },
-     };
+               title: {
+                    display: true,
+                    text: 'Laporan Pemasukan dan Pengeluaran'
+               }
+          }
+     }
+
+     const data = {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Desember'],
+          datasets: [
+               {
+                    label: 'Pemasukan',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    // fill: false,
+                    // backgroundColor: 'rgb(75, 192, 192)',
+                    borderColor: 'green',
+               },
+               {
+                    label: 'Pengeluaran',
+                    data: [28, 48, 40, 19, 86, 27, 90],
+                    // fill: false,
+                    // backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'red',
+               },
+          ],
+     }
 
      return (
-          <div className="mx-12">
-               <h1 className="my-5">Laporan Data Keuangan</h1>
-               <Line data={data} options={options} />
+          <div className="mx-12 w-full">
+               <Line options={options} data={data} />
           </div>
      );
 }
