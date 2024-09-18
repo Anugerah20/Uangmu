@@ -62,6 +62,8 @@ const TakeNotes = () => {
                const response = await useApiGet(`/get-note/${userId}?page=${page}&limit=${limit}`);
                setSavedData(response.data.showNotes || []); // Jika tidak ada data maka set sebagai array kosong
 
+               console.log("DATA NOTES: ", response.data.showNotes);
+
                // Memasukkan total halaman, halaman saat ini, dan limit data per halaman pagination
                // set total halaman, jika tidak tersedia set sebagai 1
                setTotalPage(response.data.totalPages || 1);
