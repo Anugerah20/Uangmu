@@ -12,12 +12,12 @@ const ChartMoney = () => {
                {
                     label: 'Pemasukan',
                     data: Array(12).fill(0),
-                    borderColor: 'green',
+                    borderColor: '#00a8e8',
                },
                {
                     label: 'Pengeluaran',
                     data: Array(12).fill(0),
-                    borderColor: 'red',
+                    borderColor: '#bf0603',
                }
           ]
      });
@@ -34,9 +34,7 @@ const ChartMoney = () => {
 
                notes.forEach(note => {
                     const date = new Date(note.date);
-                    const month = date.getMonth(); //
-
-                    console.log(`NOTE TYPE ${note.noteType}`)
+                    const month = date.getMonth();
 
                     if (note.noteType === 'Pemasukan') {
                          monthlyIncome[month] += note.price;
