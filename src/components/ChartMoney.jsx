@@ -25,8 +25,9 @@ const ChartMoney = () => {
      const getDataChart = async () => {
           try {
                const userId = localStorage.getItem("userId");
-               const response = await useApiGet(`/get-note/${userId}`);
-               const notes = response.data.showNotes;
+               const response = await useApiGet(`/get-all-note/${userId}`);
+
+               const notes = response.data.showAllNotes;
 
                // Menyimpan data pemasukan serta pengeluaran berdasarkan bulan
                const monthlyIncome = Array(12).fill(0);
