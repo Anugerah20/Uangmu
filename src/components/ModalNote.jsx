@@ -56,8 +56,8 @@ const ModalNote = ({ onSubmitSuccess }) => {
      };
 
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end  ml-[3.3rem] md:ml-10 lg:ml-[4.5rem] relative">
-               <button onClick={() => setOpenModal(true)} className="btn-note absolute bottom-32 left-0">Buat Catatan</button>
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end ml-[3.3rem] md:ml-10 lg:ml-[4.5rem] relative">
+               <button onClick={() => setOpenModal(true)} className="btn-note absolute lg:-top-44 md:-top-40 -top-5 lg:left-0 md:left-1">Buat Catatan</button>
 
                <Modal
                     show={openModal}

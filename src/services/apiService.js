@@ -3,7 +3,6 @@ import axios from "axios";
 // Make api
 const urlApi = "http://localhost:3000/user";
 const token = localStorage.getItem("tokenUser");
-console.log("LIHAT TOKEN: ", token);
 
 const apiService = axios.create({
      baseURL: urlApi,
@@ -11,26 +10,6 @@ const apiService = axios.create({
           "Authorization": `Bearer ${token}`
      }
 });
-
-// Interceptor to customize every request
-// Affects profile edit, must be modified
-// apiService.interceptors.request.use(
-//      (config) => {
-//           // Retrieve tokens from local storage
-//           const token = localStorage.getItem("tokenUser");
-
-//           // If the token is available, add the Authorization header
-//           if (token) {
-//                config.headers["Authorization"] = `Bearer ${token}`;
-//           }
-
-//           return config;
-//      },
-//      (error) => {
-//           return Promise.reject("Token Interceptor Failed: ", error);
-//      }
-// );
-
 
 // Register & login user
 export const userApiPost = async (url, userData) => {
@@ -59,7 +38,6 @@ export const useApiGet = async (url) => {
 export const userApiEditGet = async (url) => {
      try {
           const response = await apiService.get(url);
-          console.log("USE GET DATA EDIT USER: ", response);
           return response;
 
      } catch (error) {
@@ -71,7 +49,6 @@ export const userApiEditGet = async (url) => {
 export const userApiEditData = async (url, userData) => {
      try {
           const response = await apiService.put(url, userData);
-          console.log("USE PUT DATA USER: ", response);
           return response;
 
      } catch (error) {
@@ -100,4 +77,4 @@ export const userLogout = () => {
      } catch (error) {
           console.log("Error Logout User: ", error);
      }
-} 
+}
