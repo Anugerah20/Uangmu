@@ -186,7 +186,7 @@ const TakeNotes = () => {
 
                {/* START: CHART */}
                <div className="flex justify-center flex-col">
-                    <ChartMoney className="w-[400px] h-[300px]" />
+                    <ChartMoney />
                </div>
                {/* END: CHART */}
           </>
