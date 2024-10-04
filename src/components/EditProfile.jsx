@@ -19,9 +19,6 @@ const EditProfile = () => {
                     const userId = localStorage.getItem("userId");
                     const token = localStorage.getItem("tokenUser");
 
-                    // console.log("GET Edit Profile ID from localStorage: ", userId);
-                    // console.log("GET Edit Profile Token User: ", token);
-
                     const response = await userApiEditGet(`/edit-profil/${userId}`);
                     setGetEditData(response?.data);
 
