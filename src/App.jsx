@@ -27,7 +27,7 @@ function App() {
     <>
       <Toaster />
       {!hiddenPage && <Navigation />}
-      <div className="h-screen">
+      <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
 

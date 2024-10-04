@@ -7,7 +7,6 @@ export default function Navigation() {
 
   // Check Token User
   const userToken = localStorage.getItem("tokenUser");
-  console.log("USER TOKEN: ", userToken);
   const userLogin = userToken ? true : false;
 
   const location = useLocation();
