@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { useApiGet } from '../services/apiService';
+import React, { useState, useEffect, useCallback } from "react";
+import { Line } from "react-chartjs-2"
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import { useApiGet } from "../services/apiService";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -22,14 +22,18 @@ const ChartMoney = () => {
           ]
      });
 
-     const getDataChart = async () => {
+     const getDataChart = useCallback(async () => {
           try {
                const userId = localStorage.getItem("userId");
                const response = await useApiGet(`/get-all-note/${userId}`);
 
-               const notes = response.data.showAllNotes;
+               const notes = response?.data?.showAllNotes;
 
-               // Menyimpan data pemasukan serta pengeluaran berdasarkan bulan
+               if (!notes || !Array.isArray(notes)) {
+                    console.log("Invalid data received from API");
+                    return;
+               }
+
                const monthlyIncome = Array(12).fill(0);
                const monthlyExpense = Array(12).fill(0);
 
@@ -38,29 +42,36 @@ const ChartMoney = () => {
                     const month = date.getMonth();
 
                     if (note.noteType === 'Pemasukan') {
-                         monthlyIncome[month] += note.price;
+                         monthlyIncome[month] += parseFloat(note.price) || 0;
                     } else if (note.noteType === 'Pengeluaran') {
-                         monthlyExpense[month] += note.price;
+                         monthlyExpense[month] += parseFloat(note.price) || 0;
                     }
                });
 
-               // Memperbarui chart data
                setChartData(prevChartData => ({
-                    labels: prevChartData.labels,
+                    ...prevChartData,
                     datasets: [
                          { ...prevChartData.datasets[0], data: monthlyIncome },
                          { ...prevChartData.datasets[1], data: monthlyExpense },
                     ],
                }));
-
           } catch (error) {
                console.log("Error fetching chart data:", error);
           }
-     };
+     }, []);
 
      useEffect(() => {
+          // data chart fetch
           getDataChart();
-     }, []);
+
+          // Set up polling
+          const intervalId = setInterval(() => {
+               getDataChart();
+          }, 1000);
+
+          // Clean up on component unmount
+          return () => clearInterval(intervalId);
+     }, [getDataChart]);
 
      const options = {
           responsive: true,
