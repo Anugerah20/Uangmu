@@ -27,4 +27,4 @@ const ConfirmDeleteNote = ({ isOpen, onClose, onConfirm }) => {
      );
 }
 
-export default ConfirmDeleteNote
+export default ConfirmDeleteNote;
