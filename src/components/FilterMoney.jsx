@@ -1,3 +1,5 @@
+import React from "react";
+
 const FilterMoney = ({ selectMonth, setSelectMonth }) => {
      const months = [
           "Semua Bulan", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
