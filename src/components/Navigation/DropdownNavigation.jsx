@@ -49,8 +49,6 @@ const DropdownNavigation = () => {
                     }
                >
                     <Dropdown.Header>
-                         {/* <div className="bg-red-200 text-red-500 p-3 font-normal rounded-md">Profil kamu belum lengkap</div> */}
-                         {/* <div className="flex items-center my-2 space-x-2"> */}
                          <div className="flex items-center space-x-2">
                               <img src={avatarUserDropdown()}
                                    alt="Profile User" className="mt-2 w-10 h-10 rounded-full"
@@ -83,4 +81,4 @@ const DropdownNavigation = () => {
      )
 }
 
-export default DropdownNavigation
+export default DropdownNavigation;

@@ -65,6 +65,19 @@ const EditProfile = () => {
 
                if (response.status === 200) {
                     toast.success("Edit Profil Successfully");
+
+                    // update state directly without reload
+                    setGetEditData((prevData) => ({
+                         ...prevData,
+                         fullname: getEditData.fullname,
+                         bio: getEditData.bio,
+                    }));
+
+                    if (file) {
+                         const imageUrl = URL.createObjectURL(file);
+                         setUpdateImage(imageUrl);
+                    }
+
                } else if (response.status === 400) {
                     toast.error("Edit Profil Failed");
                }
@@ -87,7 +100,7 @@ const EditProfile = () => {
           <div>
                <form encType="multipart/form-data" onSubmit={handleSubmit} className="max-w-md lg:w-full md:w-4/5 w-4/5 flex-col gap-4 mx-auto my-10">
                     <Toaster />
-                    <div className="flex justify-between mb-6">
+                    <div className="flex justify-between mb-6 border-b-2 border-gray-300 py-2">
                          <div className="flex justify-center items-center gap-3">
                               <FaRegUser className="w-5 h-5 !font-bold" />
                               <p className="text-xl">Edit Profil</p>
@@ -115,7 +128,7 @@ const EditProfile = () => {
                          </div>
                          <input
                               id="fullname" type="text"
-                              name="fullname" value={getEditData?.fullname || ""}
+                              name="fullname" value={getEditData?.fullname}
                               onChange={handleChange}
                          />
                     </div>
@@ -126,7 +139,7 @@ const EditProfile = () => {
                          </div>
                          <input
                               id="email" type="email" className="cursor-not-allowed bg-gray-200"
-                              name="email" value={getEditData?.email || ""} disabled
+                              name="email" value={getEditData?.email} disabled
                               onChange={handleChange}
                          />
                     </div>
@@ -138,7 +151,7 @@ const EditProfile = () => {
                          <textarea
                               id="bio" type="email"
                               className="rounded h-20"
-                              name="bio" value={getEditData?.bio || ""}
+                              name="bio" value={getEditData?.bio}
                               onChange={handleChange}
                          ></textarea>
                     </div>

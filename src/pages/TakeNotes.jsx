@@ -47,10 +47,10 @@ const TakeNotes = () => {
                     setTotalPengeluaran(updateTotalPengeluaran);
 
                } else {
-                    console.error("Failed show total money :", response.data);
+                    console.log("Failed show total money :", response.data);
                }
           } catch (error) {
-               console.error("Error add data total money :", error);
+               console.log("Error add data total money :", error);
           }
      };
 
@@ -60,18 +60,18 @@ const TakeNotes = () => {
           const userId = localStorage.getItem("userId");
           try {
                const response = await useApiGet(`/get-note/${userId}?page=${page}&limit=${limit}`);
-               setSavedData(response.data.showNotes || []); // Jika tidak ada data maka set sebagai array kosong
+               setSavedData(response?.data?.showNotes || []); // Jika tidak ada data maka set sebagai array kosong
 
                console.log("DATA NOTES: ", response.data.showNotes);
 
                // Memasukkan total halaman, halaman saat ini, dan limit data per halaman pagination
                // set total halaman, jika tidak tersedia set sebagai 1
-               setTotalPage(response.data.totalPages || 1);
+               setTotalPage(response?.data?.totalPages || 1);
 
                // set halaman saat ini, jika tidak tersedia set sebagai 1
-               setCurrentPage(response.data.currentPage || 1);
+               setCurrentPage(response?.data?.currentPage || 1);
           } catch (error) {
-               console.error("Error fetching data:", error);
+               console.log("Error fetching data:", error);
           }
      };
 
