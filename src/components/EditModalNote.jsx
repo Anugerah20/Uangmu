@@ -5,70 +5,50 @@ import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
 import { formatToIDR } from "../utils/currencyMoney";
-import { FaEdit } from "react-icons/fa";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      document.title = "Uangmu | Edit Catatan";
 
      const [loading, setLoading] = useState(false);
-     const [editData] = useState(null);
-     const [openModal, setOpenModal] = useState(false);
 
      const {
           register,
           handleSubmit,
           setValue,
           formState: { errors },
-          reset
      } = useForm();
 
-     // Fungsi untuk mengambil data yang akan di edit bedasarkan id
      const userId = localStorage.getItem("userId");
 
      useEffect(() => {
           setValue("description", data.description);
-          // setValue("date", formatDate(data.date));
           setValue("date", formatDate(data.date, 'YYYY-MM-DD'));
           setValue("price", data.price);
           setValue("noteType", data.noteType);
-     }, [isOpen]);
+     }, [isOpen, setValue, data]);
 
-     // Fungsi untuk edit catatan
-     const editNote = async (data) => {
-          data.date = new Date(data.date).toISOString();
-          data.price = parseInt(data.price);
+     const editNote = async (formData) => {
+          formData.date = new Date(formData.date).toISOString();
+          formData.price = parseInt(formData.price);
           try {
-               const response = await userApiEditData(`/edit-note/${userId}`, data);
-               // console.log(response);
+               const response = await userApiEditData(`/edit-note/${userId}`, formData);
                if (response.status === 201) {
                     toast.success("Catatan berhasil diubah");
                     setLoading(false);
-                    setOpenModal(false);
                     onSubmitSuccess();
                }
           } catch (error) {
-               console.error("Error edit note: ", error);
+               console.log("Error edit note: ", error);
           }
      }
 
-     // Menampilkan data yang akan di edit
-     useEffect(() => {
-          if (editData) {
-               setValue("description", data.description)
-               setValue("date", formatDate(data.date))
-               setValue("price", formatToIDR(data.price))
-               setValue("noteType", data.noteType)
-          }
-     }, [editData]);
-
      return (
           <Fragment>
-               <button title="Edit" onClick={() => setOpenModal(!openModal)}><FaEdit /></button>
                <Modal
-                    show={openModal}
+                    show={isOpen}
                     size="md"
                     popup
-                    onClose={() => setOpenModal(!openModal)}
+                    onClose={onSubmitSuccess}
                >
                     <Modal.Header />
                     <Modal.Body>
@@ -78,29 +58,21 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
                               </h3>
                               <form onSubmit={handleSubmit(editNote)}>
                                    <div>
-                                        <div className="mb-2 block">
-                                             <label htmlFor="description">Deskripsi</label>
-                                        </div>
+                                        <label htmlFor="description">Deskripsi</label>
                                         <input type="text" id="description" {...register("description", { required: true })} />
                                         {errors.description && <span className="text-danger">Deskripsi harus diisi</span>}
                                    </div>
                                    <div>
-                                        <div className="mb-2 block">
-                                             <label htmlFor="date">Tanggal</label>
-                                        </div>
+                                        <label htmlFor="date">Tanggal</label>
                                         <input type="date" id="date" {...register("date", { required: true })} />
                                         {errors.date && <span className="text-danger">Tanggal harus diisi</span>}
                                    </div>
                                    <div>
-                                        <div className="mb-2 block">
-                                             <label htmlFor="price">Nominal</label>
-                                        </div>
+                                        <label htmlFor="price">Nominal</label>
                                         <input type="number" id="price" {...register("price", { required: true, min: 0 })} />
-                                        {errors.price && errors.price.type === "required" && <span className="text-danger">Nominal harus diisi</span>}
-                                        {errors.price && errors.price.type === "min" && <span className="text-danger">Nominal tidak boleh negatif</span>}
+                                        {errors.price && <span className="text-danger">Nominal harus diisi dan tidak boleh negatif</span>}
                                    </div>
-
-                                   <div className="block">
+                                   <div>
                                         <label htmlFor="noteType">Jenis Catatan</label>
                                         <select id="noteType" {...register("noteType", { required: true })}>
                                              <option value="" disabled>Pilih jenis catatan</option>
@@ -110,7 +82,7 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
                                         {errors.noteType && <span className="text-danger">Jenis catatan harus dipilih</span>}
                                    </div>
 
-                                   <button className="btn-modal mt-4" type="submit">{loading ? "Proses..." : "Edit Catatan"}</button>
+                                   <button className="btn-modal mt-4" type="submit">{loading ? "Tunggu..." : "Edit Catatan"}</button>
                               </form>
                          </div>
                     </Modal.Body>
@@ -120,4 +92,3 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
 };
 
 export default EditModalNote;
-
