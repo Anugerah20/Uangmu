@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
-import { formatToIDR } from "../utils/currencyMoney";
+import { TbHomeStats } from "react-icons/tb";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      document.title = "Uangmu | Edit Catatan";
@@ -39,10 +39,12 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
                     toast.success("Catatan berhasil diubah");
                     setLoading(false);
                     onSubmitSuccess(response?.data?.editNote);
-                    // onSubmitSuccess();
                }
           } catch (error) {
-               console.log("Error edit note: ", error);
+               console.log("Error edit note: ", error.response.data);
+               toast.error("Gagal mengubah catatan");
+          } finally {
+               setLoading(false);
           }
      }
 
