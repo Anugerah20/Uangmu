@@ -186,7 +186,7 @@ const TakeNotes = () => {
 
                {/* START: CHART */}
                <div className="flex justify-center flex-col">
-                    <ChartMoney />
+                    {/* <ChartMoney /> */}
                </div>
                {/* END: CHART */}
           </>
