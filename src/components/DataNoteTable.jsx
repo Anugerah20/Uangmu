@@ -8,7 +8,7 @@ import ConfirmDeleteNote from "./ConfirmDeleteNote";
 import { formatToIDR } from "../utils/currencyMoney";
 import { FaEdit } from "react-icons/fa";
 
-const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
+const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete, setUpdateChart }) => {
      const [openEditId, setOpenEditId] = useState(null);
      const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
      const [deleteId, setDeleteId] = useState(null);
@@ -19,6 +19,7 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
      const handleDelete = (id) => {
           setDeleteId(id);
           setIsConfirmDeleteOpen(true);
+          setUpdateChart(prev => !prev);
      }
 
      // Fungsi konfirmasi hapus data berdasarkan id catatan
@@ -47,6 +48,7 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
      const handleUpdateNote = (updatedNote) => {
           setCurrentData(updatedNote);
           setOpenEditId(null);
+          setUpdateChart(prev => !prev);
      };
 
      return (
