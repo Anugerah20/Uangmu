@@ -8,17 +8,18 @@ import ConfirmDeleteNote from "./ConfirmDeleteNote";
 import { formatToIDR } from "../utils/currencyMoney";
 import { FaEdit } from "react-icons/fa";
 
-const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
-     const [isOpenEdit, setIsOpenEdit] = useState(false);
-     const [triggerEffect, setTriggerEffect] = useState(false);
+const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete, setUpdateChart }) => {
+     const [openEditId, setOpenEditId] = useState(null);
      const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
      const [deleteId, setDeleteId] = useState(null);
      const [isDeleted, setIsDeleted] = useState(false);
+     const [currentData, setCurrentData] = useState(savedData);
 
      // Fungsi konfrimasi hapus data
      const handleDelete = (id) => {
           setDeleteId(id);
           setIsConfirmDeleteOpen(true);
+          setUpdateChart(prev => !prev);
      }
 
      // Fungsi konfirmasi hapus data berdasarkan id catatan
@@ -43,6 +44,13 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
           return null;
      }
 
+     // Memperbarui catatan setelah diedit
+     const handleUpdateNote = (updatedNote) => {
+          setCurrentData(updatedNote);
+          setOpenEditId(null);
+          setUpdateChart(prev => !prev);
+     };
+
      return (
           <>
                <tr className="bg-primary border-gray-300">
@@ -53,9 +61,18 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete }) => {
                     <td className="flex justify-center gap-4 mt-1 px-6 py-3">
                          <Link to="#" title="Hapus" onClick={() => handleDelete(savedData.id)}><FaTrashAlt /></Link>
 
-                         <button onClick={() => setIsOpenEdit(true)}><FaEdit /></button>
+                         <button onClick={() => setOpenEditId(savedData.id)}>
+                              <FaEdit />
+                         </button>
 
-                         <EditModalNote isOpen={isOpenEdit} date={savedData.date} data={savedData} onSubmitSuccess={() => { setTriggerEffect(!triggerEffect); setIsOpenEdit(false); onSubmitSuccess(); }} />
+                         <EditModalNote
+                              isOpen={openEditId === savedData.id}
+                              data={currentData}
+                              onSubmitSuccess={(updatedNote) => {
+                                   handleUpdateNote(updatedNote);
+                                   onSubmitSuccess();
+                              }}
+                         />
                     </td>
                </tr >
 

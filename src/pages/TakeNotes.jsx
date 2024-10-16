@@ -26,6 +26,9 @@ const TakeNotes = () => {
      const [currentPage, setCurrentPage] = useState(1);
      const limit = 3;
 
+     // State Memperbarui chart
+     const [updateChart, setUpdateChart] = useState(false);
+
      // Fungsi buat menambahkan catatan keuangan baru
      const handleAddNote = async (newNote) => {
           // Logika penambahan data catatan dan perhitungan total uang
@@ -142,6 +145,7 @@ const TakeNotes = () => {
                                                        key={index} savedData={data} onDelete={handleDelete}
                                                        onEdit={fetchData}
                                                        onSubmitSuccess={() => setTriggerEffect(!triggerEffect)}
+                                                       setUpdateChart={setUpdateChart}
                                                   />
                                              ))
                                         )}
@@ -186,7 +190,9 @@ const TakeNotes = () => {
 
                {/* START: CHART */}
                <div className="flex justify-center flex-col">
-                    <ChartMoney />
+                    <ChartMoney
+                         updateChart={updateChart}
+                    />
                </div>
                {/* END: CHART */}
           </>

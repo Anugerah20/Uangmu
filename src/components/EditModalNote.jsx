@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
-import { formatToIDR } from "../utils/currencyMoney";
+import { TbHomeStats } from "react-icons/tb";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      document.title = "Uangmu | Edit Catatan";
@@ -21,6 +21,7 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      const userId = localStorage.getItem("userId");
 
      useEffect(() => {
+          console.log("Opening edit modal for note ID:", data.id);
           setValue("description", data.description);
           setValue("date", formatDate(data.date, 'YYYY-MM-DD'));
           setValue("price", data.price);
@@ -28,17 +29,22 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      }, [isOpen, setValue, data]);
 
      const editNote = async (formData) => {
+          formData.id = data.id;
           formData.date = new Date(formData.date).toISOString();
           formData.price = parseInt(formData.price);
           try {
-               const response = await userApiEditData(`/edit-note/${userId}`, formData);
+               const response = await userApiEditData(`/edit-note/${userId}/${data.id}`, formData);
+               console.log("Response edit note: ", response);
                if (response.status === 201) {
                     toast.success("Catatan berhasil diubah");
                     setLoading(false);
-                    onSubmitSuccess();
+                    onSubmitSuccess(response?.data?.editNote);
                }
           } catch (error) {
-               console.log("Error edit note: ", error);
+               console.log("Error edit note: ", error.response.data);
+               toast.error("Gagal mengubah catatan");
+          } finally {
+               setLoading(false);
           }
      }
 

@@ -5,7 +5,7 @@ import { useApiGet } from "../services/apiService";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const ChartMoney = () => {
+const ChartMoney = ({ updateChart }) => {
      const [chartData, setChartData] = useState({
           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
           datasets: [
@@ -61,17 +61,8 @@ const ChartMoney = () => {
      }, []);
 
      useEffect(() => {
-          // data chart fetch
           getDataChart();
-
-          // Set up polling
-          const intervalId = setInterval(() => {
-               getDataChart();
-          }, 1000);
-
-          // Clean up on component unmount
-          return () => clearInterval(intervalId);
-     }, [getDataChart]);
+     }, [getDataChart, updateChart]);
 
      const options = {
           responsive: true,

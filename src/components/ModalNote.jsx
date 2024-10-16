@@ -56,9 +56,13 @@ const ModalNote = ({ onSubmitSuccess }) => {
      };
 
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex justify-end self-end ml-[3.3rem] md:ml-10 lg:ml-[4.5rem] relative">
-               <button onClick={() => setOpenModal(true)} className="btn-note absolute lg:-top-44 md:-top-40 -top-5 lg:left-0 md:left-1">Buat Catatan</button>
-
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex flex-wrap justify-end self-end ml-[3.3rem] md:ml-10 lg:ml-[5rem] relative">
+               <div className="absolute -mb-8 lg:mb-8 md:mb-8">
+                    <button onClick={() => setOpenModal(true)}
+                         className="btn-note flex justify-center items-center px-6 py-4 w-full md:w-auto mt-10">
+                         Buat Catatan
+                    </button>
+               </div>
                <Modal
                     show={openModal}
                     size="md"
@@ -76,7 +80,7 @@ const ModalNote = ({ onSubmitSuccess }) => {
                                         <div className="mb-2 block">
                                              <label htmlFor="description">Deskripsi</label>
                                         </div>
-                                        <input type="text" id="description" {...register("description", { required: true })} />
+                                        <input type="text" id="description" autoComplete="off" {...register("description", { required: true })} />
                                         {errors.description && <span className="text-danger">Deskripsi harus diisi</span>}
                                    </div>
                                    <div>
@@ -90,7 +94,7 @@ const ModalNote = ({ onSubmitSuccess }) => {
                                         <div className="mb-2 block">
                                              <label htmlFor="price">Nominal</label>
                                         </div>
-                                        <input type="number" id="price" {...register("price", { required: true, min: 0 })}
+                                        <input type="number" id="price" autoComplete="off" {...register("price", { required: true, min: 0 })}
                                         />
                                         {errors.price && errors.price.type === "required" && <span className="text-danger">Nominal harus diisi</span>}
                                         {errors.price && errors.price.type === "min" && <span className="text-danger">Nominal tidak boleh negatif</span>}
@@ -98,8 +102,8 @@ const ModalNote = ({ onSubmitSuccess }) => {
 
                                    <div className="block">
                                         <label htmlFor="noteType">Jenis Catatan</label>
-                                        <select id="noteType" {...register("noteType", { required: true })}>
-                                             <option value="" disabled>Pilih jenis catatan</option>
+                                        <select id="noteType" {...register("noteType", { required: true, validate: (value) => value !== "" })}>
+                                             <option value="">Pilih jenis catatan</option>
                                              <option value="Pemasukan">Pemasukan</option>
                                              <option value="Pengeluaran">Pengeluaran</option>
                                         </select>
