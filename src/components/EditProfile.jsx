@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { userApiEditGet, userApiEditData } from "../services/apiService";
 import { Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
 import { Toaster, toast } from "sonner";
+import { Spinner } from "flowbite-react";
 
 const EditProfile = () => {
 
@@ -11,6 +12,7 @@ const EditProfile = () => {
      const [file, setFile] = useState();
      const [updateImage, setUpdateImage] = useState("");
      const [loadingEditProfile, setLoadingEditProfile] = useState(false);
+     const fileInputRef = useRef(null);
 
      // Get Data User
      useEffect(() => {
@@ -44,7 +46,14 @@ const EditProfile = () => {
 
      // Get image user
      const handleImage = (e) => {
-          setFile(e.target.files[0]);
+          const file = e.target.files[0];
+          setFile(file);
+
+          // check if file is not empty
+          if (file) {
+               const imageUrl = URL.createObjectURL(file);
+               setUpdateImage(imageUrl);
+          }
      }
 
      // Update Profile User
@@ -57,7 +66,8 @@ const EditProfile = () => {
           const data = new FormData();
           data.append("fullname", getEditData.fullname);
           data.append("bio", getEditData.bio);
-          data.append("file", file);
+          // check file is not empty
+          if (file) data.append("file", file);
 
           try {
                const userId = localStorage.getItem("userId");
@@ -73,9 +83,14 @@ const EditProfile = () => {
                          bio: getEditData.bio,
                     }));
 
-                    if (file) {
-                         const imageUrl = URL.createObjectURL(file);
-                         setUpdateImage(imageUrl);
+                    // Set URL avatar dari Cloudinary saat mengambil data pengguna
+                    if (getEditData.image) {
+                         setUpdateImage(getEditData.image);
+                    }
+
+                    // Reset file input image
+                    if (fileInputRef.current) {
+                         fileInputRef.current.value = "";
                     }
 
                } else if (response.status === 400) {
@@ -103,11 +118,11 @@ const EditProfile = () => {
                     <div className="flex justify-between mb-6 border-b-2 border-gray-300 py-2">
                          <div className="flex justify-center items-center gap-3">
                               <FaRegUser className="w-5 h-5 !font-bold" />
-                              <p className="text-xl">Edit Profil</p>
+                              <p className="text-md">Edit Profil</p>
                          </div>
                          <div className="flex justify-center items-center gap-3">
                               <IoMdArrowBack className="w-5 h-5" />
-                              <Link to="/">Ke Beranda</Link>
+                              <Link to="/" className="text-md">Ke Beranda</Link>
                          </div>
                     </div>
 
@@ -119,6 +134,7 @@ const EditProfile = () => {
                          />
                          <input className="mt-2" type="file" name="file" id="file"
                               onChange={handleImage}
+                              ref={fileInputRef}
                          />
 
                     </div>
@@ -128,7 +144,7 @@ const EditProfile = () => {
                          </div>
                          <input
                               id="fullname" type="text"
-                              name="fullname" value={getEditData?.fullname}
+                              name="fullname" value={getEditData?.fullname || ""}
                               onChange={handleChange}
                          />
                     </div>
@@ -139,7 +155,7 @@ const EditProfile = () => {
                          </div>
                          <input
                               id="email" type="email" className="cursor-not-allowed bg-gray-200"
-                              name="email" value={getEditData?.email} disabled
+                              name="email" value={getEditData?.email || ""} disabled
                               onChange={handleChange}
                          />
                     </div>
@@ -151,14 +167,21 @@ const EditProfile = () => {
                          <textarea
                               id="bio" type="email"
                               className="rounded h-20"
-                              name="bio" value={getEditData?.bio}
+                              name="bio" value={getEditData?.bio || ""}
                               onChange={handleChange}
                          ></textarea>
                     </div>
 
                     <div>
                          <button type="submit" className="btn-login" disabled={loadingEditProfile}>
-                              {loadingEditProfile ? "Menyimpan Data" : "Simpan profil saya"}
+                              {loadingEditProfile ? (
+                                   <div className="flex justify-center items-center gap-x-3">
+                                        <Spinner size="md" />
+                                        Menyimpan data
+                                   </div>
+                              ) : (
+                                   "Simpan profil saya"
+                              )}
                          </button>
                     </div>
                </form >
