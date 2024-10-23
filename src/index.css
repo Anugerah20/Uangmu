@@ -44,7 +44,7 @@
   }
 
   input[type="file"] {
-    @apply px-2 py-2 my-2 file:bg-gray-300 file:text-black hover:file:bg-gray-400;
+    @apply px-2 py-2 my-2 file:bg-gray-200 file:text-black hover:file:bg-gray-300;
   }
 
   select {
