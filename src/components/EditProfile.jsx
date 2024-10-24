@@ -19,7 +19,7 @@ const EditProfile = () => {
           const editProfileUser = async () => {
                try {
                     const userId = localStorage.getItem("userId");
-                    const token = localStorage.getItem("tokenUser");
+                    // const token = localStorage.getItem("tokenUser");
 
                     const response = await userApiEditGet(`/edit-profil/${userId}`);
                     setGetEditData(response?.data);
