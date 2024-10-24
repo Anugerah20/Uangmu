@@ -9,7 +9,7 @@ const FilterMoney = ({ selectMonth, setSelectMonth }) => {
      ];
 
      return (
-          <>
+          <div>
                <select className="rounded-md h-10 w-full mb-10" id="selectMonth" value={selectMonth} onChange={(e) => setSelectMonth(e.target.value)}>
                     {months.map((month) => (
                          <option key={month} value={month}>
@@ -17,7 +17,7 @@ const FilterMoney = ({ selectMonth, setSelectMonth }) => {
                          </option>
                     ))}
                </select>
-          </>
+          </div>
      );
 };
 
