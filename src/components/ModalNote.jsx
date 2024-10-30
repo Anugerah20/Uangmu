@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -56,13 +57,18 @@ const ModalNote = ({ onSubmitSuccess }) => {
      };
 
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 flex flex-wrap justify-end self-end ml-[3.3rem] md:ml-10 lg:ml-[5rem] relative">
-               <div className="absolute -mb-8 lg:mb-8 md:mb-8">
-                    <button onClick={() => setOpenModal(true)}
-                         className="btn-note flex justify-center items-center px-6 py-4 w-full md:w-auto mt-10">
-                         Buat Catatan
-                    </button>
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 z-50">
+               <div className="flex flex-col">
+                    <div className="absolute lg:bottom-0 -bottom-60 lg:left-20 left-10">
+                         <button
+                              onClick={() => setOpenModal(true)}
+                              className="btn-note px-6 py-4 md:w-auto"
+                         >
+                              Buat Catatan
+                         </button>
+                    </div>
                </div>
+
                <Modal
                     show={openModal}
                     size="md"

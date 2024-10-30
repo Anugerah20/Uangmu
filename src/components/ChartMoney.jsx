@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from "react";
 import { Line } from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
@@ -78,7 +81,7 @@ const ChartMoney = ({ updateChart }) => {
      };
 
      return (
-          <div className="grid grid-cols-1 relative m-auto w-[80vw] h-[40vh] md:w-[70vw] md:h-[50vh] lg:w-[60vw] lg:h-[60vh]">
+          <div className="grid grid-cols-1 relative m-auto w-[80vw] h-[40vh] md:w-[70vw] md:h-[50vh] lg:w-[60vw] lg:h-[60vh] lg:mt-0 mt-8">
                <Line options={options} data={chartData} />
           </div>
      );

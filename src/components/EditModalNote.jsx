@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Fragment, useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { userApiEditData } from "../services/apiService";
 import { toast } from "sonner";
 import formatDate from "../services/formatDate";
-import { TbHomeStats } from "react-icons/tb";
 
 const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      document.title = "Uangmu | Edit Catatan";

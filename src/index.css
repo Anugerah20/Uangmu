@@ -9,7 +9,7 @@
   }
 
   .container-note {
-    @apply flex flex-col gap-4 mx-auto my-[2.5rem];
+    @apply flex flex-col gap-4 relative;
   }
 
   .btn-note,

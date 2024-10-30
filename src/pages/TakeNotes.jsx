@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import TotalMoney from "../components/TotalAmout";
 import DataNoteTable from "../components/DataNoteTable";
@@ -117,15 +118,11 @@ const TakeNotes = () => {
 
                     {/* START: MEMASUKKAN DATA */}
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
-                         <div className="flex justify-between items-center">
+                         <div className="flex justify-between items-center flex-grow">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
-
-                              {/* START: DOWNLOAD PDF */}
-                              <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
-                              {/* END: DOWNLOAD PDF */}
                          </div>
 
-                         <div className="relative overflow-x-auto">
+                         <div className="relative overflow-x-auto overflow-y-auto">
                               <table className="w-[100%] border-collapse border border-gray-300 rounded-md text-center overflow-x-auto ">
                                    <thead className="border">
                                         <tr>

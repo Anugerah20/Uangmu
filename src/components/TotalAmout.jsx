@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { TbSquareArrowDown } from "react-icons/tb";
 import { TbSquareArrowUp } from "react-icons/tb";
