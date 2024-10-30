@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";

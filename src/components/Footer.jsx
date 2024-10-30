@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Footer } from "flowbite-react";
 
@@ -23,5 +24,5 @@ export default function MyFooter() {
         </Footer.LinkGroup>
       </Footer>
     </>
-  )
+  );
 }
