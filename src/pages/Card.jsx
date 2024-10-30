@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import CardItem from "../components/Card/CardList";
-import { BiSolidBadgeDollar, BiSolidPointer, BiSolidHappyAlt } from "react-icons/bi";
+import { BiSolidBadgeDollar, BiSolidPointer } from "react-icons/bi";
+import { FaDownload } from "react-icons/fa6";
 
 const Card = () => {
      const cardData = [
@@ -9,7 +11,7 @@ const Card = () => {
                title: "Gratis Tanpa Biaya Apapun"
           },
           {
-               Icon: BiSolidHappyAlt,
+               Icon: FaDownload,
                title: "Bisa Mengunduh Laporan"
           },
           {

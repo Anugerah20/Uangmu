@@ -120,6 +120,7 @@ const TakeNotes = () => {
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
                          <div className="flex justify-between items-center flex-grow">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
+                              <DownloadPdf savedData={savedData} selectMonth={selectMonth} />
                          </div>
 
                          <div className="relative overflow-x-auto overflow-y-auto">
