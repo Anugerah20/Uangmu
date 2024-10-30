@@ -4,7 +4,7 @@ import DataNoteTable from "../components/DataNoteTable";
 import ModalNote from "../components/ModalNote";
 import FilterMoney from "../components/FilterMoney";
 import ChartMoney from "../components/ChartMoney";
-// import DownloadPdf from "../components/DownloadPdf";
+import DownloadPdf from "../components/DownloadPdf";
 // import AOS from "aos";
 import "aos/dist/aos.css";
 import { useApiGet, userApiDelete, userApiPost } from "../services/apiService";
@@ -119,6 +119,10 @@ const TakeNotes = () => {
                     <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
                          <div className="flex justify-between items-center">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
+
+                              {/* START: DOWNLOAD PDF */}
+                              <DownloadPdf financialData={savedData} selectMonth={selectMonth} />
+                              {/* END: DOWNLOAD PDF */}
                          </div>
 
                          <div className="relative overflow-x-auto">
