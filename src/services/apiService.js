@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Make api
 // const urlApi = "http://localhost:3000/user";
-const dev = "https://uangmu.railway.mu.app/";
+const dev = "https://uangmu.railway.mu.app/user";
 const token = localStorage.getItem("tokenUser");
 
 const apiService = axios.create({
