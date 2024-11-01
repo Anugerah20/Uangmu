@@ -60,7 +60,7 @@ const TakeNotes = () => {
 
      // 1. Fungsi untuk mengambil data catatan dari backend
      // 2. Fungsi untuk mengambil id edit catatan
-     const fetchData = async (page = 1, limit = 3) => {
+     const fetchData = async (page = 1, limit = 1) => {
           const userId = localStorage.getItem("userId");
           try {
                const response = await useApiGet(`/get-note/${userId}?page=${page}&limit=${limit}`);
