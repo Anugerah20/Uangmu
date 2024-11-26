@@ -8,6 +8,7 @@ const formatDate = (dateString, format = "DD/MM/YYYY") => {
      // Cek format tanggal apakah "DD/MM/YYYY" atau "YYYY/MM/DD"
      // Jika "DD/MM/YYYY" maka tampilkan "day/month/year"
      // Jika "YYYY/MM/DD" maka tampilkan "year/month/day"
+
      if (format === "DD/MM/YYYY") {
           return `${day}/${month}/${year}`;
      } else if (format === "YYYY-MM-DD") {
