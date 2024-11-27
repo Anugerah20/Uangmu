@@ -81,7 +81,7 @@ const ChartMoney = ({ updateChart }) => {
      };
 
      return (
-          <div className="grid grid-cols-1 relative m-auto w-[80vw] h-[40vh] md:w-[70vw] md:h-[50vh] lg:w-[60vw] lg:h-[60vh] lg:mt-0 mt-8">
+          <div className="grid grid-cols-1 relative mx-auto w-[80vw] h-[40vh] md:w-[70vw] md:h-[50vh] lg:w-[50vw] lg:h-[60vh] lg:mt-14 mt-8">
                <Line options={options} data={chartData} />
           </div>
      );
