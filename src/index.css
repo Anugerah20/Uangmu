@@ -54,5 +54,4 @@
   .text-danger {
     @apply text-sm text-red-500;
   }
-
 }
