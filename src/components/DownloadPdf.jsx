@@ -13,7 +13,7 @@ const DownloadPdf = ({ selectMonth }) => {
                     const userId = localStorage.getItem("userId");
                     const response = await useApiGet(`/get-all-note/${userId}`);
                     setFinancialData(response?.data?.showAllNotes);
-                    console.log("Download PDF: ", setFinancialData);
+                    // console.log("Download PDF: ", setFinancialData);
                } catch (error) {
                     console.log(error);
                }

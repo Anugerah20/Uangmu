@@ -21,20 +21,33 @@ const EditModalNote = ({ isOpen, data, onSubmitSuccess }) => {
      const userId = localStorage.getItem("userId");
 
      useEffect(() => {
-          console.log("Opening edit modal for note ID:", data.id);
+          // console.log("Opening edit modal for note ID:", data.id);
           setValue("description", data.description);
           setValue("date", formatDate(data.date, 'YYYY-MM-DD'));
           setValue("price", data.price);
           setValue("noteType", data.noteType);
      }, [isOpen, setValue, data]);
 
+
+
      const editNote = async (formData) => {
+          // Check supaya edit tanggal tidak melebihi batas hari ini.
+          const currentDate = formatDate(new Date(), "yyyy-MM-dd");
+          const editDate = formatDate(new Date(formData.date), "yyyy-MM-dd");
+
+          if (editDate > currentDate) {
+               setLoading(false);
+               return toast.info("Maaf tanggal melebihi batas");
+          }
+
           formData.id = data.id;
           formData.date = new Date(formData.date).toISOString();
           formData.price = parseInt(formData.price);
+
+
           try {
                const response = await userApiEditData(`/edit-note/${userId}/${data.id}`, formData);
-               console.log("Response edit note: ", response);
+               // console.log("Response edit note: ", response);
                if (response.status === 201) {
                     toast.success("Catatan berhasil diubah");
                     setLoading(false);
