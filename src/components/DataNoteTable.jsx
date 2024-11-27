@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import EditModalNote from "./EditModalNote";
 import { useEffect, useState } from "react";
-// import formatDate from "../services/formatDate";
 import ConfirmDeleteNote from "./ConfirmDeleteNote";
 import { formatToIDR } from "../utils/currencyMoney";
 import { FaEdit } from "react-icons/fa";
@@ -58,7 +57,6 @@ const DataNoteTable = ({ savedData, onSubmitSuccess, onDelete, setUpdateChart })
           <>
                <tr className="bg-primary border-gray-300">
                     <td className="whitespace-nowrap px-6 py-3">{savedData.description}</td>
-                    {/* <td className="px-6 py-3">{formatDate(savedData.date)}</td> */}
                     <td className="px-6 py-3">{joinedAtDate(savedData.date)}</td>
                     <td className="px-6 py-3">{formatToIDR(savedData.price)}</td>
                     <td className="px-6 py-3">{savedData.noteType}</td>
