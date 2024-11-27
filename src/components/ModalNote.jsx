@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { userApiPost } from "../services/apiService";
 
+// Library date-fns
+import { format } from "date-fns";
+
 const ModalNote = ({ onSubmitSuccess }) => {
      document.title = "Uangmu | Catatan";
 
@@ -22,12 +25,23 @@ const ModalNote = ({ onSubmitSuccess }) => {
           try {
                setLoading(true);
 
+               const currentDate = format(new Date(), "yyyy-MM-dd");
+
+               if (data.date > currentDate) {
+                    return toast.info('Maaf tanggal melebihi batas');
+               }
+
                const noteData = {
                     description: data.description,
                     date: new Date(data.date).toISOString(),
+
+                    // 26/11/2024
+                    // date: parsedDate(data.date),
                     price: data.price,
                     noteType: data.noteType,
                };
+
+               // console.log("Formated date: ", noteData);
 
                // Kirim data catatan ke API untuk ditambahkan
                const response = await userApiPost("/note", noteData);
@@ -94,6 +108,7 @@ const ModalNote = ({ onSubmitSuccess }) => {
                                              <label htmlFor="date">Tanggal</label>
                                         </div>
                                         <input type="date" id="date" {...register("date", { required: true })} />
+
                                         {errors.date && <span className="text-danger">Tanggal harus diisi</span>}
                                    </div>
                                    <div>
