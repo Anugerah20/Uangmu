@@ -25,18 +25,18 @@ const ModalNote = ({ onSubmitSuccess }) => {
           try {
                setLoading(true);
 
+               // Check supaya edit tanggal tidak melebihi batas hari ini.
                const currentDate = format(new Date(), "yyyy-MM-dd");
 
                if (data.date > currentDate) {
+                    setLoading(false);
+                    reset();
                     return toast.info('Maaf tanggal melebihi batas');
                }
 
                const noteData = {
                     description: data.description,
                     date: new Date(data.date).toISOString(),
-
-                    // 26/11/2024
-                    // date: parsedDate(data.date),
                     price: data.price,
                     noteType: data.noteType,
                };
