@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { userApiPost } from "../services/apiService";
 
+// Icons plus
+import { HiMiniPlusSmall } from "react-icons/hi2";
+
 // Library date-fns
 import { format } from "date-fns";
 
@@ -71,14 +74,17 @@ const ModalNote = ({ onSubmitSuccess }) => {
      };
 
      return (
-          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5 z-50">
+          <div className="container-note w-4/5 lg:w-1/4 sm:w-1/2 md:w-2/5">
                <div className="flex flex-col">
-                    <div className="absolute lg:bottom-0 -bottom-60 lg:left-20 left-10">
+                    {/* <div className="absolute lg:bottom-0 -bottom-60 lg:left-50 left-10"> */}
+
+                    {/* Editor: Nabil - 27/11/2024 */}
+                    <div className="absolute top-60 left-10 lg:bottom-0 lg:-top-10 lg:left-40 md:bottom-0 md:top-10 md:left-20">
                          <button
                               onClick={() => setOpenModal(true)}
-                              className="btn-note px-6 py-4 md:w-auto"
+                              className="btn-note px-4 py-2"
                          >
-                              Buat Catatan
+                              <span className="text-2xl"><HiMiniPlusSmall /></span> Catatan
                          </button>
                     </div>
                </div>
