@@ -117,7 +117,7 @@ const TakeNotes = () => {
                     {/* END: TOTAL MONEY */}
 
                     {/* START: MEMASUKKAN DATA */}
-                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[40%] max-h-96">
+                    <div className="flex flex-col mx-auto md:mt-12 sm:mt-0 lg:mt-12 w-[80%] sm:w-1/2 md:w-2/5 lg:w-[80%] max-h-96">
                          <div className="flex justify-between items-center flex-grow">
                               <FilterMoney selectMonth={selectMonth} setSelectMonth={setSelectMonth} />
                               <DownloadPdf savedData={savedData} selectMonth={selectMonth} />
@@ -191,7 +191,7 @@ const TakeNotes = () => {
                </div>
 
                {/* START: CHART */}
-               <div className="flex justify-center flex-col">
+               <div className="flex flex-col justify-center items-center">
                     <ChartMoney
                          updateChart={updateChart}
                     />
